@@ -1,0 +1,7 @@
+*/CMakeFiles/*
+*.o
+ClusterFirst/ClusterFirst
+*.cbp
+*/Makefile
+*CMakeCache.txt
+*.cmake
