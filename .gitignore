@@ -5,3 +5,4 @@ ClusterFirst/ClusterFirst
 */Makefile
 *CMakeCache.txt
 *.cmake
+build*
