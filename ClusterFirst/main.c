@@ -23,7 +23,9 @@
 
 #include <stdio.h>
 #include "ClusterFirst.h"
-
+#include "ListeCluster.h"
+#include "Cluster.h"
+#include "Objet.h"
 
 int main(int argc, char **argv)
 {
