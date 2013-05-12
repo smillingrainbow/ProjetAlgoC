@@ -12,9 +12,13 @@ typedef struct _ListeCluster
 	int cap;
 	struct _ListeCluster * succ;
 	bool fini;
-	struct _Cluster * valC;
+	struct _Cluster * prtC;
 }ListeCluster;
 
+void ListeCluster_init(ListeCluster * listeCluster);
+
+void ListeCluster_setvalue_cap(ListeCluster * listeCluster, const int value);
+void ListeCluster_setvalue_fini(ListeCluster * listeCluster, const int value);
 
 
 

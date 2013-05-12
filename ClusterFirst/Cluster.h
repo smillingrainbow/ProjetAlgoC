@@ -5,12 +5,12 @@
 
 typedef struct _Cluster
 {
-	struct Objet * ptrC;
+	struct Objet * ptrO;
 	struct _Cluster * succ;
 } Cluster;
 
 
-
+void Cluster_init(Cluster * cluster);
 
 
 #endif //CLUSTERFIRST_H

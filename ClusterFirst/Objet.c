@@ -8,18 +8,18 @@ void Objet_init(Objet * objet){
 	objet->poids = 0;
 }
 
-void Objet_setvalue_idObjet(int value){
+void Objet_setvalue_idObjet(Objet * objet, const int value){
 	objet->idObjet = value; 
 }
 
-void Objet_setvalue_coordx(int value){
+void Objet_setvalue_coordx(Objet * objet, const int value){
 	objet->coordx = value; 
 }
 
-void Objet_setvalue_coordy(int value){
+void Objet_setvalue_coordy(Objet * objet, const int value){
 	objet->coordy = value; 
 }
 
-void Objet_setvalue_poids(int value){
+void Objet_setvalue_poids(Objet * objet, const int value){
 	objet->poids = value; 
 }
