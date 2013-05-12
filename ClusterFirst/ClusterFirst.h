@@ -8,9 +8,9 @@
 #include "Objet.h"
 #include "Cluster.h"
 
-//void remplissageCluster(Objet **tabObjet);
+void remplissageCluster(const int cap_max, char * filename);
 
-void creationTableauObjet(char * filename);
+Objet ** creationTableauObjet(char * filename);
 FILE *  open_Fichier(char * filename);
 void close_Fichier(FILE * file, char * filename);
 

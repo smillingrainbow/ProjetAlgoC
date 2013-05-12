@@ -1,5 +1,5 @@
-#ifndef CLUSTERFIRST_H
-#define CLUSTERFIRST_H
+#ifndef CLUSTER_H
+#define CLUSTER_H
 
 #include "Objet.h"
 
@@ -9,8 +9,7 @@ typedef struct _Cluster
 	struct _Cluster * succ;
 } Cluster;
 
-
-void Cluster_init(Cluster * cluster);
 Cluster * Cluster_create(void);
+void Cluster_init(Cluster * cluster);
 
 #endif //CLUSTERFIRST_H

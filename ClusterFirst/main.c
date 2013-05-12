@@ -27,14 +27,28 @@
 #include "Cluster.h"
 #include "Objet.h"
 
+void init(int argc, char ** argv, char * filename, unsigned int cap_max){
+	if(argc > 2){
+		filename = argv[2];
+		cap_max = strtod(argv[1], NULL);
+	}
+	else{
+		printf("veuillez préciser le nom du fichier à lire et la capacite max du chariot \n\t %s <capacite max> <nom du fichier>\n", argv[0]);
+		exit(1);
+	}
+}
+
 int main(int argc, char **argv)
 {
+	char * filename;
+	unsigned int cap_max;
 
 	printf("plop \n");
-	if(argc > 1)
-		creationTableauObjet(argv[1]);
-	else
-		printf("veuillez préciser le nom du fichier à lire \n\t %s <nom du fichier>\n", argv[0]);
+
+	init(argc, argv, filename, cap_max);
+
+	remplissageCluster(cap_max, filename);
 	return 0;
+	
 }
 

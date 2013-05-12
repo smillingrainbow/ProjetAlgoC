@@ -17,7 +17,7 @@ void close_Fichier(FILE * file, char * filename){
   }
 }
 
-void creationTableauObjet(char * filename){
+Objet ** creationTableauObjet(char * filename){
 	int indice, nb_lignes, idObjet, coordx, coordy, poids; 
 	Objet ** tabObjet;
 	FILE * file = open_Fichier(filename);
@@ -35,10 +35,54 @@ void creationTableauObjet(char * filename){
 	}
 
 	close_Fichier(file, filename); 
-
+	return tabObjet; 
 }
 
 
-void remplissageCluster(Objet ** tabObjet){
+void remplissageCluster(const int cap_max, char * filename){ 
+	int indice = 0; 
+	int newCap =0; 
+	ListeCluster * listeCluster = ListeCluster_create();
+	ListeCluster * listeClusterTmp;
+	Cluster * cluster;
+	Cluster * clusterTmp;
+	Objet * objet;
+	Objet ** tabObjet = creationTableauObjet(filename);
+	int nb_lignes = (int) sizeof(tabObjet);
+	ListeCluster_init(listeCluster);
 
+	while (indice <= nb_lignes){
+		objet = tabObjet[indice]; 
+		newCap = listeCluster->cap + objet->poids;
+		while ((cap_max < newCap) || listeCluster != NULL){
+			listeCluster = listeCluster->succ; 
+		}
+
+		if (listeCluster == NULL){
+			listeClusterTmp = ListeCluster_create();
+			listeCluster->succ = listeClusterTmp;
+			ListeCluster_init(listeClusterTmp);
+			listeClusterTmp->cap = objet->poids; 
+			if (listeClusterTmp->cap = cap_max)
+				listeClusterTmp->fini = TRUE;
+			cluster = Cluster_create();
+			listeClusterTmp->ptrC = cluster; 
+			cluster->ptrO = objet;
+			cluster->succ = NULL; 
+		}
+		else{
+			clusterTmp = listeCluster->ptrC;
+			while (clusterTmp->succ != NULL){
+				clusterTmp = clusterTmp->succ;
+			}
+			cluster = Cluster_create(); 
+			clusterTmp->succ = cluster;
+			cluster->ptrO = objet;
+			cluster->succ =  NULL;
+			listeCluster->cap = newCap; 
+			if (newCap = cap_max)
+				listeCluster->fini =  TRUE;
+		}
+		indice ++; 
+	}
 }
