@@ -29,7 +29,12 @@
 
 int main(int argc, char **argv)
 {
+
 	printf("plop \n");
+	if(argc > 1)
+		creationTableauObjet(argv[1]);
+	else
+		printf("veuillez préciser le nom du fichier à lire \n\t %s <nom du fichier>\n", argv[0]);
 	return 0;
 }
 

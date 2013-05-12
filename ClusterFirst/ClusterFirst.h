@@ -10,8 +10,8 @@
 //void remplissageCluster(Objet **tabObjet);
 
 void creationTableauObjet(char * filename);
-void open_Fichier(char *filename);
-void close_Fichier(FILE * file);
+FILE *  open_Fichier(char * filename);
+void close_Fichier(FILE * file, char * filename);
 
 
 #endif //CLUSTERFIRST_H

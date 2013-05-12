@@ -12,7 +12,7 @@ typedef struct _ListeCluster
 	int cap;
 	struct _ListeCluster * succ;
 	bool fini;
-	struct _Cluster * prtC;
+	struct _Cluster * ptrC;
 }ListeCluster;
 
 void ListeCluster_init(ListeCluster * listeCluster);

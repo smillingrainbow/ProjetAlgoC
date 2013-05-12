@@ -5,7 +5,7 @@
 
 typedef struct _Cluster
 {
-	struct Objet * ptrO;
+	Objet * ptrO;
 	struct _Cluster * succ;
 } Cluster;
 
