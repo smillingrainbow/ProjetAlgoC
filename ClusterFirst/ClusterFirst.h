@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include "ListeCluster.h"
 #include "Objet.h"
+#include "Cluster.h"
 
 //void remplissageCluster(Objet **tabObjet);
 

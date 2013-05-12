@@ -27,7 +27,7 @@ void Objet_setvalue_poids(Objet * objet, const int value){
 Objet * Objet_create(void){
 	Objet * objet = (Objet *) malloc (sizeof(Objet));
 	if (objet == NULL){
-		printf("Erreur creation\n");
+		printf("Erreur creation objet \n");
 	    exit(1);
 	}
 }

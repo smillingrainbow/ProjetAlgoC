@@ -7,6 +7,7 @@ FILE * open_Fichier(char *filename){
 	    printf("Impossible d'ouvrir le fichier %s\n", filename);
 	    exit(1);
 	}
+	return file; 
 }
 
 void close_Fichier(FILE * file, char * filename){
@@ -38,6 +39,6 @@ void creationTableauObjet(char * filename){
 }
 
 
-//void remplissageCluster(Objet **tabObjet){
+void remplissageCluster(Objet ** tabObjet){
 
-//}
+}

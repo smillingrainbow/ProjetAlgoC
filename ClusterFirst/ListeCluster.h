@@ -16,7 +16,7 @@ typedef struct _ListeCluster
 }ListeCluster;
 
 void ListeCluster_init(ListeCluster * listeCluster);
-
+ListeCluster * ListeCluster_create(void); 
 void ListeCluster_setvalue_cap(ListeCluster * listeCluster, const int value);
 void ListeCluster_setvalue_fini(ListeCluster * listeCluster, const int value);
 

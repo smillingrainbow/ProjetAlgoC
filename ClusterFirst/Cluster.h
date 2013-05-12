@@ -11,6 +11,6 @@ typedef struct _Cluster
 
 
 void Cluster_init(Cluster * cluster);
-
+Cluster * Cluster_create(void);
 
 #endif //CLUSTERFIRST_H
