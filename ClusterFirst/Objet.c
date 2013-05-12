@@ -23,3 +23,11 @@ void Objet_setvalue_coordy(Objet * objet, const int value){
 void Objet_setvalue_poids(Objet * objet, const int value){
 	objet->poids = value; 
 }
+
+Objet * Objet_create(void){
+	Objet * objet = (Objet *) malloc (sizeof(Objet));
+	if (objet == NULL){
+		printf("Erreur creation objet\n");
+	    exit(1);
+	}
+}
