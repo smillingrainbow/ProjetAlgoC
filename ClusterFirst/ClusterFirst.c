@@ -38,7 +38,6 @@ Objet ** creationTableauObjet(char * filename){
 	return tabObjet; 
 }
 
-
 void remplissageCluster(const int cap_max, char * filename){ 
 	int indice = 0; 
 	int newCap =0; 
@@ -85,4 +84,22 @@ void remplissageCluster(const int cap_max, char * filename){
 		}
 		indice ++; 
 	}
+
+void Triecroissant(Objet *objet){
+	int i,j;
+	Boolean exchange;
+	for (i=1;i<sizeof(tabObjet);i++)
+		exchange=FALSE;
+	for (j=1;j>=i;j--)
+		if (tabObjet[j+1]<tabObjet[j])	{
+			tabObjet[0]=tabObjet[j+1];
+            tabObjet[j+1]=tabObjet[j];
+            tabObjet[j]=tabObjet[0];
+            exchange=TRUE;
+		}
+    if(!=exchange){
+    	
+	    return tabObjet;
+}
+
 }
