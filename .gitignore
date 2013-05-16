@@ -6,3 +6,11 @@ ClusterFirst/ClusterFirst
 *CMakeCache.txt
 *.cmake
 build*
+
+*.aux
+*.lof
+*.lot
+*.lyx
+*.out
+*.pdf
+*.toc
