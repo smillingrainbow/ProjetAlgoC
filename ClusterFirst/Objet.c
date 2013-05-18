@@ -8,7 +8,7 @@ void Objet_init(Objet * objet){
 	objet->poids = 0;
 }
 
-void Objet_setvalue_idObjet(Objet * objet, const int value){
+void Objet_setvalue_idObjet(Objet * objet, const unsigned int value){
 	objet->idObjet = value; 
 }
 
@@ -20,7 +20,7 @@ void Objet_setvalue_coordy(Objet * objet, const int value){
 	objet->coordy = value; 
 }
 
-void Objet_setvalue_poids(Objet * objet, const int value){
+void Objet_setvalue_poids(Objet * objet, const unsigned int value){
 	objet->poids = value; 
 }
 
@@ -30,4 +30,5 @@ Objet * Objet_create(void){
 		printf("Erreur creation objet \n");
 	    exit(1);
 	}
+	return objet;
 }

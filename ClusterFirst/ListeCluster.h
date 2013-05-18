@@ -9,7 +9,7 @@ typedef int bool;
 
 typedef struct _ListeCluster
 {
-	int cap;
+	unsigned int cap;
 	struct _ListeCluster * succ;
 	bool fini;
 	struct _Cluster * ptrC;
@@ -17,7 +17,7 @@ typedef struct _ListeCluster
 
 void ListeCluster_init(ListeCluster * listeCluster);
 ListeCluster * ListeCluster_create(void); 
-void ListeCluster_setvalue_cap(ListeCluster * listeCluster, const int value);
+void ListeCluster_setvalue_cap(ListeCluster * listeCluster, const unsigned int value);
 void ListeCluster_setvalue_fini(ListeCluster * listeCluster, const int value);
 
 

@@ -38,16 +38,17 @@ Objet ** creationTableauObjet(char * filename){
 	return tabObjet; 
 }
 
-void remplissageCluster(const int cap_max, char * filename){ 
-	int indice = 0; 
-	int newCap =0; 
+ListeCluster * remplissageCluster(const unsigned int cap_max, char * filename){ 
+	unsigned int indice = 0; 
+	unsigned int newCap =0; 
+	unsigned int nb_lignes;
 	ListeCluster * listeCluster = ListeCluster_create();
 	ListeCluster * listeClusterTmp;
 	Cluster * cluster;
 	Cluster * clusterTmp;
 	Objet * objet;
 	Objet ** tabObjet = creationTableauObjet(filename);
-	int nb_lignes = (int) sizeof(tabObjet);
+	nb_lignes = (int) sizeof(tabObjet);
 	ListeCluster_init(listeCluster);
 
 	while (indice <= nb_lignes){
@@ -62,7 +63,7 @@ void remplissageCluster(const int cap_max, char * filename){
 			listeCluster->succ = listeClusterTmp;
 			ListeCluster_init(listeClusterTmp);
 			listeClusterTmp->cap = objet->poids; 
-			if (listeClusterTmp->cap = cap_max)
+			if (listeClusterTmp->cap == cap_max)
 				listeClusterTmp->fini = TRUE;
 			cluster = Cluster_create();
 			listeClusterTmp->ptrC = cluster; 
@@ -79,11 +80,80 @@ void remplissageCluster(const int cap_max, char * filename){
 			cluster->ptrO = objet;
 			cluster->succ =  NULL;
 			listeCluster->cap = newCap; 
-			if (newCap = cap_max)
+			if (newCap == cap_max)
 				listeCluster->fini =  TRUE;
 		}
 		indice ++; 
 	}
+	return listeCluster ; 
+}
 
+void trieListeCluster(ListeCluster * liste){
+	while (liste != NULL){
+		trieCLuster(liste->ptrC);
+		liste = liste->succ; 
+	}
+}
 
+void trieCLuster(Cluster * head){
+	Cluster * enCours, * clusterTmp; 
+	enCours = head;
+	while (enCours->succ != NULL){
+		clusterTmp = lePlusProche(enCours);
+		inserer(enCours, clusterTmp, head);
+		enCours = clusterTmp;
+	}
+}
+
+Cluster * lePlusProche(Cluster * cluster){
+	Cluster * plusProche;
+	Objet * ObjetCourant, * objetTmp;
+	unsigned int minDist, x, y, dist;
+	minDist = INT_MAX; 
+	plusProche = NULL;
+	ObjetCourant = cluster->ptrO;
+	x = ObjetCourant->coordx;
+	y = ObjetCourant->coordy;
+	cluster = cluster->succ;
+	while ( cluster != NULL){
+		objetTmp = cluster->ptrO;
+		dist = calculDistance(x, y , objetTmp->coordx, objetTmp->coordy);
+		if (dist < minDist){
+			minDist = dist;
+			plusProche = cluster;
+		}
+		cluster = cluster->succ;
+	}
+	return plusProche;
+}
+
+int calculDistance(int ax, int ay, int bx, int by){
+	unsigned int dist;
+	//dist = (unsigned int) sqrt(((bx - ax)*(bx - ax)) + ((by - ay)*(by - ay)));
+	dist = abs((bx - ax)*(bx - ax)) + abs((by - ay)*(by - ay));
+	return dist; 
+}
+
+void inserer(Cluster * enCours, Cluster * cluster, Cluster * head){
+	Cluster * clusterTmp;
+	clusterTmp = head;
+	if (head == enCours){
+		head = cluster;
+		while ( clusterTmp->succ != cluster){
+			clusterTmp = clusterTmp->succ;
+		}
+		clusterTmp = cluster->succ;
+		cluster->succ = enCours;
+	}
+	else{
+		while (head->succ != enCours){
+			head = head->succ;
+		}
+		while ( clusterTmp->succ != cluster){
+			clusterTmp = clusterTmp->succ;
+		}
+		head->succ = cluster;
+		clusterTmp->succ = cluster->succ;
+		cluster->succ = enCours;
+	}
 }

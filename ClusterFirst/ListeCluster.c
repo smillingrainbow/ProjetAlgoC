@@ -7,7 +7,7 @@ void ListeCluster_init(ListeCluster * listeCluster){
 	listeCluster->ptrC = NULL;
 }
 
-void ListeCluster_setvalue_cap(ListeCluster * listeCluster, const int value){
+void ListeCluster_setvalue_cap(ListeCluster * listeCluster, const unsigned int value){
 	listeCluster->cap =  value; 
 }
 
@@ -21,4 +21,5 @@ ListeCluster * ListeCluster_create(void){
 		printf("Erreur creation listeCluster \n");
 	    exit(1);
 	}
+	return listeCluster; 
 }

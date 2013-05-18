@@ -11,4 +11,5 @@ Cluster * Cluster_create(void){
 		printf("Erreur creation listeCluster \n");
 	    exit(1);
 	}
+	return cluster;
 }
