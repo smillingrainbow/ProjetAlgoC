@@ -1,5 +1,12 @@
 #include "ListeCluster.h"
 
+/**
+ * \brief initialise une listeCluster
+ * \details initialise une ListeCluster, les pointeurs à null et les entiers à 0
+ * \author Natacha Marlio-Marette
+ * \warning 
+ * \@param listeCluster pointeur vers une liste de cluster
+ */ 
 void ListeCluster_init(ListeCluster * listeCluster){
 	listeCluster->cap = 0;
 	listeCluster->succ = NULL;

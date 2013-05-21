@@ -1,5 +1,14 @@
 #include "ClusterFirst.h"
 
+
+/**
+ * \brief ouvre un fichier texte
+ * \details ouvre un fichier texte en lecture
+ * \author Natacha Marlio-Marette
+ * \warning 
+ * \@param filename nom du fichier texte
+ * \return file le fichier ouvert en lecture
+ */ 
 FILE * open_Fichier(char *filename){
 	FILE * file; 
 	file = fopen(filename, "rt"); // ouvrir en lecture
@@ -10,6 +19,14 @@ FILE * open_Fichier(char *filename){
 	return file; 
 }
 
+/**
+ * \brief ferme un fichier texte
+ * \details ferme un fichier texte
+ * \author Natacha Marlio-Marette
+ * \warning 
+ * \@param filename nom du fichier texte ouvert
+ * \@param file le flux du fichier
+ */ 
 void close_Fichier(FILE * file, char * filename){
 	if(fclose(file) == EOF){
 	    printf("Probleme de fermeture du fichier %s", filename);
