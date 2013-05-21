@@ -4,10 +4,9 @@
 /**
  * \brief ouvre un fichier texte
  * \details ouvre un fichier texte en lecture
- * \author Natacha Marlio-Marette
- * \warning 
- * \@param filename nom du fichier texte
- * \return file le fichier ouvert en lecture
+ * \author Natacha Marlio-Marette 
+ * @param filename nom du fichier texte
+ * \return flux du fichier ouvert en lecture
  */ 
 FILE * open_Fichier(char *filename){
 	FILE * file; 
@@ -23,9 +22,8 @@ FILE * open_Fichier(char *filename){
  * \brief ferme un fichier texte
  * \details ferme un fichier texte
  * \author Natacha Marlio-Marette
- * \warning 
- * \@param filename nom du fichier texte ouvert
- * \@param file le flux du fichier
+ * @param filename nom du fichier texte ouvert
+ * @param file le flux du fichier
  */ 
 void close_Fichier(FILE * file, char * filename){
 	if(fclose(file) == EOF){
@@ -34,16 +32,27 @@ void close_Fichier(FILE * file, char * filename){
   }
 }
 
-Objet ** creationTableauObjet(char * filename){
-	int indice, nb_lignes, idObjet, coordx, coordy, poids; 
+Objet ** creationTableauObjet(char * filename, int * nb_lignes){
+	int indice; 
+	int idObjet, coordx, coordy, poids; 
 	Objet ** tabObjet;
 	FILE * file = open_Fichier(filename);
-	fscanf(file, "%d", &nb_lignes);
-	tabObjet = (Objet **) malloc (sizeof(Objet *) * nb_lignes);
+
+#ifndef NDEBUG
+	printf("creationTableauObjet \n");
+#endif
 	
-	for (indice = 0; indice <= nb_lignes; indice++){
+	fscanf(file, "%d", nb_lignes);
+
+#ifndef NDEBUG
+	printf("nombre de lignes :  %d\n", *nb_lignes);
+#endif
+	
+	tabObjet = (Objet **) malloc(sizeof(Objet *) * *nb_lignes);
+	
+	for (indice = 0; indice < *nb_lignes; indice++){
 		fscanf(file, "%d %d %d %d", &idObjet, &coordx, &coordy, &poids);
-		Objet *  objet = Objet_create(); 
+		Objet * objet = Objet_create(); 
 		Objet_setvalue_idObjet(objet, idObjet);
 		Objet_setvalue_coordx(objet, coordx);
 		Objet_setvalue_coordy(objet, coordy);
@@ -56,36 +65,37 @@ Objet ** creationTableauObjet(char * filename){
 }
 
 ListeCluster * remplissageCluster(const unsigned int cap_max, char * filename){ 
-	unsigned int indice = 0; 
+	int indice = 0; 
 	unsigned int newCap =0; 
-	unsigned int nb_lignes;
+	int nb_lignes;
 	ListeCluster * listeCluster = ListeCluster_create();
 	ListeCluster * listeClusterTmp;
 	Cluster * cluster;
 	Cluster * clusterTmp;
 	Objet * objet;
-	Objet ** tabObjet = creationTableauObjet(filename);
-	nb_lignes = (int) sizeof(tabObjet);
+	Objet ** tabObjet = creationTableauObjet(filename, &nb_lignes);
+	//nb_lignes = (int) sizeof(tabObjet);
 	ListeCluster_init(listeCluster);
-
-	while (indice <= nb_lignes){
+#ifndef NDEBUG
+	printf("remplissageCluster \n");
+	printf("nombre de lignes :  %d\n", nb_lignes);
+#endif
+	while (indice < nb_lignes){
 		objet = tabObjet[indice]; 
-		newCap = listeCluster->cap + objet->poids;
-		while ((cap_max < newCap) || listeCluster != NULL){
+		while ((cap_max < newCap) && (listeCluster->succ != NULL)){
 			listeCluster = listeCluster->succ; 
+			newCap = listeCluster->cap + objet->poids;
 		}
 
-		if (listeCluster == NULL){
+		if (listeCluster->succ == NULL){
 			listeClusterTmp = ListeCluster_create();
 			listeCluster->succ = listeClusterTmp;
-			ListeCluster_init(listeClusterTmp);
 			listeClusterTmp->cap = objet->poids; 
 			if (listeClusterTmp->cap == cap_max)
 				listeClusterTmp->fini = TRUE;
 			cluster = Cluster_create();
 			listeClusterTmp->ptrC = cluster; 
 			cluster->ptrO = objet;
-			cluster->succ = NULL; 
 		}
 		else{
 			clusterTmp = listeCluster->ptrC;
@@ -95,7 +105,6 @@ ListeCluster * remplissageCluster(const unsigned int cap_max, char * filename){
 			cluster = Cluster_create(); 
 			clusterTmp->succ = cluster;
 			cluster->ptrO = objet;
-			cluster->succ =  NULL;
 			listeCluster->cap = newCap; 
 			if (newCap == cap_max)
 				listeCluster->fini =  TRUE;
@@ -114,11 +123,23 @@ void trieListeCluster(ListeCluster * liste){
 
 void trieCLuster(Cluster * head){
 	Cluster * enCours, * clusterTmp; 
+#ifndef NDEBUG
+	int i=0;
+#endif
 	enCours = head;
 	while (enCours->succ != NULL){
+		#ifndef NDEBUG
+			printf("trie cluster \n");
+			printf("\ttour n°%d\n", i);
+		#endif
 		clusterTmp = lePlusProche(enCours);
-		inserer(enCours, clusterTmp, head);
+		// cas ou il n'y a pas de plus proche (un seul cluster)
+		if (clusterTmp == NULL){
+			break;	// pour eviter d'inserer une cellule NULL quitte le while
+		}
+		inserer(enCours, clusterTmp, head);	
 		enCours = clusterTmp;
+		 
 	}
 }
 
@@ -134,13 +155,16 @@ Cluster * lePlusProche(Cluster * cluster){
 	cluster = cluster->succ;
 	while ( cluster != NULL){
 		objetTmp = cluster->ptrO;
-		dist = calculDistance(x, y , objetTmp->coordx, objetTmp->coordy);
-		if (dist < minDist){
-			minDist = dist;
-			plusProche = cluster;
+		if (objetTmp->trie == FALSE){
+			dist = calculDistance(x, y , objetTmp->coordx, objetTmp->coordy);
+			if (dist < minDist){
+				minDist = dist;
+				plusProche = cluster;
+			}
 		}
 		cluster = cluster->succ;
 	}
+	objetTmp->trie =  TRUE ; 
 	return plusProche;
 }
 

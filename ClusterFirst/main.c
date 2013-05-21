@@ -26,6 +26,7 @@
 #include "ListeCluster.h"
 #include "Cluster.h"
 #include "Objet.h"
+#include "util.h"
 
 void init(int argc, char ** argv, char ** filename, unsigned int * cap_max){
 	if(argc > 2){

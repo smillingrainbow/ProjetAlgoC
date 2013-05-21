@@ -9,10 +9,11 @@
 #include "ListeCluster.h"
 #include "Objet.h"
 #include "Cluster.h"
+#include "util.h"
 
 
 
-Objet ** creationTableauObjet(char * filename);
+Objet ** creationTableauObjet(char * filename, int * nb_lignes);
 FILE *  open_Fichier(char * filename);
 void close_Fichier(FILE * file, char * filename);
 ListeCluster * remplissageCluster(const unsigned int cap_max, char * filename);

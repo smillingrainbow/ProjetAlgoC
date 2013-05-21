@@ -2,10 +2,7 @@
 #define LISTECLUSTER_H
 
 #include "Cluster.h"
-
-typedef int bool;
-#define TRUE 1
-#define FALSE 0
+#include "util.h"
 
 typedef struct _ListeCluster
 {

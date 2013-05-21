@@ -4,8 +4,7 @@
  * \brief initialise une listeCluster
  * \details initialise une ListeCluster, les pointeurs à null et les entiers à 0
  * \author Natacha Marlio-Marette
- * \warning 
- * \@param listeCluster pointeur vers une liste de cluster
+ * @param listeCluster pointeur vers une liste de cluster
  */ 
 void ListeCluster_init(ListeCluster * listeCluster){
 	listeCluster->cap = 0;
@@ -28,5 +27,6 @@ ListeCluster * ListeCluster_create(void){
 		printf("Erreur creation listeCluster \n");
 	    exit(1);
 	}
+	ListeCluster_init(listeCluster);
 	return listeCluster; 
 }
