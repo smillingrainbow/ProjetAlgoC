@@ -2,7 +2,6 @@
 
 
 /**
- * \brief ouvre un fichier texte
  * \details ouvre un fichier texte en lecture
  * \author Natacha Marlio-Marette 
  * @param filename nom du fichier texte
@@ -19,7 +18,6 @@ FILE * open_Fichier(char *filename){
 }
 
 /**
- * \brief ferme un fichier texte
  * \details ferme un fichier texte
  * \author Natacha Marlio-Marette
  * @param filename nom du fichier texte ouvert
