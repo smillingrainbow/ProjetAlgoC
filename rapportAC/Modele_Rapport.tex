@@ -33,30 +33,93 @@
 
 %%%%%%%%%%%%%%%%%%%% CHAPITRE 1 %%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Premier chapitre}
+\chapter{Présentation du projet}
 
-\section{Cahier des charges}
-\subsection{Problématique}
+\section{Définitions et mise en place du problème}
+\subsection{Définitions}
+\paragraph{}Dans cette partie, nous définirons quelques notions permettant une meilleure compréhension de ce rapport.
 
-\subsection{Cahier des charges}
+\paragraph{Picking} C'est l'opération qui consiste à prélever les articles dans la quantité demandé par la commande avant son expédition.
+
+\paragraph{Cluster} Ce terme peut être employé dans plusieurs domaines tels que les sciences, l'informatique ou bien la musique. Ici, un cluster correspond au regroupement des objets au ceint d'un ensemble.
+
+\subsection{Mise en place du problème }
+\paragraph{}La problématique de ce projet est de trouver l'itinéraire que doit réaliser chaque chariot au ceint d'un entrepôt. Pour ce faire nous avons réaliser un programme en C qui définit la tournée que doit effectuer le chariot. Cependant nous avions quelques contraintes à respecter (cf la section \ref{sec:Contraintes} page \pageref{sec:Contraintes}). 
+
+
+\section{Cahier des Charges}
+\subsection{Cahier des Charges}
+\paragraph{}Pour répondre à la problématique de ce projet, nous devions respecter un cahier des charges. Afin de trouver, l'itinéraire qu'emprunteront les chariots, nous avons utiliser différentes méthodes(cf les sections \ref{sec:CFRS} page \pageref{sec:CFRS} et \ref{sec:RFCS} page \pageref{sec:RFCS}). Nous avons considéré pour tout ce projet qu'un unique chariot et des objets avec un poids unique. 
+
+\paragraph{}Pour chercher la tournée de notre chariot, il faut commencer par lui dire ce qu'il doit aller récupérer. C'est à dire lui donner un carnet de commandes. Il faut connaître la position de chaque objet dans l'entrepôt ainsi que son poids. Ces deux éléments seront donnés avec le carnet de commandes.  
+
+\subsection{Contraintes}
+\label{sec:Contraintes}
+\paragraph{}Dans ce projet, il faut tenir compte de certaines contraintes : 
+\begin{itemize}
+\item[•]\textbf{La capacité du chariot}: En effet, celui-ci ne peut contenir qu'une certaine quantité (un certain poids).
+\item[•]\textbf{la compatibilité et incompatibilité des produits} : Par exemple, vous ne poserez pas dans le chariot un petit objet fragile au fond et un plus gros et lourd au dessus. 
+\item[•]\textbf{Zone d'exclusion mutuelle}: Il faut synchroniser les itinéraires de façon à éviter que les chariots puissent entrer en collision. 
+\end{itemize} 
+
+Nous n'avons pour ce projet tenu compte uniquement de la première contrainte.
 
 \section{Différentes méthodes de batching et picking}
+
+Il existe différentes méthodes de batching et picking. Durant ce projet, nous avons mis en œuvre les deux premières présentées ci-dessous.
+
 \subsection{Cluster First Root Second}
+\label{sec:CFRS}
+
+\paragraph{}La méthode \textit{Cluster First Root Second} signifie que l'on s'occupe en premier des clusters et en second de l'itinéraire. C'est à dire que l'on découpe tout d'abord la commande en cluster. On va couper la commande à chaque fois que le chariot sera plein. Et ensuite l'on définit l'itinéraire de chaque cluster. 
 
 \subsection{Root First Cluster Second}
+\label{sec:RFCS}
+\paragraph{}Cette seconde méthode \textit{Root First Cluster Second} est l'opposée de \textit{Cluster First Root Second}. En effet lors de son application, on ne va non plus déterminer en premier les différents clusters mais l'itinéraire de toute la commande. Puis par la suite, on va la découper à chaque fois que le chariot sera plein. Celui-ci pourra donc lors de ces coupures retourner au dépôt afin d'être vidé.
 
 \subsection{OSMAN}
 
-\section{Contraintes}
+
 
 %%%%%%%%%%%%%%%%%%%% CHAPITRE 2 %%%%%%%%%%%%%%%%%%%%%%
+
 \chapter{Cluster First Root Second}
+
+\paragraph{} Ce chapitre présente le programme utilisant la méthode \textit{Cluster First Root Second}. 
+
+\section{Architecture du programme}
+\subsection{Structures de données}
+\paragraph{} Cette section a pour objectif de présenter les différentes structures de données utilisées pour la méthode \textit{Cluster First Root Second}.
+
+\subsubsection{ListeCluster}
+
+ListeCluster est une liste qui a pour implémentation : 
+\begin{lstlisting}[caption ={Useless code} , label ={listing : useless}]
+for ( i = 0; i < 42; i ++) {
+// Do something
+}
+\end{lstlisting}
+
+\subsubsection{Cluster}
+
+\subsubsection{Objet}
+
+\subsection{Architecture}
+
+\section{Spécifications logicielles}
+
+
+\section{Algorithmes}
 
 %%%%%%%%%%%%%%%%%%%% CHAPITRE 3 %%%%%%%%%%%%%%%%%%%%%%
 
-
 \chapter{Root First Cluster Second}
 
+\section{Spécifications logicielles}
+
+\section{Architecture du programme}
+
+\section{Algorithmes}
 
 %%%%%%%%%%%%%%%%%%%% CONCLUSION %%%%%%%%%%%%%%%%%%%%%%
 
