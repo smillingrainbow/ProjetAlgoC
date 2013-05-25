@@ -3,6 +3,12 @@
 
 #include "Objet.h"
 
+/**
+ * Structure Cluster de type liste
+ * Chaque cellule contient : 
+ * @param ptrO un pointeur vers un Objet
+ * @param succ pointeur vers le suivant de la liste Cluster
+ */
 typedef struct _Cluster
 {
 	Objet * ptrO;

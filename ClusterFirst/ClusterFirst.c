@@ -3,7 +3,6 @@
 
 /**
  * \details ouvre un fichier texte en lecture
- * \author Natacha Marlio-Marette
  * @param filename nom du fichier texte
  * \return flux du fichier ouvert en lecture
  */
@@ -14,12 +13,11 @@ FILE * open_Fichier(char *filename){
 	    printf("Impossible d'ouvrir le fichier %s\n", filename);
 	    exit(1);
 	}
-	return file;
+	return file; 
 }
 
 /**
  * \details ferme un fichier texte
- * \author Natacha Marlio-Marette
  * @param filename nom du fichier texte ouvert
  * @param file le flux du fichier
  */
@@ -30,28 +28,35 @@ void close_Fichier(FILE * file, char * filename){
   }
 }
 
+/**
+ * \brief crée un tableau tabObjet de pointeurs vers des Objets
+ * \details récupère dans un fichier texte les produits et leur crée leur Objet
+ * @param filename nom du fichier texte
+ * @param nb_lignes pointeur sur un entier, null lors de l'appel de la fonction
+ * @param cap_max constante entier non signé indiquant la capacité max du chariot
+ * \return le tableau tabObjet et le nombre d'objets avec nb_lignes 
+ */
 Objet ** creationTableauObjet(char * filename, int * nb_lignes, const unsigned int cap_max){
 	int indice;
 	int idObjet, coordx, coordy, poids;
 	Objet ** tabObjet;
 	FILE * file = open_Fichier(filename);
+	
+	if(fscanf(file, "%d", nb_lignes) == 0){ // récupère le nombre de lignes du fichier
+											// qui correspond aux nombre de produits
+		printf("Erreur de lecture du nombre de lignes du fichier \n");
+		exit(1);
+	}
 
-#ifndef NDEBUG
-	printf("creationTableauObjet \n");
-#endif
-
-	fscanf(file, "%d", nb_lignes);
-
-#ifndef NDEBUG
-	printf("nombre de lignes :  %d\n", *nb_lignes);
-#endif
-
-	tabObjet = (Objet **) malloc(sizeof(Objet *) * *nb_lignes);
+	tabObjet = (Objet **) malloc(sizeof(Objet *) * *nb_lignes); // allocation du tableau de pointeurs vers des Objets
 
 	for (indice = 0; indice < *nb_lignes; indice++){
-		fscanf(file, "%d %d %d %d", &idObjet, &coordx, &coordy, &poids);
-		Objet * objet = Objet_create();
-		Objet_setvalue_idObjet(objet, idObjet);
+		if(fscanf(file, "%d %d %d %d", &idObjet, &coordx, &coordy, &poids) == 0){ // récupère l'id, le coordonnée x, y et le poids du produit
+			printf("Erreur de lecture du nombre de lignes du fichier \n");
+			exit(1);
+		}
+		Objet * objet = Objet_create(); // crée un Objet
+		Objet_setvalue_idObjet(objet, idObjet); // rempli les champs de l'Objet avec les valeurs récupérées dans le fichier
 		Objet_setvalue_coordx(objet, coordx);
 		Objet_setvalue_coordy(objet, coordy);
 		Objet_setvalue_poids(objet, poids);
@@ -62,10 +67,17 @@ Objet ** creationTableauObjet(char * filename, int * nb_lignes, const unsigned i
 		tabObjet[indice] = objet;
 	}
 
-	close_Fichier(file, filename);
+	close_Fichier(file, filename); 
 	return tabObjet;
 }
 
+/**
+ * \brief rempli la liste listeCluster
+ * \details crée les différents Cluster, et dans chaque cellule des Clusters ajoute un Objet à partir du tableau tabObjet
+ * @param filename nom du fichier texte
+ * @param cap_max constante entier non signé indiquant la capacité max du chariot
+ * \return un pointeur vers la liste listeCluster 
+ */
 ListeCluster * remplissageCluster(const unsigned int cap_max, char * filename){
 	int indice = 0;
 	unsigned int newCap =0;
@@ -76,19 +88,9 @@ ListeCluster * remplissageCluster(const unsigned int cap_max, char * filename){
 	Cluster * clusterTmp;
 	Objet * objet;
 	Objet ** tabObjet = creationTableauObjet(filename, &nb_lignes, cap_max);
-	//nb_lignes = (int) sizeof(tabObjet);
-	//ListeCluster_init(listeCluster);
-#ifndef NDEBUG
-	printf("remplissageCluster \n");
-	printf("nombre de lignes :  %d\n", nb_lignes);
-#endif
-	if (indice<nb_lignes){
-		printf("indice<nb_lignes\n");
-	}
-	while (indice < nb_lignes){
-		printf("1\n");
-		objet = tabObjet[indice];
-				printf("2\n");
+
+	while (indice < nb_lignes){ 
+		objet = tabObjet[indice]; 
         newCap = listeCluster->cap + objet->poids;
 		while ((cap_max < newCap) && (listeCluster->succ != NULL)){
 			listeCluster = listeCluster->succ;
@@ -127,46 +129,50 @@ ListeCluster * remplissageCluster(const unsigned int cap_max, char * filename){
 			cluster->ptrO = objet;
 		}
 		indice ++;
-		printf("fin remplissageCluster\n");
 	}
-	printf("indice :  %d\n", indice);
 	return listeCluster ;
 }
 
+/**
+ * \brief trie la liste listeCluster
+ * \details va trier chaque Cluster de la liste 
+ * @param liste pointeur vers la liste listecLuster
+ */
 void trieListeCluster(ListeCluster * liste){
 	while (liste != NULL){
-		trieCLuster(liste->ptrC);
+		trieCLuster(liste->ptrC); // trie chaque cluster de la liste
 		liste = liste->succ;
 	}
 }
 
+/**
+ * \brief trie la liste Cluster
+ * \details trie un Cluster en cherchant la cellule la plus proche de la cellule courante et en l'insérant avant celle-ci
+ * @param head pointeur vers la tête de la liste Cluster
+ */
 void trieCLuster(Cluster * head){
 	Cluster * enCours, * clusterTmp;
-#ifndef NDEBUG
-	int i=0;
-#endif
 	enCours = head;
-	if (enCours->succ ==  NULL)
-		printf("on a souci succ =  NULL !!! \n");
 	while (enCours->succ != NULL){
-		#ifndef NDEBUG
-			printf("trie cluster \n");
-			printf("\ttour n°%d\n", i);
-		#endif
 		clusterTmp = lePlusProche(enCours);
 		// cas ou il n'y a pas de plus proche (un seul cluster)
 		if (clusterTmp == NULL){
 			break;	// pour eviter d'inserer une cellule NULL quitte le while
 		}
-		inserer(enCours, clusterTmp, head);
+		inserer(enCours, clusterTmp, head); // insere la clusterTmp avant enCours
 		enCours = clusterTmp;
-			if (enCours ==  NULL){}
-		printf("on a souci !!! \n");
-		exit(-1);
-
+		if (enCours ==  NULL){
+			printf("Erreur trieCLuster \n");
+			exit(-1);
+		}
 	}
 }
 
+/**
+ * \details cherche le Cluster le plus proche du Cluster courant 
+ * @param cluster pointeur vers le Cluster courant
+ * \return le Cluster contenant l'objet le plus proche de l'objet courant
+ */
 Cluster * lePlusProche(Cluster * cluster){
 	Cluster * plusProche;
 	Objet * ObjetCourant, * objetTmp;
@@ -188,21 +194,35 @@ Cluster * lePlusProche(Cluster * cluster){
 		}
 		cluster = cluster->succ;
 	}
-	objetTmp->trie =  TRUE ;
+	objetTmp->trie =  TRUE ; // l'Objet est trie, on met le champ a TRUE pour ne pas le retrier 
 	return plusProche;
 }
 
+/** 
+ * \details calcul la distance entre deux objets
+ * @param ax entier coordonnée x de l'objet courant 
+ * @param ay entier coordonnée y de l'objet courant
+ * @param bx entier coordonnée x de l'objet à tester
+ * @param by entier coordonnée y de l'objet à tester
+ * \return la distance entre les deux objets
+ */
 int calculDistance(int ax, int ay, int bx, int by){
 	unsigned int dist;
-	//dist = (unsigned int) sqrt(((bx - ax)*(bx - ax)) + ((by - ay)*(by - ay)));
+	
 	dist = abs((bx - ax)*(bx - ax)) + abs((by - ay)*(by - ay));
 	return dist;
 }
 
+/** 
+ * \details insere la cellule cluster juste avant la cellule enCours en rechainant toutes la liste
+ * @param enCours pointeur vers la cellule Cluster courante
+ * @param cluster pointeur vers la cellule Cluster à inserer
+ * @param head pointeur vers la cellule Cluster de tête de liste
+ */
 void inserer(Cluster * enCours, Cluster * cluster, Cluster * head){
 	Cluster * clusterTmp;
 	clusterTmp = head;
-	if (head == enCours){
+	if (head == enCours){ // si la cellule enCours est la même que le tête de liste
 		head = cluster;
 		while ( clusterTmp->succ != cluster){
 			clusterTmp = clusterTmp->succ;

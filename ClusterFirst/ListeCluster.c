@@ -2,7 +2,6 @@
 
 /**
  * \details initialise une ListeCluster, les pointeurs à null et les entiers à 0
- * \author Natacha Marlio-Marette
  * @param listeCluster pointeur vers une liste de cluster
  */ 
 void ListeCluster_init(ListeCluster * listeCluster){
@@ -14,7 +13,6 @@ void ListeCluster_init(ListeCluster * listeCluster){
 
 /**
  * \details rempli le champ capacité de listeCluster avec value
- * \author Natacha Marlio-Marette
  * @param listeCluster pointeur vers une liste de cluster
  * @param value valeur de la capacité (entier non signé)
  */ 
@@ -24,7 +22,6 @@ void ListeCluster_setvalue_cap(ListeCluster * listeCluster, const unsigned int v
 
 /**
  * \details rempli le champ fini de listeCluster avec value
- * \author Natacha Marlio-Marette
  * @param listeCluster pointeur vers une liste de cluster
  * @param value valeur de fini (booleen)
  */
@@ -34,7 +31,6 @@ void ListeCluster_setvalue_fini(ListeCluster * listeCluster, const bool value){
 
 /**
  * \details crée une nouvelle cellule de type ListeCluster et l'initialise avec la fonction init
- * \author Natacha Marlio-Marette
  * \return listeCluster pointeur vers une structure de type ListeCluster
  */
 ListeCluster * ListeCluster_create(void){
