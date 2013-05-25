@@ -3,18 +3,18 @@
 
 /**
  * \details ouvre un fichier texte en lecture
- * \author Natacha Marlio-Marette 
+ * \author Natacha Marlio-Marette
  * @param filename nom du fichier texte
  * \return flux du fichier ouvert en lecture
- */ 
+ */
 FILE * open_Fichier(char *filename){
-	FILE * file; 
+	FILE * file;
 	file = fopen(filename, "rt"); // ouvrir en lecture
   	if(file == NULL){
 	    printf("Impossible d'ouvrir le fichier %s\n", filename);
 	    exit(1);
 	}
-	return file; 
+	return file;
 }
 
 /**
@@ -22,7 +22,7 @@ FILE * open_Fichier(char *filename){
  * \author Natacha Marlio-Marette
  * @param filename nom du fichier texte ouvert
  * @param file le flux du fichier
- */ 
+ */
 void close_Fichier(FILE * file, char * filename){
 	if(fclose(file) == EOF){
 	    printf("Probleme de fermeture du fichier %s", filename);
@@ -31,40 +31,46 @@ void close_Fichier(FILE * file, char * filename){
 }
 
 Objet ** creationTableauObjet(char * filename, int * nb_lignes){
-	int indice; 
-	int idObjet, coordx, coordy, poids; 
+	int indice;
+	int idObjet, coordx, coordy, poids;
 	Objet ** tabObjet;
 	FILE * file = open_Fichier(filename);
 
 #ifndef NDEBUG
 	printf("creationTableauObjet \n");
 #endif
-	
-	fscanf(file, "%d", nb_lignes);
+
+	if(fscanf(file, "%d", nb_lignes) == 0){
+        printf("Erreur lors de la lecture du nombre de ligne du fichier \n");
+        exit(1);
+	}
 
 #ifndef NDEBUG
 	printf("nombre de lignes :  %d\n", *nb_lignes);
 #endif
-	
+
 	tabObjet = (Objet **) malloc(sizeof(Objet *) * *nb_lignes);
-	
+
 	for (indice = 0; indice < *nb_lignes; indice++){
-		fscanf(file, "%d %d %d %d", &idObjet, &coordx, &coordy, &poids);
-		Objet * objet = Objet_create(); 
+		if(fscanf(file, "%d %d %d %d", &idObjet, &coordx, &coordy, &poids) == 0){
+            printf("Erreur lors de la lecture du fichier \n");
+            exit(1);
+		}
+		Objet * objet = Objet_create();
 		Objet_setvalue_idObjet(objet, idObjet);
 		Objet_setvalue_coordx(objet, coordx);
 		Objet_setvalue_coordy(objet, coordy);
 		Objet_setvalue_poids(objet, poids);
-		tabObjet[indice] = objet; 
+		tabObjet[indice] = objet;
 	}
 
-	close_Fichier(file, filename); 
-	return tabObjet; 
+	close_Fichier(file, filename);
+	return tabObjet;
 }
 
-ListeCluster * remplissageCluster(const unsigned int cap_max, char * filename){ 
-	int indice = 0; 
-	unsigned int newCap =0; 
+ListeCluster * remplissageCluster(const unsigned int cap_max, char * filename){
+	int indice = 0;
+	unsigned int newCap =0;
 	int nb_lignes;
 	ListeCluster * listeCluster = ListeCluster_create();
 	ListeCluster * listeClusterTmp;
@@ -83,21 +89,21 @@ ListeCluster * remplissageCluster(const unsigned int cap_max, char * filename){
 	}
 	while (indice < nb_lignes){
 		printf("1\n");
-		objet = tabObjet[indice]; 
+		objet = tabObjet[indice];
 				printf("2\n");
 		while ((cap_max < newCap) && (listeCluster->succ != NULL)){
-			listeCluster = listeCluster->succ; 
+			listeCluster = listeCluster->succ;
 			newCap = listeCluster->cap + objet->poids;
 		}
 
 		if (listeCluster->succ == NULL){
 			listeClusterTmp = ListeCluster_create();
 			listeCluster->succ = listeClusterTmp;
-			listeClusterTmp->cap = objet->poids; 
+			listeClusterTmp->cap = objet->poids;
 			if (listeClusterTmp->cap == cap_max)
 				listeClusterTmp->fini = TRUE;
 			cluster = Cluster_create();
-			listeClusterTmp->ptrC = cluster; 
+			listeClusterTmp->ptrC = cluster;
 			cluster->ptrO = objet;
 		}
 		else{
@@ -105,28 +111,28 @@ ListeCluster * remplissageCluster(const unsigned int cap_max, char * filename){
 			while (clusterTmp->succ != NULL){
 				clusterTmp = clusterTmp->succ;
 			}
-			cluster = Cluster_create(); 
+			cluster = Cluster_create();
 			clusterTmp->succ = cluster;
 			cluster->ptrO = objet;
-			listeCluster->cap = newCap; 
+			listeCluster->cap = newCap;
 			if (newCap == cap_max)
 				listeCluster->fini =  TRUE;
 		}
-		indice ++; 
+		indice ++;
 		printf("fin remplissageCluster\n");
 	}
-	return listeCluster ; 
+	return listeCluster ;
 }
 
 void trieListeCluster(ListeCluster * liste){
 	while (liste != NULL){
 		trieCLuster(liste->ptrC);
-		liste = liste->succ; 
+		liste = liste->succ;
 	}
 }
 
 void trieCLuster(Cluster * head){
-	Cluster * enCours, * clusterTmp; 
+	Cluster * enCours, * clusterTmp;
 #ifndef NDEBUG
 	int i=0;
 #endif
@@ -143,38 +149,43 @@ void trieCLuster(Cluster * head){
 		if (clusterTmp == NULL){
 			break;	// pour eviter d'inserer une cellule NULL quitte le while
 		}
-		inserer(enCours, clusterTmp, head);	
+		inserer(enCours, clusterTmp, head);
 		enCours = clusterTmp;
 			if (enCours ==  NULL){}
 		printf("on a souci !!! \n");
 		exit(-1);
 }
-		 
+
 	}
-}
+
 
 Cluster * lePlusProche(Cluster * cluster){
 	Cluster * plusProche;
 	Objet * ObjetCourant, * objetTmp;
 	unsigned int minDist, x, y, dist;
-	minDist = INT_MAX; 
+	minDist = INT_MAX;
 	plusProche = NULL;
-	ObjetCourant = cluster->ptrO;
-	x = ObjetCourant->coordx;
-	y = ObjetCourant->coordy;
-	cluster = cluster->succ;
-	while ( cluster != NULL){
-		objetTmp = cluster->ptrO;
-		if (objetTmp->trie == FALSE){
-			dist = calculDistance(x, y , objetTmp->coordx, objetTmp->coordy);
-			if (dist < minDist){
-				minDist = dist;
-				plusProche = cluster;
-			}
-		}
-		cluster = cluster->succ;
+    ObjetCourant = cluster->ptrO;
+	if(cluster->succ == NULL){
+        ObjetCourant->trie=TRUE;
 	}
-	objetTmp->trie =  TRUE ; 
+	else{
+        x = ObjetCourant->coordx;
+        y = ObjetCourant->coordy;
+        cluster = cluster->succ;
+        while ( cluster != NULL){
+            objetTmp = cluster->ptrO;
+            if (objetTmp->trie == FALSE){
+                dist = calculDistance(x, y , objetTmp->coordx, objetTmp->coordy);
+                if (dist < minDist){
+                    minDist = dist;
+                    plusProche = cluster;
+                }
+            }
+            cluster = cluster->succ;
+        }
+        objetTmp->trie =  TRUE ;
+    }
 	return plusProche;
 }
 
@@ -182,7 +193,7 @@ int calculDistance(int ax, int ay, int bx, int by){
 	unsigned int dist;
 	//dist = (unsigned int) sqrt(((bx - ax)*(bx - ax)) + ((by - ay)*(by - ay)));
 	dist = abs((bx - ax)*(bx - ax)) + abs((by - ay)*(by - ay));
-	return dist; 
+	return dist;
 }
 
 void inserer(Cluster * enCours, Cluster * cluster, Cluster * head){
