@@ -78,8 +78,13 @@ ListeCluster * remplissageCluster(const unsigned int cap_max, char * filename){
 	printf("remplissageCluster \n");
 	printf("nombre de lignes :  %d\n", nb_lignes);
 #endif
+	if (indice<nb_lignes){
+		printf("indice<nb_lignes\n");
+	}
 	while (indice < nb_lignes){
+		printf("1\n");
 		objet = tabObjet[indice]; 
+				printf("2\n");
 		while ((cap_max < newCap) && (listeCluster->succ != NULL)){
 			listeCluster = listeCluster->succ; 
 			newCap = listeCluster->cap + objet->poids;
@@ -108,6 +113,7 @@ ListeCluster * remplissageCluster(const unsigned int cap_max, char * filename){
 				listeCluster->fini =  TRUE;
 		}
 		indice ++; 
+		printf("fin remplissageCluster\n");
 	}
 	return listeCluster ; 
 }
@@ -125,6 +131,8 @@ void trieCLuster(Cluster * head){
 	int i=0;
 #endif
 	enCours = head;
+	if (enCours->succ ==  NULL)
+		printf("on a souci succ =  NULL !!! \n");
 	while (enCours->succ != NULL){
 		#ifndef NDEBUG
 			printf("trie cluster \n");
@@ -137,6 +145,10 @@ void trieCLuster(Cluster * head){
 		}
 		inserer(enCours, clusterTmp, head);	
 		enCours = clusterTmp;
+			if (enCours ==  NULL){}
+		printf("on a souci !!! \n");
+		exit(-1);
+}
 		 
 	}
 }
