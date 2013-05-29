@@ -3,20 +3,19 @@
 
 #include "Cluster.h"
 #include "util.h"
-/**
- * Structure ListeCluster de type liste
- * Chaque cellule contient : 
- * @param cap un entier non signé correspondant à la capacité du cluster
- * @param succ un pointeur vers le suivant de la liste ListeCluster
- * @param fini un booleen qui indique si le cluster est plein
- * @param ptrC un pointeur vers une liste de Cluster
+
+ /**
+ * \_struct ListeCluster
+ * \brief Liste chainée de pointeur vers des Clusters
+ *
+ * ListeCluster est une liste chainée de pointeur qui se termine par NULL.
  */
 typedef struct _ListeCluster
 {
-	unsigned int cap;
-	struct _ListeCluster * succ;
-	bool fini;
-	struct _Cluster * ptrC;
+	unsigned int cap; /*!< entier non signé correspondant à la capacité du cluster */
+	struct _ListeCluster * succ; /*!< pointeur vers la cellule suivante */
+	bool fini; /*!< booleen qui indique si la liste de Cluster est pleine */
+	struct _Cluster * ptrC; /*!< pointeur vers une liste de Cluster*/
 }ListeCluster;
 
 void ListeCluster_init(ListeCluster * listeCluster);

@@ -6,22 +6,20 @@
 #include <stdlib.h>
 #include "util.h"
 
+
 /**
- * Structure Objet 
- * Chaque cellule contient :
- * @param idObjet un entier non signé correspondant à l'identifiant du produit
- * @param coordx un entier correspondant au coordonnée suivant l'axe des abscisses
- * @param coordy un entier correspondant au coordonnée suivant l'axe des ordonnées
- * @param poids un entier non signé indiquant le poids du produit
- * @param trie un booleen indiquant si le produit a été trié dans un Cluster
+ * \_struct Objet
+ * \brief Objet contenant les informations d'un produit
+ *
+ * Objet contient toutes les informations relatives à un objet : son identifiant, ses coordonées x et y, ainsi que son poids.
  */
 typedef struct _Objet
 {
-	unsigned int idObjet;
-	int coordx;
-	int coordy;
-	unsigned int poids;
-	bool trie; 
+	unsigned int idObjet; /*!< entier non signé correspondant à l'identifiant du produit */
+	int coordx; /*!< entier signé correspondant au coordonée x du produit */
+	int coordy; /*!< entier signé correspondant au coordonée y du produit */
+	unsigned int poids; /*!< entier non signé correspondant au poids du produit */
+	bool trie; /*!< booleen indiquant si le produit a été trié dans un Cluster */
 } Objet;
 
 void Objet_init(Objet * objet);

@@ -3,16 +3,17 @@
 
 #include "Objet.h"
 
-/**
- * Structure Cluster de type liste
- * Chaque cellule contient : 
- * @param ptrO un pointeur vers un Objet
- * @param succ pointeur vers le suivant de la liste Cluster
+
+ /**
+ * \_struct Cluster
+ * \brief Liste chainée de pointeur vers des Objets
+ *
+ * Cluster est une liste chainée de pointeur qui se termine par NULL.
  */
 typedef struct _Cluster
 {
-	Objet * ptrO;
-	struct _Cluster * succ;
+	Objet * ptrO; /*!< pointeur vers un Objet*/
+	struct _Cluster * succ; /*!< pointeur vers la cellule suivante */
 } Cluster;
 
 Cluster * Cluster_create(void);

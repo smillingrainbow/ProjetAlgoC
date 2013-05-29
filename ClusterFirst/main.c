@@ -44,9 +44,6 @@ int main(int argc, char **argv)
 	char * filename;
 	unsigned int cap_max;
 	ListeCluster * listeCluster; 
-#ifndef NDEBUG
-	printf("plop \n");
-#endif
 	init(argc, argv, &filename, &cap_max);
 
 	listeCluster = remplissageCluster(cap_max, filename);

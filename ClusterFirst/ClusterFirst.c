@@ -176,7 +176,8 @@ void trieCLuster(Cluster * head){
 Cluster * lePlusProche(Cluster * cluster){
 	Cluster * plusProche;
 	Objet * ObjetCourant, * objetTmp;
-	unsigned int minDist, x, y, dist;
+	unsigned int minDist, dist;
+	int x, y; 
 	minDist = INT_MAX;
 	plusProche = NULL;
 	ObjetCourant = cluster->ptrO;
