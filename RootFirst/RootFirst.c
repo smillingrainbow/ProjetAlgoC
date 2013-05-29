@@ -102,7 +102,7 @@ ListeObjet * trieTabObjet(char * filename, const unsigned int cap_max){
 		listeObjet->ptrO=enCours;
 		printf("Un seul objet\n");
 	}
-	return listeObjet;
+	return listeObjetHead;
 }
 
 Objet *  plusProche(Objet * enCours, Objet ** tabObjet, int nb_lignes){
@@ -139,17 +139,51 @@ int calculDistance(int ax, int ay, int bx, int by){
 void creationListeCluster(ListeObjet * listeObjet, unsigned int cap_max){
 	unsigned int cap = 0; 
 	ListeObjet * listeObjetHead, *listeObjetTmp; 
-	ListeCluster * listeCluster; 
-	Objet * objet, * objetTmp; 
+	ListeCluster * listeCluster, * listeClusterTmp; 
+	Objet * objet, * objetTmp;
+	listeObjetHead = listeObjet; 
+	listeCluster = ListeCluster_create();
+	#ifndef NDEBUG
+		printf("avant boucle\n");
+	#endif
 	// s'il y a plus d'un objet découper listeObjet en Cluster
 	if(listeObjet->succ != NULL){
+		#ifndef NDEBUG
+			printf("0\n");
+		#endif
 		while(listeObjet != NULL){
 			objet = listeObjet->ptrO; 
-			
+			cap += objet->poids;
+			#ifndef NDEBUG
+				printf("1\n");
+			#endif
+			// s'il listeObjet n'est pas l'avant dernier élément
+			if(listeObjet->succ != NULL){
+				listeObjetTmp = listeObjet->succ;
+				objetTmp = listeObjetTmp->ptrO;
+				// permet de vérifier si le prochain objet peut être dans le cluster courant
+				if ((cap + objetTmp->poids) > cap_max){
+					listeClusterTmp = ListeCluster_create(); // crée le cluster suivant
+					listeCluster->ptrLO = listeObjetHead; // listeCLuster pointe vers le début de la liste
+					listeObjet->succ = NULL; // dernier élément du Cluster
+					listeObjetHead = listeObjetTmp; // pointeur sur le début du Cluster suivant
+					listeObjet = listeObjet->succ; 
+					listeCluster->succ = listeClusterTmp;
+					listeCluster = listeCluster->succ; // listeCluster pointe sur la liste du prochain Cluster
+					cap = 0; // remise à zéro de la capacité pour le prochain cluster
+				} // si oui on continue de parcourir listeObjet
+				else{
+					listeObjet = listeObjet->succ; 
+				}
+			} // cas pour le dernier élément de listeObjet
+			else{
+			// ajoute le dernier objet de listeObjet au dernier cluster 	
+				listeCluster->ptrLO = listeObjetHead;
+				listeObjet = listeObjet->succ; // fin de la boucle while listeObjet = NULL;
+			}
 		}
 	}
 	else{ 
-		listeCluster = ListeCluster_create();
-		listeCluster->ptrLO = listeObjet; 
+		listeCluster->ptrLO = listeObjetHead; 
 	}
 }

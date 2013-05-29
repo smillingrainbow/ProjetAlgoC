@@ -49,7 +49,7 @@ int main(int argc, char **argv)
 	init(argc, argv, &filename, &cap_max);
 
 	listeObjet = trieTabObjet(filename, cap_max);
-//	trieListeCluster(listeCluster);
+	creationListeCluster(listeObjet, cap_max);
 
 	return 0;
 	

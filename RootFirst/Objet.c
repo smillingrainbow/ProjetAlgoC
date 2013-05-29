@@ -56,5 +56,6 @@ Objet * Objet_create(void){
 		printf("Erreur creation objet \n");
 	    exit(1);
 	}
+	Objet_init(objet);
 	return objet;
 }
