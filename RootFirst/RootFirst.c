@@ -70,6 +70,13 @@ Objet ** creationTableauObjet(char * filename, int * nb_lignes, const unsigned i
 	return tabObjet;
 }
 
+/**
+ * \brief Trie le tableau d'Objet
+ * \details Cette fonction crée un tableau de pointeurs vers des Objets, et le trie suivant le chemin le plus court pour tous les récupérer.
+ * @param filename Fichier texte contenant les données sur les produits
+ * @param cap_max Entier non signé représentant la capacité max du chariot.
+ * \return Cette fonction retourne un pointeur sur la tête de la liste d'Objet triée.
+ */
 ListeObjet * trieTabObjet(char * filename, const unsigned int cap_max){
 	int indice = 0;
 	int nb_lignes;
@@ -81,6 +88,7 @@ ListeObjet * trieTabObjet(char * filename, const unsigned int cap_max){
 	listeObjet = listeObjetHead;
 	// s'il y a plus d'un objet chercher son voisin le plus proche
 	if(nb_lignes > 1){
+		// création de la liste en fonction du nombre de produits
 		while (indice < nb_lignes-1){
 			listeObjetTmp = ListeObjet_create();
 			listeObjet->succ = listeObjetTmp;
@@ -90,32 +98,47 @@ ListeObjet * trieTabObjet(char * filename, const unsigned int cap_max){
 			#endif
 			indice++; 
 		}
+		// le pointeur pointe sur la tête de liste
 		listeObjet = listeObjetHead;
 		while(listeObjet != NULL){
+			// recherche du plus proche produit de celui en cours
 			objetPlusProche = plusProche(enCours, tabObjet, nb_lignes);
 			listeObjet->ptrO = objetPlusProche;
 			enCours = objetPlusProche; 
 			listeObjet = listeObjet->succ;  
 		}
 	}
+	// s'il n'y a qu'un seul produit dans la commande
 	else{
 		listeObjet->ptrO=enCours;
-		printf("Un seul objet\n");
+		#ifndef NDEBUG
+				printf("Un seul objet\n");
+		#endif
 	}
+	// on retourne le pointeur sur la tête de la liste
 	return listeObjetHead;
 }
 
+/**
+ * \brief Cherche l'élément le plus proche
+ * \details Cette fonction cherche le produit le plus proche du produit en cours.
+ * @param enCours pointeur sur l'Objet courant
+ * @param tabObjet tableau de pointeurs vers des Objets
+ * @param nb_lignes entier représentant le nombre de produit de la commande
+ * \return Cette fonction retourne un pointeur sur le produit le plus proche de celui courant.
+ */
 Objet *  plusProche(Objet * enCours, Objet ** tabObjet, int nb_lignes){
 	int indice, x, y; 
 	unsigned int minDist, dist; 
 	Objet * objetPlusProche, * objetTmp; 
 	indice = 0; 
-	minDist= INT_MAX; 
+	minDist= INT_MAX; // initialisation de minDist à un nombre très grand
 	x = enCours->coordx;
 	y = enCours->coordy; 
 	objetPlusProche = NULL; 
 	while(indice < nb_lignes){
 		objetTmp = tabObjet[indice];
+		// si le produit a parcourir n'est pas le produit courant et n'a pas déjà été trié
 		if(enCours != objetTmp && objetTmp->trie == FALSE){
 			dist = calculDistance(x, y, objetTmp->coordx, objetTmp->coordy);
 			if(dist < minDist){
@@ -125,10 +148,20 @@ Objet *  plusProche(Objet * enCours, Objet ** tabObjet, int nb_lignes){
 		}
 		indice++;
 	}
+	// le champ trie de l'objet le plus proche passe à TRUE
 	objetPlusProche->trie = TRUE;
 	return objetPlusProche; 
 }
 
+/**
+ * \brief Calcul la distance entre deux produits
+ * \details Calcul la distance entre le produit courant et le produit à parcourir
+ * @param ax entier coordonnée x de l'objet courant 
+ * @param ay entier coordonnée y de l'objet courant
+ * @param bx entier coordonnée x de l'objet à tester
+ * @param by entier coordonnée y de l'objet à tester
+ * \return la distance entre les deux objets
+ */
 int calculDistance(int ax, int ay, int bx, int by){
 	unsigned int dist;
 	
@@ -136,6 +169,12 @@ int calculDistance(int ax, int ay, int bx, int by){
 	return dist;
 }
 
+/**
+ * \brief Crée les différents Cluster
+ * \details Cette fonction découpe la liste d'Objet en Cluster avec une capacité inférieur ou égal à la capacité maximum du chariot.
+ * @param listeObjet Pointeur vers la liste d'Objet crée dans trieTabObjet
+ * @param cap_max Entier non signé représentant la capacité max du chariot.
+ */
 void creationListeCluster(ListeObjet * listeObjet, unsigned int cap_max){
 	unsigned int cap = 0; 
 	ListeObjet * listeObjetHead, *listeObjetTmp; 

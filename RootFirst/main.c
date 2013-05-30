@@ -26,6 +26,7 @@
 #include "ListeObjet.h"
 #include "Objet.h"
 #include "util.h"
+#include "ListeCluster.h"
 
 void init(int argc, char ** argv, char ** filename, unsigned int * cap_max){
 	if(argc > 2){
@@ -44,7 +45,7 @@ int main(int argc, char **argv)
 	unsigned int cap_max;
 	ListeObjet * listeObjet; 
 #ifndef NDEBUG
-	printf("plop \n");
+	printf("Lancement du main \n");
 #endif
 	init(argc, argv, &filename, &cap_max);
 

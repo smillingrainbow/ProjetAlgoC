@@ -48,8 +48,11 @@ void Objet_setvalue_poids(Objet * objet, const unsigned int value){
 	objet->poids = value; 
 }
 
-
-
+/**
+ * \brief Crée un élement de type Objet
+ * \details Cette fonction crée un élément de type objet et l'initialise.
+ * \return Elle retourne un pointeur sur l'élément alloué et initialisé.
+ */
 Objet * Objet_create(void){
 	Objet * objet = (Objet *) malloc (sizeof(Objet));
 	if (objet == NULL){
