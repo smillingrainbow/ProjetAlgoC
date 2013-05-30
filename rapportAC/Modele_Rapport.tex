@@ -25,6 +25,19 @@
 {Description en anglais}
 {Mots clés en anglais}
 
+\lstset{
+frame =single ,
+tabsize =2,
+breaklines =true ,
+basicstyle =\small \ttfamily ,
+captionpos =b
+}
+
+\nolistoftables
+
+\addextratables{
+	\lstlistoflistings
+}
 \begin{document}
 
 %%%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%%%
@@ -91,16 +104,57 @@ Il existe différentes méthodes de batching et picking. Durant ce projet, nous 
 \subsection{Structures de données}
 \paragraph{} Cette section a pour objectif de présenter les différentes structures de données utilisées pour la méthode \textit{Cluster First Root Second}.
 
-\subsubsection{ListeCluster}
+\subsubsection{Utile}
 
-ListeCluster est une liste qui a pour implémentation : 
-\begin{lstlisting}[caption ={Useless code} , label ={listing : useless}]
-for ( i = 0; i < 42; i ++) {
-// Do something
-}
+\paragraph{}
+Un fichier \textit{util.h} a été crée pour gérer le type bool qui correspond au booléen. 
+Ci-dessous la définition du type booléen. 
+\begin{lstlisting}[caption ={Définition du type Booleen} , label ={listing : useless}]
+typedef int bool;
+#define TRUE 1
+#define FALSE 0
 \end{lstlisting}
 
+Lorsque l'on attribue la valeur "TRUE" à une variable, celle-ci prend comme valeur "1". De m\^eme pour "FALSE", la variable prendra la valeur "0".
+
+
+\subsubsection{ListeCluster}
+\paragraph{}
+ListeCluster est une liste cha\^inée qui a pour implémentation :
+\begin{figure}[!h]
+\texttt{ListeCluster = \^\,Place;}
+\paragraph{}
+ \texttt{ Place = enregistrement 
+\begin{description}
+\item cap : Entier non signé;
+\item succ : ListeCluster;
+\item fini : Booléen;
+\item ptrC : Cluster;
+\end{description}
+}
+\caption{Implémentation de la structure ListeCluster}
+\end{figure}
+
+\paragraph{}ListeCluster est une liste chainée de pointeurs vers une liste de type de structure Cluster. Cette structure sert à gérer les différents cluster. Chaque élément de la liste indique la capacité de son cluster avec l'attribut \"cap\". Mais aussi si le cluster peut contenir un autre produit avec l'attribut "fini". Celui-ci vaut "TRUE" lorque la capacité du cluster est égale à la capacité maximum du chariot. 
+
+
 \subsubsection{Cluster}
+
+Ci-dessous l'implémentation de la structure Cluster. 
+\begin{figure}[!h]
+\texttt{Cluster = \^\,Place;}
+\paragraph{}
+ \texttt{ Place = enregistrement 
+\begin{description}
+\item ptrO : Objet;
+\item succ : Cluster;
+\end{description}
+}
+\caption{Implémentation de la structure Cluster}
+\end{figure}
+
+\paragraph{}
+La structure Cluster est une liste cha\^inée à l'aide de l'attribut "succ". Chaque cellule pointe vers une autre cellule de la structure et vers un élément de type Objet. 
 
 \subsubsection{Objet}
 
@@ -125,7 +179,7 @@ for ( i = 0; i < 42; i ++) {
 
 \chapter{Conclusion}
 
-\annexes
+%\annexes
 
 \end{document}
 
