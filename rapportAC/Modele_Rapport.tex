@@ -120,7 +120,7 @@ Lorsque l'on attribue la valeur "TRUE" à une variable, celle-ci prend comme val
 
 \subsubsection{ListeCluster}
 \paragraph{}
-ListeCluster est une liste cha\^inée qui a pour implémentation :
+ListeCluster est une liste cha\^inée qui a pour représentation :
 \begin{figure}[!h]
 \texttt{ListeCluster = \^\,Place;}
 \paragraph{}
@@ -128,19 +128,27 @@ ListeCluster est une liste cha\^inée qui a pour implémentation :
 \begin{description}
 \item cap : Entier non signé;
 \item succ : ListeCluster;
-\item fini : Booléen;
+\item fini : Bool;
 \item ptrC : Cluster;
+\item fin; 
 \end{description}
 }
-\caption{Implémentation de la structure ListeCluster}
+\caption{Représentation de la structure ListeCluster}
 \end{figure}
 
-\paragraph{}ListeCluster est une liste chainée de pointeurs vers une liste de type de structure Cluster. Cette structure sert à gérer les différents cluster. Chaque élément de la liste indique la capacité de son cluster avec l'attribut \"cap\". Mais aussi si le cluster peut contenir un autre produit avec l'attribut "fini". Celui-ci vaut "TRUE" lorque la capacité du cluster est égale à la capacité maximum du chariot. 
+\paragraph{}ListeCluster est une liste chainée de pointeurs vers une liste de type de structure Cluster. Cette structure sert à gérer les différents cluster. Chaque élément de la liste indique la capacité de son cluster avec l'attribut \"cap\". Mais aussi si le cluster peut contenir un autre produit avec l'attribut "fini". Celui-ci vaut "TRUE" lorque la capacité du cluster est égale à la capacité maximum du chariot.
+Ci-dessous le graphe de collaboration de la structure.
+
+\begin{figure}[!ht]
+\center
+\includegraphics[scale=0.5]{images/struct_liste_cluster.png}
+\caption{Graphe de collaboration de la structure ListeCluster}
+\end{figure} 
 
 
 \subsubsection{Cluster}
 
-Ci-dessous l'implémentation de la structure Cluster. 
+Ci-dessous la représentation de la structure Cluster. 
 \begin{figure}[!h]
 \texttt{Cluster = \^\,Place;}
 \paragraph{}
@@ -148,15 +156,40 @@ Ci-dessous l'implémentation de la structure Cluster.
 \begin{description}
 \item ptrO : Objet;
 \item succ : Cluster;
+\item fin;
 \end{description}
 }
-\caption{Implémentation de la structure Cluster}
+\caption{Représentation de la structure Cluster}
 \end{figure}
 
 \paragraph{}
 La structure Cluster est une liste cha\^inée à l'aide de l'attribut "succ". Chaque cellule pointe vers une autre cellule de la structure et vers un élément de type Objet. 
 
+\begin{figure}[!ht]
+\center
+\includegraphics[scale=0.5]{images/struct_cluster.png}
+\caption{Graphe de collaboration de la structure Cluster}
+\end{figure} 
+
 \subsubsection{Objet}
+
+La structure Objet peut-\^etre représentée de la manière suivante : 
+\begin{figure}[!h]
+\texttt{Objet = \^\,Element;}
+\paragraph{}
+ \texttt{Element = enregistrement 
+\begin{description}
+\item idObjet : Entier non signé;
+\item coordx : Entier;
+\item coordy : Entire;
+\item poids : Entier non signé;
+\item trie : Bool
+\item fin;
+\end{description}
+}
+\caption{Représentation de la structure Objet}
+\end{figure}
+
 
 \subsection{Architecture}
 
