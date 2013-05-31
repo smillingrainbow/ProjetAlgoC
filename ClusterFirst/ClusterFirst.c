@@ -83,15 +83,24 @@ ListeCluster * remplissageCluster(const unsigned int cap_max, char * filename){
 	unsigned int newCap =0;
 	int nb_lignes;
 	ListeCluster * listeCluster = ListeCluster_create();
-	ListeCluster * listeClusterTmp;
+	ListeCluster * listeClusterTmp, *listeClusterHead;
 	Cluster * cluster;
 	Cluster * clusterTmp;
 	Objet * objet;
 	Objet ** tabObjet = creationTableauObjet(filename, &nb_lignes, cap_max);
+	listeClusterHead = listeCluster;
+	#ifndef NDEBUG
+		printf("nre lignes : %d \n", nb_lignes);
+	#endif
 
 	while (indice < nb_lignes){ 
 		objet = tabObjet[indice]; 
         newCap = listeCluster->cap + objet->poids;
+        #ifndef NDEBUG
+			printf("indice : %d \n", indice);
+			printf("newCap : %d \n", newCap);
+			printf("cap : %d \n", listeCluster->cap);
+		#endif
 		while ((cap_max < newCap) && (listeCluster->succ != NULL)){
 			listeCluster = listeCluster->succ;
 			newCap = listeCluster->cap + objet->poids;
@@ -106,12 +115,33 @@ ListeCluster * remplissageCluster(const unsigned int cap_max, char * filename){
 			clusterTmp->succ = cluster;
 			cluster->ptrO = objet;
 			listeCluster->cap = newCap;
+			#ifndef NDEBUG
+					printf("nouvelle cap : %d \n", listeCluster->cap);
+			#endif
             }
             else{
-                clusterTmp = Cluster_create();
-                listeCluster->ptrC = clusterTmp;
-                clusterTmp->ptrO = objet;
-                listeCluster->cap = newCap;
+            	if(listeCluster->ptrC == NULL){
+	                clusterTmp = Cluster_create();
+	                listeCluster->ptrC = clusterTmp;
+	                clusterTmp->ptrO = objet;
+	                listeCluster->cap = newCap;
+	                #ifndef NDEBUG
+						printf("nouvelle cap : %d \n", listeCluster->cap);
+					#endif
+				}
+				else{
+			        clusterTmp = listeCluster->ptrC;
+					while (clusterTmp->succ != NULL){
+						clusterTmp = clusterTmp->succ;
+					}
+					cluster = Cluster_create();
+					clusterTmp->succ = cluster;
+					cluster->ptrO = objet;
+					listeCluster->cap = newCap;
+					#ifndef NDEBUG
+						printf("nouvelle cap : %d \n", listeCluster->cap);
+					#endif
+				}
             }
             if (newCap == cap_max){
 				listeCluster->fini =  TRUE;
@@ -130,7 +160,7 @@ ListeCluster * remplissageCluster(const unsigned int cap_max, char * filename){
 		}
 		indice ++;
 	}
-	return listeCluster ;
+	return listeClusterHead ;
 }
 
 /**
@@ -139,10 +169,20 @@ ListeCluster * remplissageCluster(const unsigned int cap_max, char * filename){
  * @param liste pointeur vers la liste listecLuster
  */
 void trieListeCluster(ListeCluster * liste){
+	int dist = 0;
+	int distTotal = 0;
+
+
 	while (liste != NULL){
-		trieCLuster(liste->ptrC); // trie chaque cluster de la liste
+		trieCLuster(liste->ptrC, &dist); // trie chaque cluster de la liste
+
 		liste = liste->succ;
+		distTotal += dist; 
+		#ifndef NDEBUG
+			printf("distTotal: %d \n", distTotal);
+		#endif
 	}
+	printf("La distance a parcourir est : %d \n", distTotal);
 }
 
 /**
@@ -150,21 +190,40 @@ void trieListeCluster(ListeCluster * liste){
  * \details trie un Cluster en cherchant la cellule la plus proche de la cellule courante et en l'insérant avant celle-ci
  * @param head pointeur vers la tête de la liste Cluster
  */
-void trieCLuster(Cluster * head){
+void trieCLuster(Cluster * head, int * distTotal){
+	int dist = 0;
+	int indice = 0;  
+	int compt = 1; 
+	*distTotal = 0;
 	Cluster * enCours, * clusterTmp;
 	enCours = head;
-	while (enCours->succ != NULL){
-		clusterTmp = lePlusProche(enCours);
+	while(enCours->succ != NULL){
+		enCours = enCours->succ;
+		compt++;
+	}
+	enCours = head;
+	while (indice < compt){
+		clusterTmp = lePlusProche(head, enCours, &dist, compt);
 		// cas ou il n'y a pas de plus proche (un seul cluster)
 		if (clusterTmp == NULL){
 			break;	// pour eviter d'inserer une cellule NULL quitte le while
 		}
+		// permet de ne pas récupérer la premiere valeur
+		if(indice != 0){
+			*distTotal += dist; 
+		}
+
+		#ifndef NDEBUG
+			printf("distance total trieCLuster : %d \n", *distTotal);
+		#endif
+		
 		inserer(enCours, clusterTmp, head); // insere la clusterTmp avant enCours
 		enCours = clusterTmp;
 		if (enCours ==  NULL){
 			printf("Erreur trieCLuster \n");
 			exit(-1);
 		}
+		indice++; 
 	}
 }
 
@@ -173,28 +232,43 @@ void trieCLuster(Cluster * head){
  * @param cluster pointeur vers le Cluster courant
  * \return le Cluster contenant l'objet le plus proche de l'objet courant
  */
-Cluster * lePlusProche(Cluster * cluster){
-	Cluster * plusProche;
+Cluster * lePlusProche(Cluster * head, Cluster * cluster, int * minDist, int compt){
+	Cluster * plusProche, *clusterTmp;
 	Objet * ObjetCourant, * objetTmp;
-	unsigned int minDist, dist;
+	int dist = 0;
 	int x, y; 
-	minDist = INT_MAX;
+	int indice = 0;
+	*minDist = INT_MAX;
 	plusProche = NULL;
 	ObjetCourant = cluster->ptrO;
 	x = ObjetCourant->coordx;
 	y = ObjetCourant->coordy;
-	cluster = cluster->succ;
-	while ( cluster != NULL){
-		objetTmp = cluster->ptrO;
-		if (objetTmp->trie == FALSE){
+	clusterTmp = head;
+	#ifndef NDEBUG
+		printf("nombre tour de boucle : %d \n", compt);
+	#endif
+	while ( indice < compt){
+		#ifndef NDEBUG
+			printf("tour numero : %d \n", indice);
+		#endif
+		objetTmp = clusterTmp->ptrO;
+		if (objetTmp->trie == FALSE && ObjetCourant != objetTmp){
 			dist = calculDistance(x, y , objetTmp->coordx, objetTmp->coordy);
-			if (dist < minDist){
-				minDist = dist;
-				plusProche = cluster;
+			if (dist < *minDist){
+				*minDist = dist;
+				plusProche = clusterTmp;
+				#ifndef NDEBUG
+					printf("minDist lePlusProche : %d \n", *minDist);
+				#endif
 			}
 		}
-		cluster = cluster->succ;
+
+		clusterTmp = clusterTmp->succ;
+		indice++; 
 	}
+	#ifndef NDEBUG
+		printf("Fin boucle lePlusProche\n");
+	#endif
 	objetTmp->trie =  TRUE ; // l'Objet est trie, on met le champ a TRUE pour ne pas le retrier 
 	return plusProche;
 }
@@ -223,13 +297,13 @@ int calculDistance(int ax, int ay, int bx, int by){
 void inserer(Cluster * enCours, Cluster * cluster, Cluster * head){
 	Cluster * clusterTmp;
 	clusterTmp = head;
-	if (head == enCours){ // si la cellule enCours est la même que le tête de liste
-		head = cluster;
-		while ( clusterTmp->succ != cluster){
+	if (head == enCours){ // si la cellule enCours est la même que la tête de liste
+		while(clusterTmp->succ != cluster){
 			clusterTmp = clusterTmp->succ;
 		}
 		clusterTmp = cluster->succ;
 		cluster->succ = enCours;
+		head = cluster;
 	}
 	else{
 		while (head->succ != enCours){
