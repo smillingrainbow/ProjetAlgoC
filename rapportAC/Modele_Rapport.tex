@@ -104,6 +104,13 @@ Il existe différentes méthodes de batching et picking. Durant ce projet, nous 
 \subsection{Structures de données}
 \paragraph{} Cette section a pour objectif de présenter les différentes structures de données utilisées pour la méthode \textit{Cluster First Root Second}.
 
+\paragraph{}Ces différentes structures sont définies dans les fichiers suivant : 
+\begin{itemize}
+\item[•] \textit{util.h}
+\item[•]\textit{ListeCluster.h}
+\item[•]\textit{Cluster.h}
+\item[•]\textit{Objet.h}
+\end{itemize}
 \subsubsection{Utile}
 
 \paragraph{}
@@ -119,8 +126,10 @@ Lorsque l'on attribue la valeur "TRUE" à une variable, celle-ci prend comme val
 
 
 \subsubsection{ListeCluster}
+
 \paragraph{}
 ListeCluster est une liste cha\^inée qui a pour représentation :
+
 \begin{figure}[!h]
 \texttt{ListeCluster = \^\,Place;}
 \paragraph{}
@@ -139,7 +148,7 @@ ListeCluster est une liste cha\^inée qui a pour représentation :
 \paragraph{}ListeCluster est une liste chainée de pointeurs vers une liste de type de structure Cluster. Cette structure sert à gérer les différents cluster. Chaque élément de la liste indique la capacité de son cluster avec l'attribut \"cap\". Mais aussi si le cluster peut contenir un autre produit avec l'attribut "fini". Celui-ci vaut "TRUE" lorque la capacité du cluster est égale à la capacité maximum du chariot.
 Ci-dessous le graphe de collaboration de la structure.
 
-\begin{figure}[!ht]
+\begin{figure}[!h]
 \center
 \includegraphics[scale=0.5]{images/struct_liste_cluster.png}
 \caption{Graphe de collaboration de la structure ListeCluster}
@@ -163,9 +172,10 @@ Ci-dessous la représentation de la structure Cluster.
 \end{figure}
 
 \paragraph{}
-La structure Cluster est une liste cha\^inée à l'aide de l'attribut "succ". Chaque cellule pointe vers une autre cellule de la structure et vers un élément de type Objet. 
+La structure Cluster est une liste cha\^inée à l'aide de l'attribut "succ". Chaque cellule pointe vers une autre cellule de la structure et vers un élément de type Objet.
+Ci-dessous, le graphe de collaboration de la structure Cluster.  
 
-\begin{figure}[!ht]
+\begin{figure}[!h]
 \center
 \includegraphics[scale=0.5]{images/struct_cluster.png}
 \caption{Graphe de collaboration de la structure Cluster}
@@ -190,8 +200,20 @@ La structure Objet peut-\^etre représentée de la manière suivante :
 \caption{Représentation de la structure Objet}
 \end{figure}
 
+\paragraph{}
+Un élément de la structure Objet représente un produit. Pour chaque produit, on indiquera : 
+\begin{itemize}
+\item[•]\textbf{l'identifiant} : idObjet
+\item[•]\textbf{son coordonnée x} : coordx
+\item[•]\textbf{son coordonnée y} : coordy 
+\item[•]\textbf{son poids} : poids
+\item[•]\textbf{s'il a déjà été trié} : trie
+\end{itemize}
+
 
 \subsection{Architecture}
+
+
 
 \section{Spécifications logicielles}
 
