@@ -6,6 +6,12 @@ ClusterFirst/ClusterFirst
 *CMakeCache.txt
 *.cmake
 build*
+Doc*
+algo*
+*.dvi
+*.synctex.gz
+*.loa
+*.lol
 
 *.aux
 *.lof
