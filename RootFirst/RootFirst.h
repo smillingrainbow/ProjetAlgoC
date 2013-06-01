@@ -15,7 +15,7 @@ Objet ** creationTableauObjet(char * filename, int * nb_lignes, const unsigned i
 FILE *  open_Fichier(char * filename);
 void close_Fichier(FILE * file, char * filename);
 ListeObjet * trieTabObjet(char * filename, const unsigned int cap_max);
-Objet *  plusProche(Objet * enCours, Objet ** tabObjet, int nb_lignes); 
+Objet *  plusProche(Objet * enCours, Objet ** tabObjet, int nb_lignes, int * dist); 
 int calculDistance(int ax, int ay, int bx, int by);
 void creationListeCluster(ListeObjet * listeObjet, unsigned int cap_max);
 

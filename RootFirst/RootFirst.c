@@ -80,6 +80,9 @@ Objet ** creationTableauObjet(char * filename, int * nb_lignes, const unsigned i
 ListeObjet * trieTabObjet(char * filename, const unsigned int cap_max){
 	int indice = 0;
 	int nb_lignes;
+	int dist = 0;
+	unsigned int distTotal = 0;
+	int parcours = 0;
 	ListeObjet * listeObjet, * listeObjetTmp, * listeObjetHead; 
 	Objet * enCours, * objetPlusProche; 
 	Objet ** tabObjet = creationTableauObjet(filename, &nb_lignes, cap_max);
@@ -102,10 +105,19 @@ ListeObjet * trieTabObjet(char * filename, const unsigned int cap_max){
 		listeObjet = listeObjetHead;
 		while(listeObjet != NULL){
 			// recherche du plus proche produit de celui en cours
-			objetPlusProche = plusProche(enCours, tabObjet, nb_lignes);
+			objetPlusProche = plusProche(enCours, tabObjet, nb_lignes, &dist);
 			listeObjet->ptrO = objetPlusProche;
 			enCours = objetPlusProche; 
 			listeObjet = listeObjet->succ;  
+			// ne crecupère pas la première valeur
+			if(parcours != 0){
+				distTotal += dist;
+			}
+			#ifndef NDEBUG
+				printf("distance min :  %d \n", dist);
+				printf("distanceTotal : %d \n", distTotal);
+			#endif
+			parcours++;
 		}
 	}
 	// s'il n'y a qu'un seul produit dans la commande
@@ -115,6 +127,7 @@ ListeObjet * trieTabObjet(char * filename, const unsigned int cap_max){
 				printf("Un seul objet\n");
 		#endif
 	}
+	printf("La distance a parcourir est : %d \n", distTotal);
 	// on retourne le pointeur sur la tête de la liste
 	return listeObjetHead;
 }
@@ -127,12 +140,12 @@ ListeObjet * trieTabObjet(char * filename, const unsigned int cap_max){
  * @param nb_lignes entier représentant le nombre de produit de la commande
  * \return Cette fonction retourne un pointeur sur le produit le plus proche de celui courant.
  */
-Objet *  plusProche(Objet * enCours, Objet ** tabObjet, int nb_lignes){
+Objet *  plusProche(Objet * enCours, Objet ** tabObjet, int nb_lignes,int * minDist){
 	int indice, x, y; 
-	unsigned int minDist, dist; 
+	int dist = 0; 
 	Objet * objetPlusProche, * objetTmp; 
 	indice = 0; 
-	minDist= INT_MAX; // initialisation de minDist à un nombre très grand
+	*minDist= INT_MAX; // initialisation de minDist à un nombre très grand
 	x = enCours->coordx;
 	y = enCours->coordy; 
 	objetPlusProche = NULL; 
@@ -141,13 +154,19 @@ Objet *  plusProche(Objet * enCours, Objet ** tabObjet, int nb_lignes){
 		// si le produit a parcourir n'est pas le produit courant et n'a pas déjà été trié
 		if(enCours != objetTmp && objetTmp->trie == FALSE){
 			dist = calculDistance(x, y, objetTmp->coordx, objetTmp->coordy);
-			if(dist < minDist){
-				minDist = dist; 
+			if(dist < *minDist){
+				*minDist = dist; 
 				objetPlusProche = objetTmp; 
 			}
 		}
 		indice++;
 	}
+	if(*minDist == INT_MAX){
+		*minDist = 0;
+	}
+	#ifndef NDEBUG
+		printf("minDist : %d \n", *minDist);
+	#endif
 	// le champ trie de l'objet le plus proche passe à TRUE
 	objetPlusProche->trie = TRUE;
 	return objetPlusProche; 
@@ -163,9 +182,9 @@ Objet *  plusProche(Objet * enCours, Objet ** tabObjet, int nb_lignes){
  * \return la distance entre les deux objets
  */
 int calculDistance(int ax, int ay, int bx, int by){
-	unsigned int dist;
+	int dist;
 	
-	dist = abs((bx - ax)*(bx - ax)) + abs((by - ay)*(by - ay));
+	dist = abs((bx - ax)) + abs((by - ay));
 	return dist;
 }
 
@@ -187,15 +206,9 @@ void creationListeCluster(ListeObjet * listeObjet, unsigned int cap_max){
 	#endif
 	// s'il y a plus d'un objet découper listeObjet en Cluster
 	if(listeObjet->succ != NULL){
-		#ifndef NDEBUG
-			printf("0\n");
-		#endif
 		while(listeObjet != NULL){
 			objet = listeObjet->ptrO; 
 			cap += objet->poids;
-			#ifndef NDEBUG
-				printf("1\n");
-			#endif
 			// s'il listeObjet n'est pas l'avant dernier élément
 			if(listeObjet->succ != NULL){
 				listeObjetTmp = listeObjet->succ;
