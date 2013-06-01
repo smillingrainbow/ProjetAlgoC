@@ -228,10 +228,11 @@ On peut représenter le graphe des dépendances par inclusion du \textit{main} d
 Le main appel trois fonctions : 
 \begin{itemize}
 \item[•]\textbf{init} : Permet de récupérer les paramètres(capacité maximum du chariot ainsi que le fichier texte contenant les informations sur les produits, c'est à dire le carnet de commande) et affiche un message d'erreur si aucuns paramètres n'a été passé.
-\item[•]\textbf{remplissageCluster}(\ref{algo:remplissageCluster}) : Découpe le carnet de commande en cluster.
-\item[•]\textbf{trieListeCluster} : Trie chaque cluster crée avec remplissageCluster pour que le chariot effectue l'itinéraire le plus court possible.
+\item[•]\textbf{remplissageCluster}\footnote{cf algorithme n\degre \ref{algo:remplissageCluster}} : Découpe le carnet de commande en cluster.
+\item[•]\textbf{trieListeCluster} \footnote{cf algorithme n\degre \ref{algo:trieListeCluster}}: Trie chaque cluster crée avec remplissageCluster pour que le chariot effectue l'itinéraire le plus court possible.
 \end{itemize}
 
+\paragraph{}
 Le graphe d'appel du \textit{main} (ci-dessous), montre tous les appels de fonction effectuer à partir celui-ci à travers les trois fonctions citées précédemment.
 
 \begin{figure}[!h]
@@ -247,10 +248,11 @@ Dans cette section, les principaux différents algorithmes seront décrits.
 
 \subsection{Remplissage des clusters}
 
+\paragraph{}
 Afin de créer une liste de clusters, il faut tout d'abord remplir la structure Objet avec les informations des produits. Pour cela on va utiliser la fonction \textit{creationTableauObjet} dont voici l'algorithme : 
 
 \begin{algorithm}[H]
-\caption{Creation d'un tableau de pointeur vers des Objets \textit{creationTabObjet}}
+\caption{Creation d'un tableau de pointeur vers des Objets : \textit{creationTabObjet}}
 \label{algo:creationTabObjet}
 \algsetup{indent=3em}
 \begin{algorithmic}[1]
@@ -286,10 +288,11 @@ Afin de créer une liste de clusters, il faut tout d'abord remplir la structure 
 \end{algorithmic}
 \end{algorithm}
 
+\paragraph{}
 Après l'allocation de la structure Objet, on peut remplir les différents clusters à partir de la fonction \textit{remplissageCLuster}. L'algorithme de cette fonction est le suivant : 
 
 \begin{algorithm}[H]
-\caption{Remplissage des clusters \textit{remplissageCluster}}
+\caption{Remplissage des clusters : \textit{remplissageCluster}}
 \label{algo:remplissageCluster}
 \algsetup{indent=3em}
 \begin{algorithmic}[1]
@@ -340,26 +343,115 @@ Après l'allocation de la structure Objet, on peut remplir les différents clust
 		\ENDIF
 \ENDFOR
 \RETURN $listeClusterHead$
-\STATE $fermetureFichier(file)$
-\COMMENT{fermeture du flux}
-\RETURN $tabObjet$
+
 
 \end{algorithmic}
 \end{algorithm}
 
 \subsection{Trie des clusters}
 
+\paragraph{}
+Lorsque la liste des clusters est crée, il faut ensuite trier chacun d'eux pour que l'itinéraire du chariot soit le plus court possible. Pour ce faire, nous avons réaliser trois algorithmes :
+\begin{enumerate}
+\item\textit{trieListeCluster} \footnote{cf algorithme n\degre \ref{algo:trieListeCluster}} : Permet de trier la liste des Clusters
+\item\textit{trieCluster}\footnote{cf algorithme n\degre \ref{algo:trieCluster}} : Trie chaque cluster
+\item\textit{lePlusProche} \footnote{cf algorithme n\degre \ref{algo:lePlusProche}} : Cherche l'objet le plus proche de celui passer en paramètre dans son cluster
+\end{enumerate}
 
+\begin{algorithm}[H]
+\caption{Trie de la liste des clusters : \textit{trieListeCluster}}
+\label{algo:trieListeCluster}
+\algsetup{indent=3em}
+\begin{algorithmic}[1]
+\REQUIRE { %
+ entrées : $listeCluster$ : liste des clusters}
+%\ENSURE { sortie : $listeCluster$ : pointeur sur la tête de la liste de clusters}
+
+\WHILE{($listeCluster \neq NULL$)}
+	\STATE $dist \leftarrow trieCluster(listeCluster\uparrow ptrC)$
+	\COMMENT{retourne la distance à effectuer par le chariot dans le cluster}
+	\STATE $listeCluster \leftarrow listeCluster\uparrow succ$
+	\STATE $distTotal \leftarrow distTotal + dist$
+\ENDWHILE
+\STATE $afficher(la distance a parcourir par le chariot est : distTotal)$
+
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{Trie d'un cluster : \textit{trieCluster}}
+\label{algo:trieCluster}
+\algsetup{indent=3em}
+\begin{algorithmic}[1]
+\REQUIRE { %
+ entrées : $head$ : pointeur vers la tête de la liste du cluster}
+\ENSURE { sortie : $distTotal$ : distance à parcourir par le chariot dans le cluster}
+
+\STATE $enCours \leftarrow head$
+\WHILE{($enCours\uparrow succ \neq NULL$)}
+	\STATE $comp++$
+	\COMMENT{compte le nombre d'item du cluster}
+\ENDWHILE
+\STATE $enCours \leftarrow head$
+\WHILE{($enCours \neq NULL$)}
+	\STATE $clusterTmp \leftarrow lePlusProche(head, enCours, dist, compt)$
+	\COMMENT{retourne le cluster le plus proche de enCours}
+	\STATE $listeCluster \leftarrow listeCluster\uparrow succ$
+	\STATE $distTotal \leftarrow distTotal + dist$
+	\STATE $inserer(enCours, clusterTmp, head)$
+	\COMMENT{insère la cellule clusterTmp avant celle d'enCours et refait le chainage de la liste}
+	\STATE $enCours \leftarrow clusterTmp$
+\ENDWHILE
+\STATE $afficher(la distance a parcourir par le chariot est : distTotal)$
+\RETURN $distTotal$
+
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}[H]
+\caption{Cherche le cluster le plus proche : \textit{lePlusProche}}
+\label{algo:lePlusProche}
+\algsetup{indent=3em}
+\begin{algorithmic}[1]
+\REQUIRE { %
+ entrées : $head$ : pointeur vers la tête de la liste du cluster, $enCours$ : pointeur vers le cluster courant, $distmin$ : distance minimum, $compt$ : nombre de cellule du cluster}
+\ENSURE { sortie : $plusProche$ : cluster le plus proche de enCours, $distmin$ : distance entre $plusProche$ et $enCours$}
+
+\STATE $ObjetCourant \leftarrow enCours\uparrow ptrO$
+\STATE $minDist \leftarrow infini$
+\STATE $cluster \leftarrow head$
+\FOR[parcours du cluster]{$indice$ \textbf{de} 1 \textbf{à} $compt$ \textbf{faire}}
+	\STATE $objetTmp \leftarrow cluster\uparrow ptrO$
+	\IF[si $objetTmp$ n'a pas déjà été trié et s'il est différent de $objet$]{(($objetTmp\uparrow trie = FALSE) \AND (objetTmp \neq objet$))}
+		\STATE $dist \leftarrow calculDistance(objet\uparrow coordx, objet\uparrow coordy, objetTmp\uparrow coordx, objetTmp\uparrow coordy)$
+		\COMMENT{calcul la distance euclidienne entre $objetTmp$ et $objet$}
+		\IF{($dist < minDist$)}
+			\STATE $minDist \leftarrow dist$
+			\STATE $plusProche \leftarrow cluster$
+		\ENDIF
+	\ENDIF
+	\STATE $cluster \leftarrow cluster\uparrow succ$
+\ENDFOR
+\RETURN $plusProche$
+\end{algorithmic}
+\end{algorithm}
 
 %%%%%%%%%%%%%%%%%%%% CHAPITRE 3 %%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Root First Cluster Second}
 
-\section{Spécifications logicielles}
-
 \section{Architecture du programme}
 
+\subsection{Structure de données}
+
+\subsection{Architecture}
+
 \section{Algorithmes}
+
+\subsection{Trie des items}
+
+\subsection{Découpage en clusters}
 
 
 %%%%%%%%%%%%%%%%%%%%%%% CHAPITRE 4 %%%%%%%%%%%%%%%%%%
