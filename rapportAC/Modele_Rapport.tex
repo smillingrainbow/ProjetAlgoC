@@ -215,8 +215,8 @@ Un élément de la structure Objet représente un produit. Pour chaque produit, 
 \subsection{Architecture}
 
 \paragraph{}
-Le programme est axé autour d'un fichier principal appelé par le main, \textit{ClusterFirst.h}. Dans le main sont aussi inclus les différentes structures citées auparavant(\ref{subsec:struct} page \pageref{subsec:struct}) ainsi que différents fichier de la librairie C. 
-On peut représenter le graphe des dépendances par inclusion du main de la façon suivante : 
+Le programme est axé autour d'un fichier principal appelé par le \textit{main}, \textit{ClusterFirst.h}. Dans le \textit{main} sont aussi inclus les différentes structures citées auparavant(\ref{subsec:struct} page \pageref{subsec:struct}) ainsi que différents fichier de la librairie C. 
+On peut représenter le graphe des dépendances par inclusion du \textit{main} de la façon suivante : 
 
 \begin{figure}[!h]
 	\center
@@ -228,16 +228,16 @@ On peut représenter le graphe des dépendances par inclusion du main de la faç
 Le main appel trois fonctions : 
 \begin{itemize}
 \item[•]\textbf{init} : Permet de récupérer les paramètres(capacité maximum du chariot ainsi que le fichier texte contenant les informations sur les produits, c'est à dire le carnet de commande) et affiche un message d'erreur si aucuns paramètres n'a été passé.
-\item[•]\textbf{remplissageCluster} : Découpe le carnet de commande en cluster.
+\item[•]\textbf{remplissageCluster}(\ref{algo:remplissageCluster}) : Découpe le carnet de commande en cluster.
 \item[•]\textbf{trieListeCluster} : Trie chaque cluster crée avec remplissageCluster pour que le chariot effectue l'itinéraire le plus court possible.
 \end{itemize}
 
-Le graphe d'appel du main (ci-dessous), montre tous les appels de fonction effectuer à partir celui-ci à travers les trois fonctions citées précédemment.
+Le graphe d'appel du \textit{main} (ci-dessous), montre tous les appels de fonction effectuer à partir celui-ci à travers les trois fonctions citées précédemment.
 
 \begin{figure}[!h]
 	\center
 	\includegraphics[scale=0.5]{images/main_appel.png}
-	\caption{Graphe d'appel de la fonction main}
+	\caption{Graphe d'appel de la fonction \textit{main}}
 \end{figure}
 
 \section{Algorithmes}
@@ -247,9 +247,109 @@ Dans cette section, les principaux différents algorithmes seront décrits.
 
 \subsection{Remplissage des clusters}
 
+Afin de créer une liste de clusters, il faut tout d'abord remplir la structure Objet avec les informations des produits. Pour cela on va utiliser la fonction \textit{creationTableauObjet} dont voici l'algorithme : 
 
+\begin{algorithm}[H]
+\caption{Creation d'un tableau de pointeur vers des Objets \textit{creationTabObjet}}
+\label{algo:creationTabObjet}
+\algsetup{indent=3em}
+\begin{algorithmic}[1]
+\REQUIRE { %
+ entrées : $filename$ : fichier texte, $nb\_lignes$ : nombre de lignes, $cap\_max$ : capacité maximum du chariot}
+\ENSURE { sortie : $tabObjet$ : le tableau de pointeur vers des Objets, $nb\_lignes$ : le nombre de produits}
+
+\STATE $file \leftarrow ouvrirFichier(filename)$ 
+\COMMENT{ouverture du fichier}
+\STATE $allouer(tabObjet)$
+\COMMENT{ allocation mémoire de $tabObjet$ }
+\STATE $lire(file, nb\_lignes)$
+\COMMENT{lecture de la première ligne et récupération du nombre d'item dans $nb\_lignes$}
+\FOR[parcours du fichier ]{$indice$ \textbf{de} 1 \textbf{à} $nb\_lignes$ \textbf{faire}}
+	\STATE $lire(file, idObjet, coordx, coordy, poids)$
+	\COMMENT{lecture d'une ligne}
+	\STATE $creer(Objet)$
+	\COMMENT{allocation mémoire et initialisation de $Objet$}
+	\STATE $Objet\uparrow idObjet \leftarrow idObjet$
+	\STATE $Objet\uparrow coordx \leftarrow coordx$
+	\STATE $Objet\uparrow coordy \leftarrow coordy$
+	\STATE $Objet\uparrow poids \leftarrow poids$
+	\IF[vérifie que le poids des produits est inférieur à la capacité du chariot]{($Objet\uparrow poids < cap\_max$)}
+	\STATE $afficher($Erreur poids produits trop élévé$)$
+	\STATE $exit$
+	\ENDIF
+	\STATE $tabObjet[indice] \leftarrow Objet$
+\ENDFOR
+\STATE $fermetureFichier(file)$
+\COMMENT{fermeture du flux}
+\RETURN $tabObjet$
+
+\end{algorithmic}
+\end{algorithm}
+
+Après l'allocation de la structure Objet, on peut remplir les différents clusters à partir de la fonction \textit{remplissageCLuster}. L'algorithme de cette fonction est le suivant : 
+
+\begin{algorithm}[H]
+\caption{Remplissage des clusters \textit{remplissageCluster}}
+\label{algo:remplissageCluster}
+\algsetup{indent=3em}
+\begin{algorithmic}[1]
+\REQUIRE { %
+ entrées : $filename$ : fichier texte,$cap\_max$ : capacité maximum du chariot}
+\ENSURE { sortie : $listeCluster$ : pointeur sur la tête de la liste de clusters}
+
+\STATE $creer(listeCLuster)$ 
+\COMMENT{allocation mémoire et création de $listeCluster$}
+\STATE $tabObjet\leftarrow creationTabObjet(filename, nb\_lignes, cap\_max)$
+\COMMENT{appel de la fonction $creationTabObjet$ }
+\STATE $listeCLusterHead\leftarrow listeCluster$
+\COMMENT{fait pointer la tête de liste vers $listeCluster$}
+\FOR[Parcours de tabObjet ]{$indice$ \textbf{de} 1 \textbf{à} $nb\_lignes$ \textbf{faire}}
+		\STATE $Objet \leftarrow tabObjet[indice]$	
+		\COMMENT{$Objet$ reçoit le pointeur vers un Objet de la case $indice$ de $tabObjet$}
+		\STATE $newCap \leftarrow listeCluster\uparrow cap + Objet\uparrow poids$
+		\COMMENT{addition de la capacité du cluster en cours et du poids de l'objet a ajouter}
+		\WHILE{(($cap\_max < newCap)\AND (listeCluster\uparrow succ \neq NULL$))}
+			\STATE $listeCluster \leftarrow listeCluster\uparrow succ$
+			\STATE $newCap \leftarrow listeCluster\uparrow cap + Objet\uparrow poids$
+		\ENDWHILE
+		\IF[s'il y a de la place pour ajouter l'objet]{$newCap \leq cap\_max$}
+			\STATE $clusterTmp \leftarrow listeCluster\uparrow ptrC$
+			\COMMENT{$clusterTmp$ pointe vers la tête de liste du cluster}
+			\WHILE{($clusterTmp\uparrow succ \neq NULL$)} 
+				\STATE $clusterTmp \leftarrow clusterTmp\uparrow succ$
+				\COMMENT{parcours du cluster jusqu'à la fin}
+			\ENDWHILE
+			\STATE $creer(cluster)$
+			\COMMENT{allocation mémoire et initialisation de $cluster$}
+			\STATE $clusterTmp\uparrow succ \leftarrow cluster$
+			\STATE $cluster\uparrow ptrO \leftarrow Objet$
+			\STATE $listeCluster\uparrow cap \leftarrow newCap$
+		\ELSE[si pas assez de place dans aucun cluster déjà existant]
+			\STATE $creer(listeCLusterTmp)$
+			\COMMENT{allocation mémoire et initialisation de $listeClusterTmp$}
+			\STATE $listeCluster\uparrow succ \leftarrow listeClusterTmp$
+			\STATE $listeCluster \leftarrow listeClusterTmp$
+			\STATE $listeCluster\uparrow cap \leftarrow objet\uparrow poids$
+			\STATE $creer(cluster)$
+			\COMMENT{allocation mémoire et initialisation de $cluster$}
+			\STATE $listecLuster\uparrow ptrC \leftarrow cluster$
+			\STATE $cluster\uparrow ptrO \leftarrow objet$
+		\ENDIF
+		\IF{($listecluster\uparrow cap = cap\_max$)}
+			\STATE $listeCLuster\uparrow fini \leftarrow TRUE$
+		\ENDIF
+\ENDFOR
+\RETURN $listeClusterHead$
+\STATE $fermetureFichier(file)$
+\COMMENT{fermeture du flux}
+\RETURN $tabObjet$
+
+\end{algorithmic}
+\end{algorithm}
 
 \subsection{Trie des clusters}
+
+
 
 %%%%%%%%%%%%%%%%%%%% CHAPITRE 3 %%%%%%%%%%%%%%%%%%%%%%
 
