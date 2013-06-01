@@ -6,6 +6,7 @@ import (
 	"math"
 	"math/rand"
 	"os"
+	"time"
 )
 
 func Initialisation() uint {
@@ -31,7 +32,7 @@ func main() {
 
 	result = make([][]int, nbLigne)
 
-	r = rand.New(rand.NewSource(42))
+	r = rand.New(rand.NewSource(time.Now().UnixNano()))
 
 	for i = 0; i < nbLigne; i++ {
 		result[i] = make([]int, 3)

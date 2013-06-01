@@ -113,6 +113,10 @@ ListeObjet * trieTabObjet(char * filename, const unsigned int cap_max){
 			if(parcours != 0){
 				distTotal += dist;
 			}
+			#ifndef NDEBUG
+				printf("distance min :  %d \n", dist);
+				printf("distanceTotal : %d \n", distTotal);
+			#endif
 			parcours++;
 		}
 	}
@@ -157,6 +161,12 @@ Objet *  plusProche(Objet * enCours, Objet ** tabObjet, int nb_lignes,int * minD
 		}
 		indice++;
 	}
+	if(*minDist == INT_MAX){
+		*minDist = 0;
+	}
+	#ifndef NDEBUG
+		printf("minDist : %d \n", *minDist);
+	#endif
 	// le champ trie de l'objet le plus proche passe à TRUE
 	objetPlusProche->trie = TRUE;
 	return objetPlusProche; 
@@ -174,7 +184,7 @@ Objet *  plusProche(Objet * enCours, Objet ** tabObjet, int nb_lignes,int * minD
 int calculDistance(int ax, int ay, int bx, int by){
 	int dist;
 	
-	dist = abs((bx - ax)*(bx - ax)) + abs((by - ay)*(by - ay));
+	dist = abs((bx - ax)) + abs((by - ay));
 	return dist;
 }
 
@@ -196,15 +206,9 @@ void creationListeCluster(ListeObjet * listeObjet, unsigned int cap_max){
 	#endif
 	// s'il y a plus d'un objet découper listeObjet en Cluster
 	if(listeObjet->succ != NULL){
-		#ifndef NDEBUG
-			printf("0\n");
-		#endif
 		while(listeObjet != NULL){
 			objet = listeObjet->ptrO; 
 			cap += objet->poids;
-			#ifndef NDEBUG
-				printf("1\n");
-			#endif
 			// s'il listeObjet n'est pas l'avant dernier élément
 			if(listeObjet->succ != NULL){
 				listeObjetTmp = listeObjet->succ;

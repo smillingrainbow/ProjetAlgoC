@@ -179,6 +179,7 @@ void trieListeCluster(ListeCluster * liste){
 		liste = liste->succ;
 		distTotal += dist; 
 		#ifndef NDEBUG
+			printf("distTrieCLuster : %d\n", dist);
 			printf("distTotal: %d \n", distTotal);
 		#endif
 	}
@@ -214,6 +215,7 @@ void trieCLuster(Cluster * head, int * distTotal){
 		}
 
 		#ifndef NDEBUG
+			printf("distance lePlusProche : %d\n", dist);
 			printf("distance total trieCLuster : %d \n", *distTotal);
 		#endif
 		
@@ -244,31 +246,33 @@ Cluster * lePlusProche(Cluster * head, Cluster * cluster, int * minDist, int com
 	x = ObjetCourant->coordx;
 	y = ObjetCourant->coordy;
 	clusterTmp = head;
-	#ifndef NDEBUG
+	/*#ifndef NDEBUG
 		printf("nombre tour de boucle : %d \n", compt);
-	#endif
+	#endif*/
 	while ( indice < compt){
-		#ifndef NDEBUG
+		/*#ifndef NDEBUG
 			printf("tour numero : %d \n", indice);
-		#endif
+		#endif*/
 		objetTmp = clusterTmp->ptrO;
 		if (objetTmp->trie == FALSE && ObjetCourant != objetTmp){
 			dist = calculDistance(x, y , objetTmp->coordx, objetTmp->coordy);
 			if (dist < *minDist){
 				*minDist = dist;
 				plusProche = clusterTmp;
-				#ifndef NDEBUG
-					printf("minDist lePlusProche : %d \n", *minDist);
-				#endif
 			}
 		}
-
 		clusterTmp = clusterTmp->succ;
 		indice++; 
 	}
+	if(*minDist == INT_MAX){
+		*minDist = 0;
+	}
 	#ifndef NDEBUG
-		printf("Fin boucle lePlusProche\n");
+		printf("minDist lePlusProche : %d \n", *minDist);
 	#endif
+	/*#ifndef NDEBUG
+		printf("Fin boucle lePlusProche\n");
+	#endif*/
 	objetTmp->trie =  TRUE ; // l'Objet est trie, on met le champ a TRUE pour ne pas le retrier 
 	return plusProche;
 }
@@ -284,7 +288,7 @@ Cluster * lePlusProche(Cluster * head, Cluster * cluster, int * minDist, int com
 int calculDistance(int ax, int ay, int bx, int by){
 	unsigned int dist;
 	
-	dist = abs((bx - ax)*(bx - ax)) + abs((by - ay)*(by - ay));
+	dist = abs((bx - ax)) + abs((by - ay));
 	return dist;
 }
 
