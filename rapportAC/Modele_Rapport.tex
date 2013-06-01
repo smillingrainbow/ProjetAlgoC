@@ -1,6 +1,7 @@
 \documentclass[twoside,UTF8]{EPURapport}
 \input{include.tex}
 
+
 \thedocument{Rapport de Projet}{Batching et optimisation des trajectoires de picking dans un centre d'entreposage}{Batching et picking}
 
 \grade{Département Informatique\\ 3\ieme{} année\\ 2008 - 2009}
@@ -25,19 +26,11 @@
 {Description en anglais}
 {Mots clés en anglais}
 
-\lstset{
-frame =single ,
-tabsize =2,
-breaklines =true ,
-basicstyle =\small \ttfamily ,
-captionpos =b
-}
 
-\nolistoftables
 
-\addextratables{
-	\lstlistoflistings
-}
+
+
+
 \begin{document}
 
 %%%%%%%%%%%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%%%
@@ -51,28 +44,34 @@ captionpos =b
 \section{Définitions et mise en place du problème}
 \subsection{Définitions}
 \paragraph{}Dans cette partie, nous définirons quelques notions permettant une meilleure compréhension de ce rapport.
+\begin{description}
+\item[• Picking]: C'est l'opération qui consiste à prélever les articles dans la quantité demandé par la commande avant son expédition.
 
-\paragraph{Picking} C'est l'opération qui consiste à prélever les articles dans la quantité demandé par la commande avant son expédition.
+\item[• Cluster]: Ce terme peut être employé dans plusieurs domaines tels que les sciences, l'informatique ou bien la musique. Ici, un cluster correspond au regroupement des objets au ceint d'un ensemble.
+\item[• Heuristique] : Une heuristique est une méthode de calcul qui fournit rapidement une solution réalisable. Mais cette solution n'est pas nécessairement optimale. Ce terme s'applique pour un problème d'optimisation NP-difficile.
+\end{description}
 
-\paragraph{Cluster} Ce terme peut être employé dans plusieurs domaines tels que les sciences, l'informatique ou bien la musique. Ici, un cluster correspond au regroupement des objets au ceint d'un ensemble.
 
 \subsection{Mise en place du problème }
-\paragraph{}La problématique de ce projet est de trouver l'itinéraire que doit réaliser chaque chariot au ceint d'un entrepôt. Pour ce faire nous avons réaliser un programme en C qui définit la tournée que doit effectuer le chariot. Cependant nous avions quelques contraintes à respecter (cf la section \ref{sec:Contraintes} page \pageref{sec:Contraintes}). 
+\paragraph{}La problématique de ce projet est de trouver l'itinéraire que doit réaliser chaque chariot au ceint d'un entrepôt. Pour ce faire nous avons réaliser un programme en C qui définit la tournée que doit effectuer le chariot. Cependant nous avions quelques contraintes à respecter (cf la section \ref{sec:Contraintes} page \pageref{sec:Contraintes}). Pour cela nous avons utiliser différents heuristiques, il faudra par la suite en effectuant des tests déterminer le meilleur.
 
 
 \section{Cahier des Charges}
 \subsection{Cahier des Charges}
 \paragraph{}Pour répondre à la problématique de ce projet, nous devions respecter un cahier des charges. Afin de trouver, l'itinéraire qu'emprunteront les chariots, nous avons utiliser différentes méthodes(cf les sections \ref{sec:CFRS} page \pageref{sec:CFRS} et \ref{sec:RFCS} page \pageref{sec:RFCS}). Nous avons considéré pour tout ce projet qu'un unique chariot et des objets avec un poids unique. 
 
-\paragraph{}Pour chercher la tournée de notre chariot, il faut commencer par lui dire ce qu'il doit aller récupérer. C'est à dire lui donner un carnet de commandes. Il faut connaître la position de chaque objet dans l'entrepôt ainsi que son poids. Ces deux éléments seront donnés avec le carnet de commandes.  
+\paragraph{}Pour chercher l'itinéraire de notre chariot, il faut tout d'abord lui dire ce qu'il doit aller chercher dans l'entrepôt. C'est à dire lui donner un carnet de commandes. Il faut connaître la position de chaque objet dans l'entrepôt ainsi que leur poids. Ces deux éléments seront donnés avec le carnet de commandes.
+
+\paragraph{}Après la réalisation des différents heuristiques, il faudra faire une série de test de façon à savoir lequel est le meilleur des deux. Ces tests sont expliqués dans le chapitre \ref{chap:test} page \pageref{chap:test}.
 
 \subsection{Contraintes}
 \label{sec:Contraintes}
 \paragraph{}Dans ce projet, il faut tenir compte de certaines contraintes : 
 \begin{itemize}
 \item[•]\textbf{La capacité du chariot}: En effet, celui-ci ne peut contenir qu'une certaine quantité (un certain poids).
-\item[•]\textbf{la compatibilité et incompatibilité des produits} : Par exemple, vous ne poserez pas dans le chariot un petit objet fragile au fond et un plus gros et lourd au dessus. 
+\item[•]\textbf{La compatibilité et incompatibilité des produits} : Il faut tenir compte de la compatibilité des produits, de façon à ce qu'aucun produits ne soient écrasé dans le chariot.
 \item[•]\textbf{Zone d'exclusion mutuelle}: Il faut synchroniser les itinéraires de façon à éviter que les chariots puissent entrer en collision. 
+\item[•]\textbf{La cartographie de l'entrepôt} : Celle-ci étant inconnue, il est difficile de calculer un itinéraire exact pour le chariot. Ce qui a un impact sur la distance totale que le chariot devra parcourir.
 \end{itemize} 
 
 Nous n'avons pour ce projet tenu compte uniquement de la première contrainte.
@@ -90,7 +89,6 @@ Il existe différentes méthodes de batching et picking. Durant ce projet, nous 
 \label{sec:RFCS}
 \paragraph{}Cette seconde méthode \textit{Root First Cluster Second} est l'opposée de \textit{Cluster First Root Second}. En effet lors de son application, on ne va non plus déterminer en premier les différents clusters mais l'itinéraire de toute la commande. Puis par la suite, on va la découper à chaque fois que le chariot sera plein. Celui-ci pourra donc lors de ces coupures retourner au dépôt afin d'être vidé.
 
-\subsection{OSMAN}
 
 
 
@@ -101,7 +99,10 @@ Il existe différentes méthodes de batching et picking. Durant ce projet, nous 
 \paragraph{} Ce chapitre présente le programme utilisant la méthode \textit{Cluster First Root Second}. 
 
 \section{Architecture du programme}
+
 \subsection{Structures de données}
+\label{subsec:struct}
+
 \paragraph{} Cette section a pour objectif de présenter les différentes structures de données utilisées pour la méthode \textit{Cluster First Root Second}.
 
 \paragraph{}Ces différentes structures sont définies dans les fichiers suivant : 
@@ -213,12 +214,42 @@ Un élément de la structure Objet représente un produit. Pour chaque produit, 
 
 \subsection{Architecture}
 
+\paragraph{}
+Le programme est axé autour d'un fichier principal appelé par le main, \textit{ClusterFirst.h}. Dans le main sont aussi inclus les différentes structures citées auparavant(\ref{subsec:struct} page \pageref{subsec:struct}) ainsi que différents fichier de la librairie C. 
+On peut représenter le graphe des dépendances par inclusion du main de la façon suivante : 
 
+\begin{figure}[!h]
+	\center
+	\includegraphics[scale=0.5]{images/main_inclusion.png}
+	\caption{Graphe des dépendances par inclusion de \textit{main.c}}
+\end{figure} 
 
-\section{Spécifications logicielles}
+\paragraph{}
+Le main appel trois fonctions : 
+\begin{itemize}
+\item[•]\textbf{init} : Permet de récupérer les paramètres(capacité maximum du chariot ainsi que le fichier texte contenant les informations sur les produits, c'est à dire le carnet de commande) et affiche un message d'erreur si aucuns paramètres n'a été passé.
+\item[•]\textbf{remplissageCluster} : Découpe le carnet de commande en cluster.
+\item[•]\textbf{trieListeCluster} : Trie chaque cluster crée avec remplissageCluster pour que le chariot effectue l'itinéraire le plus court possible.
+\end{itemize}
 
+Le graphe d'appel du main (ci-dessous), montre tous les appels de fonction effectuer à partir celui-ci à travers les trois fonctions citées précédemment.
+
+\begin{figure}[!h]
+	\center
+	\includegraphics[scale=0.5]{images/main_appel.png}
+	\caption{Graphe d'appel de la fonction main}
+\end{figure}
 
 \section{Algorithmes}
+
+\paragraph{}
+Dans cette section, les principaux différents algorithmes seront décrits.
+
+\subsection{Remplissage des clusters}
+
+
+
+\subsection{Trie des clusters}
 
 %%%%%%%%%%%%%%%%%%%% CHAPITRE 3 %%%%%%%%%%%%%%%%%%%%%%
 
@@ -230,6 +261,11 @@ Un élément de la structure Objet représente un produit. Pour chaque produit, 
 
 \section{Algorithmes}
 
+
+%%%%%%%%%%%%%%%%%%%%%%% CHAPITRE 4 %%%%%%%%%%%%%%%%%%
+
+\chapter{Test des différents heuristiques}
+\label{chap:test}
 %%%%%%%%%%%%%%%%%%%% CONCLUSION %%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Conclusion}
