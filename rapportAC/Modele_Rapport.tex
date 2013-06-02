@@ -21,10 +21,10 @@
 	\details{Université François-Rabelais, Tours}
 }
 
-\abstracts{Description en français}
-{Mots clés français}
-{Description en anglais}
-{Mots clés en anglais}
+\abstracts{Ce projet de troisième année porte sur le batching et l'optimisation des trajectoires d'un chariot dans un centre d'entreposage. Deux heuristiques différentes ont été réalisée suivant la méthode \textit{Cluster First Root Second} et la méthode \textit{Root First Cluster Second}. Puis une série de tests ont été effectuée pour déterminer l'heuristique la plus performante.}
+{Batching, Picking, Problème du voyageur de commerce, Problème de tournée de véhicules, NP-complet, Cluster First Root Second, Root First Cluster Second}
+{This project is about batching and optimization of path from a wagon in a stocking center. Two differents heuristics exist to solve this problem : Cluster First Root Second and Root First Cluster Second. A set of tests were realised to determinate the most efficient heuristic. }
+{Batching, Picking, Travelling Salesman Problem, Vehicle Routing Problem, NP-complete, Cluster First Root Seocnd, Root First Cluster Second}
 
 
 
@@ -37,6 +37,15 @@
 
 \chapter{Introduction}
 
+\paragraph{}
+Le problème d'optimisation de la tournée de chariots dans un entrepôt pour récupérer des produits est un problème NP-complet, c'est à dire qu'il est possible de vérifier une solution en un temps polynomial. Ce problème peut soit être de type VRP (Vehicle Routing Problem) s'il y a plusieurs chariots de capacité différentes ou de type TSP (Travelling Salesman Problem) s'il n'y a qu'un chariot de capacité unique. 
+\paragraph{}
+Le problème du voyageur de commerce consiste à trouver le plus court chemin reliant un ensemble de points séparés par des distances connues en passant une fois seulement par chacun d'eux. Il n'existe pas de méthodes de résolution permettant d'obtenir des solutions exactes en un temps raisonnable pour de grandes instances car pour ces instances on se retrouve face à une explosion combinatoire.
+\paragraph{}
+Le problème de tournée de véhicules est une classe de problème de recherche opérationnelle et d'optimisation combinatoire. Il consiste à déterminer par exemple les tournées de plusieurs véhicules afin de livrer une liste de clients ou de réaliser des tournées d'interventions (réparation, contrôle, maintenance) ou de visites (commerciales, médicales, etc...). On peut rajouter quelques contraintes, tels que la capacité des véhicules qui peut être limité, ou aux ressources et aux clients en fonctions des disponibilités, localisations, etc..., mais aussi des intervalles de temps pour effectuer les livraisons. Ce problème est une extension du problème du voyageur de commerce. 
+\paragraph{}Dans le cadre de ce projet, il ne sera considéré qu'un seul chariot pour aller chercher les produits d'un carnet de commande dans un entrepôt. Ce sera donc un problème de type TSP. Il existe différentes heuristiques pour essayer de résoudre ce problème. Nous en avons mis deux en place : \textit{Cluster First Root Second}\footnote{voir \ref{sec:CFRS}} et \textit{Root First Cluster Second}\footnote{voir \ref{sec:RFCS}}. Après réalisation de ces deux heuristiques, nous avons réaliser plusieurs jeux de tests dessus afin de déterminer le plus performant.
+
+
 %%%%%%%%%%%%%%%%%%%% CHAPITRE 1 %%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Présentation du projet}
@@ -48,12 +57,12 @@
 \item[• Picking]: C'est l'opération qui consiste à prélever les articles dans la quantité demandé par la commande avant son expédition.
 
 \item[• Cluster]: Ce terme peut être employé dans plusieurs domaines tels que les sciences, l'informatique ou bien la musique. Ici, un cluster correspond au regroupement des objets au ceint d'un ensemble.
-\item[• Heuristique] : Une heuristique est une méthode de calcul qui fournit rapidement une solution réalisable. Mais cette solution n'est pas nécessairement optimale. Ce terme s'applique pour un problème d'optimisation NP-difficile.
+\item[• Heuristique] : Une heuristique est une méthode de calcul qui fournit rapidement une solution réalisable. Mais cette solution n'est pas nécessairement optimale. Ce terme s'applique pour un problème d'optimisation NP-complet.
 \end{description}
 
 
 \subsection{Mise en place du problème }
-\paragraph{}La problématique de ce projet est de trouver l'itinéraire que doit réaliser chaque chariot au ceint d'un entrepôt. Pour ce faire nous avons réaliser un programme en C qui définit la tournée que doit effectuer le chariot. Cependant nous avions quelques contraintes à respecter (cf la section \ref{sec:Contraintes} page \pageref{sec:Contraintes}). Pour cela nous avons utiliser différents heuristiques, il faudra par la suite en effectuant des tests déterminer le meilleur.
+\paragraph{}La problématique de ce projet est de trouver l'itinéraire que doit réaliser chaque chariot au ceint d'un entrepôt. Pour ce faire nous avons réaliser un programme en C qui définit la tournée que doit effectuer le chariot. Cependant nous avions quelques contraintes à respecter (cf la section \ref{sec:Contraintes} page \pageref{sec:Contraintes}). Pour cela nous avons utiliser différentes heuristiques, il faudra par la suite en effectuant des tests déterminer la meilleure.
 
 
 \section{Cahier des Charges}
@@ -62,7 +71,7 @@
 
 \paragraph{}Pour chercher l'itinéraire de notre chariot, il faut tout d'abord lui dire ce qu'il doit aller chercher dans l'entrepôt. C'est à dire lui donner un carnet de commandes. Il faut connaître la position de chaque objet dans l'entrepôt ainsi que leur poids. Ces deux éléments seront donnés avec le carnet de commandes.
 
-\paragraph{}Après la réalisation des différents heuristiques, il faudra faire une série de test de façon à savoir lequel est le meilleur des deux. Ces tests sont expliqués dans le chapitre \ref{chap:test} page \pageref{chap:test}.
+\paragraph{}Après la réalisation des différentes heuristiques, il faudra faire une série de test de façon à savoir lequel est la meilleure des deux. Ces tests sont expliqués dans le chapitre \ref{chap:test} page \pageref{chap:test}.
 
 \subsection{Contraintes}
 \label{sec:Contraintes}
@@ -96,7 +105,7 @@ Il existe différentes méthodes de batching et picking. Durant ce projet, nous 
 
 \chapter{Cluster First Root Second}
 
-\paragraph{} Ce chapitre présente le programme utilisant la méthode \textit{Cluster First Root Second}. 
+\paragraph{} Ce chapitre présente le programme utilisant l'heuristique \textit{Cluster First Root Second}. 
 
 \section{Architecture du programme}
 
@@ -112,7 +121,9 @@ Il existe différentes méthodes de batching et picking. Durant ce projet, nous 
 \item[•]\textit{Cluster.h}
 \item[•]\textit{Objet.h}
 \end{itemize}
+
 \subsubsection{Utile}
+\label{subsec:util.h}
 
 \paragraph{}
 Un fichier \textit{util.h} a été crée pour gérer le type bool qui correspond au booléen. 
@@ -132,21 +143,21 @@ Lorsque l'on attribue la valeur "TRUE" à une variable, celle-ci prend comme val
 ListeCluster est une liste cha\^inée qui a pour représentation :
 
 \begin{figure}[!h]
-\texttt{ListeCluster = \^\,Place;}
-\paragraph{}
- \texttt{ Place = enregistrement 
-\begin{description}
-\item cap : Entier non signé;
-\item succ : ListeCluster;
-\item fini : Bool;
-\item ptrC : Cluster;
-\item fin; 
-\end{description}
-}
-\caption{Représentation de la structure ListeCluster}
+
+\begin{tabbing}
+\texttt{ListeCluster = \^\,Place;} \\
+\texttt{Place =} \= \texttt{enregistrement} \\
+\> \texttt{cap : Entier non signé;} \\
+\> \texttt{succ : ListeCluster;} \\
+\> \texttt{fini : Bool;} \\
+\> \texttt{ptrC : Cluster;} \\
+\> \texttt{fin; } \\
+\end{tabbing}
+
+\caption{Représentation de la structure ListeCluster (\textit{Cluster First root Second})}
 \end{figure}
 
-\paragraph{}ListeCluster est une liste chainée de pointeurs vers une liste de type de structure Cluster. Cette structure sert à gérer les différents cluster. Chaque élément de la liste indique la capacité de son cluster avec l'attribut \"cap\". Mais aussi si le cluster peut contenir un autre produit avec l'attribut "fini". Celui-ci vaut "TRUE" lorque la capacité du cluster est égale à la capacité maximum du chariot.
+\paragraph{}ListeCluster est une liste chainée de pointeurs vers une liste de type de structure Cluster. Cette structure sert à gérer les différents cluster. Chaque élément de la liste indique la capacité de son cluster avec l'attribut "cap". Mais aussi si le cluster peut contenir un autre produit avec l'attribut "fini". Celui-ci vaut "TRUE" lorque la capacité du cluster est égale à la capacité maximum du chariot.
 Ci-dessous le graphe de collaboration de la structure.
 
 \begin{figure}[!h]
@@ -160,15 +171,15 @@ Ci-dessous le graphe de collaboration de la structure.
 
 Ci-dessous la représentation de la structure Cluster. 
 \begin{figure}[!h]
-\texttt{Cluster = \^\,Place;}
-\paragraph{}
- \texttt{ Place = enregistrement 
-\begin{description}
-\item ptrO : Objet;
-\item succ : Cluster;
-\item fin;
-\end{description}
-}
+
+\begin{tabbing}
+\texttt{Cluster = \^\,Place;} \\
+\texttt{Place =} \= \texttt{enregistrement} \\
+\> \texttt{ptrO : Objet;} \\
+\> \texttt{succ : Cluster;} \\
+\> \texttt{fin;}\\
+\end{tabbing}
+
 \caption{Représentation de la structure Cluster}
 \end{figure}
 
@@ -183,21 +194,20 @@ Ci-dessous, le graphe de collaboration de la structure Cluster.
 \end{figure} 
 
 \subsubsection{Objet}
-
+\label{subsec:Objet.h}
 La structure Objet peut-\^etre représentée de la manière suivante : 
 \begin{figure}[!h]
-\texttt{Objet = \^\,Element;}
-\paragraph{}
- \texttt{Element = enregistrement 
-\begin{description}
-\item idObjet : Entier non signé;
-\item coordx : Entier;
-\item coordy : Entire;
-\item poids : Entier non signé;
-\item trie : Bool
-\item fin;
-\end{description}
-}
+\begin{tabbing}
+\texttt{Objet = \^\,Element;}\\
+\texttt{Element =} \= \texttt{enregistrement}\\
+\> \texttt{idObjet : Entier non signé;} \\
+\> \texttt{coordx : Entier;} \\
+\> \texttt{coordy : Entire;} \\
+\> \texttt{poids : Entier non signé;} \\
+\> \texttt{trie : Bool;} \\
+\> \texttt{fin;}\\
+\end{tabbing}
+
 \caption{Représentation de la structure Objet}
 \end{figure}
 
@@ -441,9 +451,44 @@ Lorsque la liste des clusters est crée, il faut ensuite trier chacun d'eux pour
 
 \chapter{Root First Cluster Second}
 
-\section{Architecture du programme}
+\paragraph{}
+Ce chapitre a pour objectif de présenter l'heuristique \textit{Root First Cluster Second}.
 
 \subsection{Structure de données}
+
+Pour cette heuristique, nous avons repris les même structure de données que pour \textit{Cluster First Root Second} avec quelques modifications.
+
+\paragraph{}
+Les différentes structures utilisées pour cette heuristique sont dans les fichiers suivants :
+\begin{itemize}
+	\item[•]\textit{util.h}
+	\item[•]\textit{ListeCluster.h}
+	\item[•]\textit{ListeObjet.h}
+	\item[•]\textit{Objet.h}
+\end{itemize}
+
+\paragraph{}
+Les structures définies dans \textit{util.h}\footnote{voir \ref{subsec:util.h} page \pageref{subsec:util.h}} et \textit{Objet.h} \footnote{voir \ref{subsec:Objet.h} page \pageref{subsec:Objet.h}} sont les mêmes que celle de \textit{Cluster First Root Second}. 
+
+\subsubsection{ListeCluster}
+
+\paragraph{}
+ListeCLuster est une liste chainée qui peut être représentée de la manière suivante : 
+
+\begin{figure}[!h]
+
+\begin{tabbing}
+\texttt{ListeCluster = \^\,Place;} \\
+\texttt{Place =} \= \texttt{enregistrement} \\
+\> \texttt{ptrLO : ListeObjet;} \\
+\> \texttt{succ : ListeClutser;} \\
+\> \texttt{fin; } \\
+\end{tabbing}
+
+\caption{Représentation de la structure ListeCluster (\textit{Root First Cluster Second})}
+\end{figure}
+
+\section{Architecture du programme}
 
 \subsection{Architecture}
 
@@ -456,7 +501,7 @@ Lorsque la liste des clusters est crée, il faut ensuite trier chacun d'eux pour
 
 %%%%%%%%%%%%%%%%%%%%%%% CHAPITRE 4 %%%%%%%%%%%%%%%%%%
 
-\chapter{Test des différents heuristiques}
+\chapter{Test des différentes heuristiques}
 \label{chap:test}
 %%%%%%%%%%%%%%%%%%%% CONCLUSION %%%%%%%%%%%%%%%%%%%%%%
 
