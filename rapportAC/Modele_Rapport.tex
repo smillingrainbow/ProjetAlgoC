@@ -107,9 +107,9 @@ Il existe différentes méthodes de batching et picking. Durant ce projet, nous 
 
 \paragraph{} Ce chapitre présente le programme utilisant l'heuristique \textit{Cluster First Root Second}. 
 
-\section{Architecture du programme}
 
-\subsection{Structures de données}
+
+\section{Structures de données}
 \label{subsec:struct}
 
 \paragraph{} Cette section a pour objectif de présenter les différentes structures de données utilisées pour la méthode \textit{Cluster First Root Second}.
@@ -122,7 +122,7 @@ Il existe différentes méthodes de batching et picking. Durant ce projet, nous 
 \item[•]\textit{Objet.h}
 \end{itemize}
 
-\subsubsection{Utile}
+\subsection{Utile}
 \label{subsec:util.h}
 
 \paragraph{}
@@ -137,12 +137,12 @@ typedef int bool;
 Lorsque l'on attribue la valeur "TRUE" à une variable, celle-ci prend comme valeur "1". De m\^eme pour "FALSE", la variable prendra la valeur "0".
 
 
-\subsubsection{ListeCluster}
+\subsection{ListeCluster}
 
 \paragraph{}
 ListeCluster est une liste cha\^inée qui a pour représentation :
 
-\begin{figure}[!h]
+\begin{figure}[H]
 
 \begin{tabbing}
 \texttt{ListeCluster = \^\,Place;} \\
@@ -154,23 +154,23 @@ ListeCluster est une liste cha\^inée qui a pour représentation :
 \> \texttt{fin; } \\
 \end{tabbing}
 
-\caption{Représentation de la structure ListeCluster (\textit{Cluster First root Second})}
+\caption{Représentation de la structure ListeCluster (\textit{Cluster First Root Second})}
 \end{figure}
 
 \paragraph{}ListeCluster est une liste chainée de pointeurs vers une liste de type de structure Cluster. Cette structure sert à gérer les différents cluster. Chaque élément de la liste indique la capacité de son cluster avec l'attribut "cap". Mais aussi si le cluster peut contenir un autre produit avec l'attribut "fini". Celui-ci vaut "TRUE" lorque la capacité du cluster est égale à la capacité maximum du chariot.
 Ci-dessous le graphe de collaboration de la structure.
 
-\begin{figure}[!h]
+\begin{figure}[H]
 \center
 \includegraphics[scale=0.5]{images/struct_liste_cluster.png}
-\caption{Graphe de collaboration de la structure ListeCluster}
+\caption{Graphe de collaboration de la structure ListeCluster (\textit{Cluster First Root Second})}
 \end{figure} 
 
 
-\subsubsection{Cluster}
+\subsection{Cluster}
 
 Ci-dessous la représentation de la structure Cluster. 
-\begin{figure}[!h]
+\begin{figure}[H]
 
 \begin{tabbing}
 \texttt{Cluster = \^\,Place;} \\
@@ -187,16 +187,16 @@ Ci-dessous la représentation de la structure Cluster.
 La structure Cluster est une liste cha\^inée à l'aide de l'attribut "succ". Chaque cellule pointe vers une autre cellule de la structure et vers un élément de type Objet.
 Ci-dessous, le graphe de collaboration de la structure Cluster.  
 
-\begin{figure}[!h]
+\begin{figure}[H]
 \center
 \includegraphics[scale=0.5]{images/struct_cluster.png}
 \caption{Graphe de collaboration de la structure Cluster}
 \end{figure} 
 
-\subsubsection{Objet}
+\subsection{Objet}
 \label{subsec:Objet.h}
 La structure Objet peut-\^etre représentée de la manière suivante : 
-\begin{figure}[!h]
+\begin{figure}[H]
 \begin{tabbing}
 \texttt{Objet = \^\,Element;}\\
 \texttt{Element =} \= \texttt{enregistrement}\\
@@ -222,13 +222,13 @@ Un élément de la structure Objet représente un produit. Pour chaque produit, 
 \end{itemize}
 
 
-\subsection{Architecture}
+\section{Architecture du programme}
 
 \paragraph{}
 Le programme est axé autour d'un fichier principal appelé par le \textit{main}, \textit{ClusterFirst.h}. Dans le \textit{main} sont aussi inclus les différentes structures citées auparavant(\ref{subsec:struct} page \pageref{subsec:struct}) ainsi que différents fichier de la librairie C. 
 On peut représenter le graphe des dépendances par inclusion du \textit{main} de la façon suivante : 
 
-\begin{figure}[!h]
+\begin{figure}[H]
 	\center
 	\includegraphics[scale=0.5]{images/main_inclusion.png}
 	\caption{Graphe des dépendances par inclusion de \textit{main.c}}
@@ -245,7 +245,7 @@ Le main appel trois fonctions :
 \paragraph{}
 Le graphe d'appel du \textit{main} (ci-dessous), montre tous les appels de fonction effectuer à partir celui-ci à travers les trois fonctions citées précédemment.
 
-\begin{figure}[!h]
+\begin{figure}[H]
 	\center
 	\includegraphics[scale=0.5]{images/main_appel.png}
 	\caption{Graphe d'appel de la fonction \textit{main}}
@@ -454,7 +454,7 @@ Lorsque la liste des clusters est crée, il faut ensuite trier chacun d'eux pour
 \paragraph{}
 Ce chapitre a pour objectif de présenter l'heuristique \textit{Root First Cluster Second}.
 
-\subsection{Structure de données}
+\section{Structure de données}
 
 Pour cette heuristique, nous avons repris les même structure de données que pour \textit{Cluster First Root Second} avec quelques modifications.
 
@@ -475,7 +475,7 @@ Les structures définies dans \textit{util.h}\footnote{voir \ref{subsec:util.h} 
 \paragraph{}
 ListeCLuster est une liste chainée qui peut être représentée de la manière suivante : 
 
-\begin{figure}[!h]
+\begin{figure}[H]
 
 \begin{tabbing}
 \texttt{ListeCluster = \^\,Place;} \\
@@ -488,15 +488,174 @@ ListeCLuster est une liste chainée qui peut être représentée de la manière 
 \caption{Représentation de la structure ListeCluster (\textit{Root First Cluster Second})}
 \end{figure}
 
+\paragraph{}
+Cette structure est une liste chainée de pointeurs vers la tête de la liste d'objets. Elle permet de pouvoir gérer facilement chaque liste d'objets correspondant à un cluster. 
+Ci-dessous une représentation du graphe de collaboration de la structure ListeCluster.
+
+
+\begin{figure}[H]
+	\center
+	\includegraphics[scale=0.5]{images/struct_listeClusterRF.png}
+	\caption{Graphe de collaboration de la structure ListeCLuster (\textit{Root First Cluster First})}
+\end{figure} 
+
+\subsubsection{ListeObjet}
+
+\paragraph{}
+La structure ListeObjet a été défini pour gérer chaque cluster. C'est une liste chainée de pointeurs vers des Objets (voir \ref{subsec:Objet.h}). Cette structure a pour représentation la figure ci-dessous : 
+
+\begin{figure}[H]
+
+\begin{tabbing}
+\texttt{ListeObjet = \^\,Place;} \\
+\texttt{Place =} \= \texttt{enregistrement} \\
+\> \texttt{ptrO : Objet;} \\
+\> \texttt{succ : ListeObjet;} \\
+\> \texttt{fin; } \\
+\end{tabbing}
+
+\caption{Représentation de la structure ListeObjet}
+\end{figure}
+
+\paragraph{}
+Chaque cellule de la structure a pour attribut un pointeur vers un Objet et un pointeur vers la cellule suivante, comme le montre le graphe de collaboration suivant : 
+
+\begin{figure}[H]
+\center
+\includegraphics[scale=0.5]{images/struct_listeobjet.png}
+\caption{Graphe de collaboration de la structure ListeObjet}
+\end{figure} 
+
 \section{Architecture du programme}
 
-\subsection{Architecture}
+\paragraph{}
+Le code source du programme se situe dans le fichier \textit{RootFirst.c}. Celui est inclus dans le fichier \textit{main.c}. 
+Pour plus de clarté sur les inclusions \textit{main}, voici le graphe des dépendances par inclusion de celui-ci : 
+
+
+\begin{figure}[H]
+\center
+\includegraphics[scale=0.5]{images/main_inclusionRF.png}
+\caption{Graphe des dépendances par inclusion de \textit{main.c} (\textit{Root First Cluster Second})}
+\end{figure} 
+
+\paragraph{}
+Le main fait appel à trois fonctions : 
+\begin{itemize}
+	\item[•]\textbf{init} : Cette fonction a pour objectif de récupérer les paramètres lors de l'exécution du programme. Il y a deux paramètres à fournir le capacité maximum du chariot et le fichier texte avec les informations sur les produits. Si ce n'est pas le cas, la fonction renvoie une erreur.
+	\item[•]\textbf{trieTabObjet} : Après la création d'un tableau de pointeurs vers des Objets contenant les informations relatives aux produits de la commande, cette fonction trie ce tableau de façon à obtenir l'itinéraire le plus court pour le chariot. Elle renvoie une liste d'Objets. 
+	\item[•]\textbf{creationListeCLuster} : Cette fonction découpe la liste d'objets obtenue avec la fonction précédente en cluster ne dépassant pas la capacité maximum du chariot.
+\end{itemize}
+\paragraph{}
+Ces appels de fonction dans le \textit{main} peuvent être schématisé avec un graphe d'appel du \textit{main}.
+
+
+\begin{figure}[H]
+\center
+\includegraphics[scale=0.5]{images/main_appelRF.png}
+\caption{Graphe d'appel de la fonction main (\textit{Root First Cluster Second})}
+\end{figure} 
+
 
 \section{Algorithmes}
 
+\paragraph{}
+Cette section a pour objectif de présenter les principaux algorithmes du programme \textit{Root First Cluster Second}. Les algorithmes des fonctions \textit{creationtabObjet} et \textit{lePlusProche} ne seront pas explicité car ils sont similaires à ceux du programme \textit{Cluster First Root Second}.
+
 \subsection{Trie des items}
 
+\paragraph{}
+La méthode \textit{Root First Cluster Second} consiste à tout d'abord trouver l'itinéraire que devra effectuer le chariot puis ensuite à découper celui-ci à chaque fois que le chariot aura atteint sa capacité maximale. 
+
+\paragraph{}
+Ce premier algorithme permet de trier les objets pour obtenir le meilleur itinéraire. Il renvoi un pointeur vers la tête de la liste de structure ListeObjet. 
+
+\begin{algorithm}[H]
+\caption{Creation d'une liste de pointeurs vers des Objets triée : \textit{trieTabObjet}}
+\label{algo:creationTabObjet}
+\algsetup{indent=3em}
+\begin{algorithmic}[1]
+\REQUIRE { %
+ entrées : $filename$ : fichier texte, $cap\_max$ : capacité maximum du chariot}
+\ENSURE { sortie : $ListeObjet$ : listeObjets trié}
+
+\STATE $tabObjet \leftarrow crationTabObjet(filename, nb\_lignes, cap\_max)$
+\COMMENT{crée un tableau de pointeur vers des Objets et récupère avec $nb\_lignes$ le nombre d'item}
+\STATE $objetEnCours \leftarrow tabObjet[1]$
+\STATE $creer(listeObjetHead)$
+\COMMENT{allocation et initialisation de $listeObjetHead$}
+\STATE $lsiteObjet \leftarrow listeObjetHead$
+\FOR[Création de la liste]{$indice$ \textbf{de} 1 \textbf{à} $nb\_lignes-1$ \textbf{faire}}
+	\STATE $creer(listeObjetTmp)$
+	\COMMENT{allocation et initialisation de $listeObjetTmp$}
+	\STATE $listeObjet\uparrow succ \leftarrow listeObjetTmp$
+	\STATE $listeObjet \leftarrow listeObjet\uparrow succ$
+\ENDFOR
+\STATE $listeObjet \leftarrow listeObjetHead$
+\COMMENT{met le pointeur de la liste sur la tête}
+\WHILE{($listeObjet \neq NULL$)}
+	\STATE $objetPlusProche \leftarrow lePlusProche(objetEnCours, tabObjet,nb\_lignes, dist)$ 
+	\COMMENT{cherche l'objet le plus proche d'$objetEnCours$ et retourne la distance les séparant}
+	\STATE $listeObjet\uparrow ptrO \leftarrow objetPlusProche$
+	\STATE $objetEnCours \leftarrow objetPlusProche$
+	\STATE $distTotal \leftarrow distTotal + dist$
+	\STATE $listeObjet \leftarrow listeObjet\uparrow succ$
+\ENDWHILE
+\RETURN $listeObjetHead$
+
+\end{algorithmic}
+\end{algorithm}
+
 \subsection{Découpage en clusters}
+
+\paragraph{}
+La fonction \textit{creationListeCluster} découpe la liste d'Objets (listeObjet), crée avec la fonction \textit{trieTabObjet}, en cluster de capacité inférieur ou égal à la capacité maximum du chariot. 
+
+\begin{algorithm}[H]
+\caption{Creation d'une liste de pointeurs vers des liste d'Objets : \textit{creationListeCluster}}
+\label{algo:creationTabObjet}
+\algsetup{indent=3em}
+\begin{algorithmic}[1]
+\REQUIRE { %
+ entrées : $listeObjet$ : pointeur vers la tête de la liste d'Objets, $cap\_max$ : capacité maximum du chariot}
+
+\STATE $cap \leftarrow 0$
+\STATE $listeObjetHead \leftarrow listeObjet$
+\STATE $creer(listeCluster$
+\COMMENT{allocation et initialisation de $listeCluster$}
+\WHILE{($listeObjet \neq NULL$)}
+	 \STATE $objet \leftarrow listeObjet\uparrow ptrO$
+	 \STATE $cap \leftarrow cap + obket\uparrow poids$
+	 \IF[si $listeObjet$ n'est pas le dernier élément de la liste]{($listeObjet\uparrow succ \neq NULL$)}
+	 	\STATE $listeObjetTmp \leftarrow listeObjet\uparrow succ$
+	 	\STATE $objetTmp \leftarrow listeObjetTmp\uparrow ptrO$
+	 	\IF[si $ObjetTmp$ ne peut pas rentrer dans le cluster]{(($cap +objetTmp\uparrow poids) > cap\_max$)}
+	 		\STATE $creer(listeClusterTmp)$
+	 		\STATE $listeCLuster\uparrow ptrLO \leftarrow listeObjetHead$
+	 		\COMMENT{le cluster pointe vers la tête de la liste d'Objets}
+	 		\STATE $listeObjet\uparrow NULL$
+	 		\COMMENT{défini la fin de liste d'Objets dans le cluster}
+	 		\STATE $listeObjetHead \leftarrow listeObjetTmp$
+	 		\COMMENT{la liste d'Objets du prochain cluster pointera vers $listeObjetTmp$}
+	 		\STATE $listeObjet \leftarrow listeObjetTmp$
+	 		\STATE $listeCluster\uparrow succ \leftarrow listeCLusterTmp$
+	 		\STATE $listeCluster \leftarrow listeCluster\uparrow succ$
+	 		\STATE $cap \leftarrow 0$
+	 		\COMMENT{remet la capacité du prochain cluster à 0}
+	 	\ELSE
+	 		\STATE $listeObjet \leftarrow listeObjet\uparrow succ$
+	 	\ENDIF
+	 \ELSE[cas pour le dernier élément de listeObjet]
+	 	\STATE $listeCluster\uparrow ptrLO \leftarrow listeOBjetHead$
+	 	\STATE $listeObjet \leftarrow listeObjet\uparrow succ$
+	 \ENDIF
+\ENDWHILE
+	 
+
+\end{algorithmic}
+\end{algorithm}
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%% CHAPITRE 4 %%%%%%%%%%%%%%%%%%

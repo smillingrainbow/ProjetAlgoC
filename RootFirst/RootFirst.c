@@ -219,7 +219,7 @@ void creationListeCluster(ListeObjet * listeObjet, unsigned int cap_max){
 					listeCluster->ptrLO = listeObjetHead; // listeCLuster pointe vers le début de la liste
 					listeObjet->succ = NULL; // dernier élément du Cluster
 					listeObjetHead = listeObjetTmp; // pointeur sur le début du Cluster suivant
-					listeObjet = listeObjet->succ; 
+					listeObjet = listeObjetTmp; 
 					listeCluster->succ = listeClusterTmp;
 					listeCluster = listeCluster->succ; // listeCluster pointe sur la liste du prochain Cluster
 					cap = 0; // remise à zéro de la capacité pour le prochain cluster
