@@ -138,6 +138,7 @@ ListeObjet * trieTabObjet(char * filename, const unsigned int cap_max){
  * @param enCours pointeur sur l'Objet courant
  * @param tabObjet tableau de pointeurs vers des Objets
  * @param nb_lignes entier représentant le nombre de produit de la commande
+ * @param minDist pointeur vers un entier, renvoi la distance entre l'objet en cours et l'objet le plus proche
  * \return Cette fonction retourne un pointeur sur le produit le plus proche de celui courant.
  */
 Objet *  plusProche(Objet * enCours, Objet ** tabObjet, int nb_lignes,int * minDist){
