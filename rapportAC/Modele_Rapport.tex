@@ -38,12 +38,12 @@
 \chapter{Introduction}
 
 \paragraph{}
-Le problème d'optimisation de la tournée de chariots dans un entrepôt pour récupérer des produits est un problème NP-complet, c'est à dire qu'il est possible de vérifier une solution en un temps polynomial. Ce problème peut soit être de type VRP (Vehicle Routing Problem) s'il y a plusieurs chariots de capacité différentes ou de type TSP (Travelling Salesman Problem) s'il n'y a qu'un chariot de capacité unique. 
+Le problème d'optimisation de la tournée de chariots dans un entrepôt de façon à récupérer des produits est un problème NP-complet, c'est à dire qu'il est possible de vérifier une solution en un temps polynomial. Ce problème peut soit être de type VRP (Vehicle Routing Problem) s'il y a plusieurs chariots de capacité différentes ou de type TSP (Travelling Salesman Problem) s'il n'y a qu'un chariot de capacité unique. 
 \paragraph{}
 Le problème du voyageur de commerce consiste à trouver le plus court chemin reliant un ensemble de points séparés par des distances connues en passant une fois seulement par chacun d'eux. Il n'existe pas de méthodes de résolution permettant d'obtenir des solutions exactes en un temps raisonnable pour de grandes instances car pour ces instances on se retrouve face à une explosion combinatoire.
 \paragraph{}
-Le problème de tournée de véhicules est une classe de problème de recherche opérationnelle et d'optimisation combinatoire. Il consiste à déterminer par exemple les tournées de plusieurs véhicules afin de livrer une liste de clients ou de réaliser des tournées d'interventions (réparation, contrôle, maintenance) ou de visites (commerciales, médicales, etc...). On peut rajouter quelques contraintes, tels que la capacité des véhicules qui peut être limité, ou aux ressources et aux clients en fonctions des disponibilités, localisations, etc..., mais aussi des intervalles de temps pour effectuer les livraisons. Ce problème est une extension du problème du voyageur de commerce. 
-\paragraph{}Dans le cadre de ce projet, il ne sera considéré qu'un seul chariot pour aller chercher les produits d'un carnet de commande dans un entrepôt. Ce sera donc un problème de type TSP. Il existe différentes heuristiques pour essayer de résoudre ce problème. Nous en avons mis deux en place : \textit{Cluster First Root Second}\footnote{voir \ref{sec:CFRS}} et \textit{Root First Cluster Second}\footnote{voir \ref{sec:RFCS}}. Après réalisation de ces deux heuristiques, nous avons réaliser plusieurs jeux de tests dessus afin de déterminer le plus performant.
+Le problème de tournée de véhicules est une classe de problème de recherche opérationnelle et d'optimisation combinatoire. Il consiste à déterminer par exemple les tournées de plusieurs véhicules afin de livrer une liste de clients ou de réaliser des tournées d'interventions (réparation, contrôle, maintenance) ou de visites (commerciales, médicales, etc...). On peut rajouter quelques contraintes, telles que la capacité des véhicules qui peut être limitée, ou aux ressources et aux clients en fonctions des disponibilités, localisations, etc..., mais aussi des intervalles de temps pour effectuer les livraisons. Ce problème est une extension du problème du voyageur de commerce. 
+\paragraph{}Dans le cadre de ce projet, il ne sera considéré qu'un seul chariot pour aller chercher les produits d'un carnet de commande dans un entrepôt. Ce sera donc un problème de type TSP. Il existe différentes heuristiques pour essayer de résoudre ce problème. Nous en avons mis deux en place : \textit{Cluster First Root Second}\footnote{voir \ref{sec:CFRS}} et \textit{Root First Cluster Second}\footnote{voir \ref{sec:RFCS}}. Après réalisation de ces deux heuristiques, nous avons réaliser plusieurs jeux de tests dessus afin de déterminer la plus performante.
 
 
 %%%%%%%%%%%%%%%%%%%% CHAPITRE 1 %%%%%%%%%%%%%%%%%%%%%%
@@ -67,7 +67,7 @@ Le problème de tournée de véhicules est une classe de problème de recherche 
 
 \section{Cahier des Charges}
 \subsection{Cahier des Charges}
-\paragraph{}Pour répondre à la problématique de ce projet, nous devions respecter un cahier des charges. Afin de trouver, l'itinéraire qu'emprunteront les chariots, nous avons utiliser différentes méthodes(cf les sections \ref{sec:CFRS} page \pageref{sec:CFRS} et \ref{sec:RFCS} page \pageref{sec:RFCS}). Nous avons considéré pour tout ce projet qu'un unique chariot et des objets avec un poids unique. 
+\paragraph{}Pour répondre à la problématique de ce projet, nous devions respecter un cahier des charges. Afin de trouver, l'itinéraire qu'emprunteront les chariots, nous avons utiliser différentes méthodes (cf les sections \ref{sec:CFRS} page \pageref{sec:CFRS} et \ref{sec:RFCS} page \pageref{sec:RFCS}). Nous avons considéré pour tout ce projet qu'un unique chariot et des objets avec un poids unique. 
 
 \paragraph{}Pour chercher l'itinéraire de notre chariot, il faut tout d'abord lui dire ce qu'il doit aller chercher dans l'entrepôt. C'est à dire lui donner un carnet de commandes. Il faut connaître la position de chaque objet dans l'entrepôt ainsi que leur poids. Ces deux éléments seront donnés avec le carnet de commandes.
 
@@ -78,16 +78,17 @@ Le problème de tournée de véhicules est une classe de problème de recherche 
 \paragraph{}Dans ce projet, il faut tenir compte de certaines contraintes : 
 \begin{itemize}
 \item[•]\textbf{La capacité du chariot}: En effet, celui-ci ne peut contenir qu'une certaine quantité (un certain poids).
-\item[•]\textbf{La compatibilité et incompatibilité des produits} : Il faut tenir compte de la compatibilité des produits, de façon à ce qu'aucun produits ne soient écrasé dans le chariot.
+\item[•]\textbf{La compatibilité et incompatibilité des produits} : Il faut tenir compte de la compatibilité des produits, de façon à ce qu'aucun produit ne soit écrasé dans le chariot.
 \item[•]\textbf{Zone d'exclusion mutuelle}: Il faut synchroniser les itinéraires de façon à éviter que les chariots puissent entrer en collision. 
 \item[•]\textbf{La cartographie de l'entrepôt} : Celle-ci étant inconnue, il est difficile de calculer un itinéraire exact pour le chariot. Ce qui a un impact sur la distance totale que le chariot devra parcourir.
 \end{itemize} 
 
+\paragraph{}
 Nous n'avons pour ce projet tenu compte uniquement de la première contrainte.
 
 \section{Différentes méthodes de batching et picking}
 
-Il existe différentes méthodes de batching et picking. Durant ce projet, nous avons mis en œuvre les deux premières présentées ci-dessous.
+Il existe différentes méthodes de batching et picking. Durant ce projet, nous avons mis en œuvre les deux heuristiques présentées ci-dessous.
 
 \subsection{Cluster First Root Second}
 \label{sec:CFRS}
@@ -96,7 +97,7 @@ Il existe différentes méthodes de batching et picking. Durant ce projet, nous 
 
 \subsection{Root First Cluster Second}
 \label{sec:RFCS}
-\paragraph{}Cette seconde méthode \textit{Root First Cluster Second} est l'opposée de \textit{Cluster First Root Second}. En effet lors de son application, on ne va non plus déterminer en premier les différents clusters mais l'itinéraire de toute la commande. Puis par la suite, on va la découper à chaque fois que le chariot sera plein. Celui-ci pourra donc lors de ces coupures retourner au dépôt afin d'être vidé.
+\paragraph{}Cette seconde méthode \textit{Root First Cluster Second} est l'opposée de \textit{Cluster First Root Second}. En effet lors de son application, on ne va non plus déterminer en premier les différents clusters mais l'itinéraire de toute la commande. Puis par la suite, on va la découper à chaque fois que le chariot aura atteint sa capacité maximum. Celui-ci pourra donc lors de ces coupures retourner au dépôt afin d'être vidé.
 
 
 
@@ -662,9 +663,192 @@ La fonction \textit{creationListeCluster} découpe la liste d'Objets (listeObjet
 
 \chapter{Test des différentes heuristiques}
 \label{chap:test}
+
+\section{Mise en place des tests}
+
+\paragraph{}
+Pour mettre en place les tests sur les heuristiques, il faut tout d'abord déterminer les données du problèmes qui sont ici, la capacité maximum du chariot ($cap$) et le nombre de produits de la commande.
+
+\paragraph{}
+Soit $n$ le nombre d'item, le couple de coordonnées($x,y$) et $p$ le poids, on peut définir la propriété suivante : 
+\begin{align}
+\forall i\in [1,n], \exists
+\left\{
+  \begin{array}{rcr}
+   (x_{i},y_{i}) \\
+     p_{i} \\
+  \end{array}
+\right.
+\end{align}
+
+\paragraph{}
+Lors de la réalisation des tests, des fichiers de produits ou instances seront généré. On prendra $p_{i}\in [1,10]$ et $(x_{i},y_{i}) \in [-100, 100]$.
+
+\paragraph{}
+Seront pris en compte les ensembles de valeurs suivant pour déterminer les jeux de tests à réaliser : 
+\begin{itemize}
+	\item[•]$n \in \{100, 200\}$
+	\item[•]$cap \in \{20, 30\}$
+\end{itemize} 
+
+\paragraph{}
+Il y a quatre jeux de tests à effectuer avec en paramètre le couple ($n, cap$) : (100, 20), (100,30), (200, 20) et (200, 30).
+Chaque jeu de tests sera testé sur vingt instances générées aléatoirement. Une instance sera lancée deux fois, une fois par heuristique. 
+
+\section{Résultats des tests}
+
+\subsection{Dominance}
+
+\paragraph{}
+Après réalisation des quatre jeux de test, on remarque que  
+\textit{Root First Cluster Second} domine toujours \textit{Cluster Root First Second}. 
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline 
+($n,cap$) & \textit{Cluster First Root Second} & \textit{Root First Cluster Second} \\ 
+\hline 
+(100, 20) & 0/20 & 20/20 \\ 
+\hline 
+(100, 30) & 0/20 & 20/20 \\
+\hline 
+(200, 20) & 0/20 & 20/20 \\ 
+\hline 
+(200, 30) & 0/20 & 20/20 \\ 
+\hline 
+\end{tabular}
+\caption{Tableau de dominances} 
+\end{table}
+
+\paragraph{}
+Ce tableau signifie que pour le jeu de test (100, 20) par exemple, l'heuristique \textit{Root First Cluster Second} sur vingt instances a renvoyé vingt fois une distance inférieur à celle de \textit{Cluster First Root Second}. 
+
+\subsection{Gap}
+
+\paragraph{}
+Nous avons calculé le gap minimum, maximum et moyen pour chaque jeu de tests de chaque heuristique. 
+Pour cela, nous avons utilisé les formules suivantes lorsque \textit{Cluster First Root Second} domine :  
+
+
+\begin{align}
+gap_{min} = \min_{1 \leqslant i \leqslant 20}(\frac{distRoot - distClsuter}{distCluster} * 100) \\
+gap_{max} = \max_{1 \leqslant i \leqslant 20}(\frac{distRoot - distClsuter}{distCluster} * 100) \\
+gap_{moy} = \frac{\displaystyle\sum_{i=1}^{nbr\, de\, dominances}(\frac{distRoot - distClsuter}{distCluster} * 100)}{nbr\, de\, dominances}
+\end{align}
+
+\paragraph{}
+Et lorsque \textit{Root First Cluster Second} domine : 
+
+\begin{align}
+gap_{min} = \min_{1 \leqslant i \leqslant 20}(\frac{distCluster - distRoot}{distRoot} * 100) \\
+gap_{max} = \max_{1 \leqslant i \leqslant 20}(\frac{distCluster - distRoot}{distRoot} * 100) \\
+gap_{moy} = \frac{\displaystyle\sum_{i=1}^{nbr\, de\, dominances}(\frac{distCluster - distRoot}{distRoot} * 100)}{nbr\, de\, dominances}
+\end{align}
+
+\paragraph{}
+Ces calculs permettent d'obtenir le tableau de résultats suivant : 
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+ & \multicolumn{3}{c|}{dominance de \textit{Cluster First root Second}} & \multicolumn{3}{c|}{dominance de \textit{Root First Cluster Second}} \\ 
+\hline 
+($n, cap$) & $gap_{min}$ & $gap_{max}$ & $gap_{moy}$ & $gap_{min}$ & $gap_{max}$ & $gap_{moy}$ \\ 
+\hline 
+(100, 20) & -65 & -46 & 0 & 87 & 191 & -1146 \\ 
+\hline 
+(100, 30) & -54 & 8 & 8 & -8 & 119 & -37 \\ 
+\hline 
+(200, 20) & -74 & -63 & 0 & 175 & 295 & -1401 \\ 
+\hline 
+(200, 30) & -65 & -37 & 0 & 59 & 193 & -1113 \\ 
+\hline 
+\end{tabular} 
+\caption{Tableau de résultats des $gap_{min}$, $gap_{max}$ et $gap_{moy}$} 
+\end{table}
+
+\paragraph{}
+Malgré le fait que les résultats des tests ne soient pas concluants, l'on peut quand même remarquer sur le tableau que \textit{Root First Cluster Second} semble avoir un  pourcentage de dominance plus élevé.
+
+\paragraph{}
+Les résultats obtenus dans le tableau précédent peuvent être généralisé avec la formule suivante : 
+
+
+Soit $H_{k}$ l'heuristique $k$ et $dist$ la distance retournée lors de l'exécution d'un heuristique alors pour chaque résultat des instances d'un jeu de test on a $$ gap_{H_{k}} =  \frac{\displaystyle\sum_{j=1}^{20}(\frac{dist_{j\, H_{k}} - dist_{j}^{best}}{dist_{j}^{best}} * 100)}{20}$$
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline 
+($n,cap$) & \textit{Cluster First Root Second} & \textit{Root First Cluster Second} \\ 
+\hline 
+(100, 20) & 3 & 0 \\ 
+\hline 
+(100, 30) & 2 & -219 \\
+\hline 
+(200, 20) & 3 & 0 \\ 
+\hline 
+(200, 30) & 2 & 0 \\ 
+\hline 
+\end{tabular}
+\caption{Tableau de résultats général des gaps} 
+\end{table}
+
+\subsection{Temps d'exécution}
+
+\paragraph{}
+Les temps de calcul avec 100 et 200 items étant très infimes, nous avons refait les tests des deux heuristiques avec $n \in \{10000, 20000\}$. 
+
+\paragraph{}
+La moyenne des temps d'exécutions de chaque heuristique pour chaque jeu de tests ont été calculé avec la formule suivante : 
+
+\begin{align}
+ tempsMoy = \frac{\displaystyle\sum_{i=0}^{20}temps_{i}}{20}
+\end{align}
+
+\paragraph{}
+Voici le tableau des résultats obtenus : 
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline 
+($n,cap$) & \textit{Cluster First Root Second} & \textit{Root First Cluster Second} \\ 
+\hline 
+(10000, 20) & 0.05 & 1.70 \\ 
+\hline 
+(10000, 30) & 0.05 & 1.72 \\
+\hline 
+(20000, 20) & 0.11 & 7.20 \\ 
+\hline 
+(20000, 30) & 0.11 & 7.80 \\ 
+\hline 
+\end{tabular}
+\caption{Tableau des temps d'exécutions (en secondes)} 
+\end{table}
+
+\paragraph{}
+Le temps d'exécution de \textit{Root First Cluster Second} est plus long que celui de \textit{Cluster First Root Second} mais sans qu'il y ait une grande différence d'écart entre les deux à faible niveau. Mais sur de plus grand jeu l'écart est plus visible.
+
+\paragraph{}
+Le changement du nombre d'items est visible avec les résultats pour les deux heuristiques. Le temps d'exécution augmente peu lors de ce changement pour \textit{Cluster First Root Second} contrairement à \textit{Root First Cluster Second}. La modification de la capacité du chariot n'a visiblement aucune influence sur \textit{Cluster First Root Second} à l'inverse de \textit{Root First Cluster Second} dont le temps d'exécution augmente légèrement.
+
 %%%%%%%%%%%%%%%%%%%% CONCLUSION %%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Conclusion}
+
+
+\paragraph{}
+\`A ce stade du projet, l'heuristique \textit{Root First Cluster Second} semble être la meilleur mais il manque des paramètres à prendre en compte. Pour le moment, l'heuristique \textit{Cluster First Root Second} renvoie toujours des résultats beaucoup plus grand que \textit{Root First Cluster Second} mais sur de grandes instances s'exécute nettement plus vite.
+
+\paragraph{}
+Ce projet pourrait être améliorer en optimisant chaque heuristique et en tenant compte d'une structure précise d'un entrepôt ou en ajoutant plusieurs chariots. 
+
+\paragraph{}
+Tout au long de ce projet, nous avons dû explorer différentes pistes d'algorithmes pour chaque heuristique. Chercher comment avec la méthode \textit{Cluster First Root Second}, créer les différents clusters du carnet de commande pour notre chariot ou bien choisir les bonnes structures pour les deux heuristiques, nous ont permis de nous améliorer. 
 
 %\annexes
 
