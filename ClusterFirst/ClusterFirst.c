@@ -190,6 +190,7 @@ void trieListeCluster(ListeCluster * liste){
  * \brief trie la liste Cluster
  * \details trie un Cluster en cherchant la cellule la plus proche de la cellule courante et en l'insérant avant celle-ci
  * @param head pointeur vers la tête de la liste Cluster
+ * @param distTotal pointeur vers un entier, permet de la récupérer par trieListeCluster, correspond à la distance à effectuer dans le cluster
  */
 void trieCLuster(Cluster * head, int * distTotal){
 	int dist = 0;
@@ -232,6 +233,8 @@ void trieCLuster(Cluster * head, int * distTotal){
 /**
  * \details cherche le Cluster le plus proche du Cluster courant 
  * @param cluster pointeur vers le Cluster courant
+ * @param minDist pointeur vers un entier, permet de renvoyer la distance entre l'objet en cours et l'objet le plus proche
+ * @param compt entier indiquant le nombre d'item contenu dans le cluster
  * \return le Cluster contenant l'objet le plus proche de l'objet courant
  */
 Cluster * lePlusProche(Cluster * head, Cluster * cluster, int * minDist, int compt){
