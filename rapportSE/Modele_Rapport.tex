@@ -142,7 +142,7 @@ C'est une machine virtuelle qui exécute une ROM très proche du vrai Windows Ph
 
 \begin{figure}[H]
 \center
-\includegraphics[scale=0.7]{images/emulateur.jpg}
+\includegraphics[scale=0.6]{images/emulateur.jpg}
 \caption{\'Emulateur Windows Phone}
 \end{figure}
 
@@ -160,13 +160,88 @@ L'émulateur est muni des trois boutons physiques requis par Microsoft : retour,
 
 
 	\section{Visual Studio}
+
+	\subsection{Interface de développement}	
+\paragraph{}
+Visual Studio est l'environnement de développement commun aux deux types de développements supportés parla plateforme mobile : Silverlight et XNA.  
+
+	\begin{figure}[H]
+		\center
+		\includegraphics[scale=0.6]{images/visualstudioview.png}
+		\caption{Visual Srudio 2010 Express pour Windows Phone}
+	\end{figure}
+
+\paragraph{}
+L'environnement est séparé en différentes parties. La partie centrale et principale est dédiée au code et à la vue du Windows Phone. Sur la gauche se trouve la toolbox répertoriant différents contrôles, et sur la droite, en haut se situe l'explorateur de la Solution\footnote{Dans Visual Studio, un projet est appelé Solution} et en bas la fenêtre de propriétés des contrôles qui sont insérés via la toolbox. 
+
 		\subsection{Création de projet}
-		
 %description des différents modèles de projets disponibles
+\paragraph{}
+Lors de la création d'un projet, Visual Studio propose un ensemble de modèles pour visual Basic et Visual C$\#$ qui sont déclinés pour Silverlight et XNA.
+
+	\begin{figure}[H]
+		\center
+		\includegraphics[scale=0.6]{images/creaprojetxna.png}
+		\caption{Création de projet avec XNA}
+	\end{figure}		
+
+\paragraph{}
+Visual Srudio propose deux modèles pour XNA : 
+\begin{itemize}
+	\item[•]\textbf{Jeu Windows Phone (4.0)} : modèle de base pour créer un jeu
+	\item[•]\textbf{Bibliothèque de jeu Windows Phone (4.0)} : permet de rajouter des composantes à son application XNA
+\end{itemize}
+	
+	\begin{figure}[H]	
+		\center
+		\includegraphics[scale=0.6]{images/creaprojetsilverlight.png}		
+		\caption{Création de projet avec Silverlight}
+	\end{figure}
+
+\paragraph{}
+Pour Silverlight, il propose cinq modèles de projet : 
+\begin{itemize}
+	\item[•]\textbf{Application Windows Phone} : modèle de base pour commencer d'une page vierge
+	\item[•]\textbf{Application liée aux données Windows Phone} : modèle exemple qui contient une ListBox alimentée en données, permet également de voir comment naviguer entre des pages de l'application en cliquant sur un élément de la ListBox
+	\item[•]\textbf{Bibliothèque de classes Windows Phone} : projet utiliser pour rajouter des composantes (nouvelles bibliothèque de contrôles, nouveaux modules, classes, etc)
+	\item[•]\textbf{Application Panorama Windows Phone} : modèle qui permet de faciliter l'affichage d'un écran trop grand, scinde l'écran en sous-zones et propose une navigation fluide comme si l'on tournait les pages d'un livre
+	\item[•]\textbf{Application Pivot Windows Phone} : modèle assez similaire au panorama, mais plus utilisé pour montrer plusieurs pages de la même donnée autour d'un pivot alors que le contrôle Panorama sera plus utilisé pour naviguer entre plusieurs pages
+\end{itemize}
+
 		\subsection{Configuration de base}
 %description des fichiers générés lors de la création d'un projet		
-		
+\paragraph{}
+Lors de la création d'un projet à partit d'un modèle une configuration de base est générée pour le projet. Que ce soit Silverlight ou XNA, la structure du projet contient obligatoirement les éléments suivants dans le dossier Propriétés: 
+\begin{itemize}
+	\item[•]\textbf{AppManifest.xml} : prépare le livrable finale (.xap) en référençant les pré-requis nécessaires à son fonctionnement (les librairies par exemple)
+	\item[•]\textbf{WMAppManifest.xml} : fichier de configuration (spécifique à Windows Phone) pour décrire l'applications au travers d'attributs XML (titre, description, nom de l'auteur, société, version, technologie), permet d'identifier l'application après son déploiement
+\end{itemize}
+
+\paragraph{}
+Certaines images sont aussi générées lors de la création du projet. Cependant leur nom diffère en Silverlight et XNA : 
+\begin{itemize}
+	\item[•]\textbf{GameThumbnail.png}(XNA)/\textbf{ApplicationIcon.png}(Silverlight) : icône de l'application telle qu'elle sera affichée dans la liste des applications installées sur le téléphone et sur le Marketplace
+	\item[•]\textbf{Background.png} : icône de la version "épinglée" de l'application lorque l'utilisateur rajoute l'application dans ses favoris sur la page d'accueil
+	\textbf{Game.ico} (XNA) : icône du jeu XNA au format icône Windows pour les jeux compatibles avec Windows
+	\item[•]\textbf{SplashScreenImage.jpg} (Silverlight) : image affichée pendant le lancement de l'application 
+\end{itemize}
+
+	\begin{figure}[H]	
+		\center
+		\includegraphics[scale=0.8]{images/explorateursolution.png}		
+		\caption{Explorateur de solutions XNA et Silverlight}
+	\end{figure}
+
+\paragraph{}
+Dans le cas d'une application Silverlight, \textbf{App.xaml} est un fichier qui fait référence aux ressources et qui gère les évènements au niveau de l'application et \textbf{MainPage.xaml}  est le fichier pour gérer le design de la page d'accueil de l'application  avec à gauche la vue du Windows Phone et à droite le code.
+
 	\section{Expression Blend}
+	
+\paragraph{}
+Expression Blend est le logiciel utilisé par les designers de conception graphique. Il n'est utilisé que dans le cadre d'applications Silverlight. Il est possible de créer un nouveau projet à partir d'Expression Blend de développement Windows Phone 7. Mais il est aussi possible de lancer Expression Blend à partir de Visual Studio.
+
+\paragraph{}
+Comme pour Visual Studio, avec Expression Blend il est possible d'éditer directement le code en XAML mais le travail est majoritairement réalisé de manière graphique. Le concepteur d'interface dispose d'une palette d'objets graphiques destinés à être simplement glissés-déposés dans la page en édition. Chaque contrôle, une fois positionné, peut être configuré grâce à la fenêtre de propriétés. Le designer peut personnaliser l'objet au niveau des couleurs, dégradé, épaisseur des traits, contenu, style de la police, etc ...
 	
 	\section{Test sur le matériel}
 %comment tester son application sur son telephone, declaration avec Zune
