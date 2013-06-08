@@ -1,7 +1,7 @@
 \documentclass[twoside,UTF8]{EPURapport}
 \input{include.tex}
 
-\thedocument{Rapport de Projet}{Le titre long}{Titre court}
+\thedocument{Rapport de Projet}{Initiation au développement sur Windows Phone \\ Etude du SDK n\degre 2}{Initiation au développement sur Windows Phone}
 
 \grade{Département Informatique\\ 3\ieme{} année\\ 2012 - 2013}
 
@@ -35,24 +35,130 @@
 \chapter{Windows Phone}
 \section{Historique}
 
+\paragraph{Windows Phone} est un système d'exploitation mobile développé par Microsoft qui succède à Windows Mobile, son ancienne plateforme renommée en Windows Phone Classic. Windows Phone a été conçut pour être d'abord destiné au grand public puis ensuite aux entreprises. Depuis Windows Phone 8, Microsoft propose des fonctions avancées pour les entreprises.
+
+\paragraph{}
+En 2003, naît Windows mobile, qui est décliné en plusieurs éditions pour les PC Pocket, PC Pocket muni de la fonction vocale et les smartphones. En 2005, Windows Mobile devient Windows Mobile 5.0 puis Windows Mobile 6.0 en 2007. Windows Mobile 6.5 est rendue disponible en 2009 et est la version la plus utilisée. 
+
+\paragraph{}
+Microsoft décide de repartir de zéro avec Windows Phone 7. Tout d'abord en changeant le nom de son système d'exploitation puis en repensant entièrement son système. Windows Phone 7 est totalement différent de Windows Mobile 6.5 en terme de système d'exploitation et d'expérience pour l'utilisateur qu'en tant que plateforme de développement. 
+ 
+
 \section{Matériel ciblé}
 	\subsection{Pré-requis matériel}
 %quel type de telephone faut-il pour cet OS?
+\paragraph{}
+Microsoft propose Windows Phone 7 comme système d'exploitation mais ne construit pas de matériel. Il impose aux constructeurs une configuration minimale et similaire. Cela permet aux développeurs d'éviter de tester leurs applications sur l'ensemble des configurations proposées par l'ensemble des constructeurs. 
+\paragraph{}
+Pour éviter cela, les constructeurs souhaitant proposer Windows Phone 7 doivent respecter des pré-requis matériels. 
+Voici quelques contraintes matérielles à respecter : 
+\begin{itemize}
+	\item[•]\`Ecran capacitif : quatre points de contacts ou plus (multitouch)
+	\item[•]Capteurs : Assisted GPS, accéloromètre, boussole, lumière, proximité
+	\item[•]Appareil Photo : 5 méga pixels ou plus
+	\item[•]Multimédia : Accélération, décodage
+	\item[•]CPU (processeur) : ARMv7 Cortex/ Scorpion ou mieux
+	\item[•]Mémoire : 256MB RAM ou plus, 8GB de Flash ou plus
+	\item[•]GPU (processeur graphique) : accélération DirectX 9
+	\item[•]Trois boutons: Retour, recherche, démarrer
+\end{itemize}
+
+\paragraph{}
+Ces exigences imposées par Microsoft garantissent aux utilisateurs achetant un smartphone doté de Windows Phone 7 qu'ils n'auront pas de problème de performances ainsi qu'aux développeurs que leurs applications fonctionneront de la même manière sur l'ensemble des mobiles compatibles. 
+
 	\subsection{Différents constructeurs}
 %constructeurs qui commenercialisent
+\paragraph{}
+Windows Phone 7 a été lancé sur le commerce le 21 octobre 2010 par seulement HTC, Samsung et LG. HTC a présenté une gamme comprenant cinq smartphones (HTC HD7, HTC 7 Mozart, HTC 7 Trophy, HTC 7 Surround et HTC 7 Pro) mais non disponible partout dans le monde. Samsung et LG ont seulement présenté deux modèles: Samsung Omnia 7 , Samsung Focus , LG Optimus 7 et LG Quantum. Seulement six téléphones étaient disponible en Europe : HTC Mozart, Trophy, LG Optimus 7, HTC hd7 et Samsung Omnia 7.
+
+\paragraph{}
+Certains fabricants ne veulent pas utiliser ce système d'exploitation : Motorola ne produit que des smartphones sous Android, HP sous webOS. Sonny Ericsson avait commencé un prototype et s'est retracté en disant que celui-ci n'avait pas abouti et préférait se concentrer sur Android avec sa gamme XPERIA. LG, un des premiers constructeurs à avoir soutenu Windows Phone, a décidé de se recentrer sur Android après de très mauvaises ventes sous le système d'exploitation de Microsoft.
+
 	
 \section{Outils de programmation}
 %outils de programmation et langage unique pour pc, WP, xBox et le web
 
+\paragraph{}
+Le développement d'application pour Windows Phone 7 se fait à partir de Silverlight pour les applications et XNA pour les jeux qui sont basés sur le .NET Compact Framework. Silverlight est un langage de programmation multi-plateforme. En effet, il permet de développer des applications pour les PC, les MAC, le Web, le Cloud et les mobiles avec Windows Phone. Quant au langage de programmation XNA, il permet de faire des jeux pour Xbox, sur PC ainsi que Windows Phone.Cette compatibilité des langages entre différentes plateformes est accentuée par l'utilisation d'un seul outil de programmation : Visual Studio. 
+
+\paragraph{}
+Les développeurs d'applications sur Windows Phone ont besoin de Visual Studio et Expression Blend. Une version gratuit de Visual Studio existe : Visual Studio Express for Windows Phone (en anglais). Le SDK(Software Development Kit) pour Windows Phone quant à lui est disponible en français. 
+
 \section{Marketplace}
+
+\paragraph{}
+Le Marketplace est une plateforme de vente d'applications pour Windows Phone et Xbox Live mais on peut aussi trouver de la musique, des films et des podcasts. Elle connu aussi sous le nom Windows Phone Store et a été mise en service me 21 octobre 2010. Il y a environ 145 000 applications disponibles actuellement.
+
+\paragraph{}
+Microsoft gère l'achat des applications par les utilisateurs puis reverse les fonds à leurs développeurs. Ce système est géré par deux interfaces et services : 
+\begin{itemize}
+	\item[•] \textbf{App Hub} est une interface web qui permet aux créateurs de soumettre leurs applications sur le Marketplace.
+	\item[•]\textbf{Marketplace} est un catalogue d'applications destinés aux utilisateurs disponibles depuis leur téléphone ou depuis le logiciel Zune.
+\end{itemize}
+
+\paragraph{}
+Chaque développeur souhaitant diffuser ses applications doit d'abord régler un droit d'entrée annuel de 99 euros. Ce droit permet de diffuser jusqu'à cinq applications gratuites et un nombre illimité pour les applications payantes. Pour les applications gratuites après les cinq, il faut payer 20 euros supplémentaires par application. Microsoft touche 30\% du revenu des applications payantes. Le prix de vente est choisi par le créateur mais n'est pas totalement libre. Il doit être choisit parmi une liste de tarifs proposés. 
+
+\paragraph{}
+Tout créateur possédant un compte App Hub valide peut soumettre son application. Sur le site, un assistant permet en cinq étapes de la proposer : 
+\begin{enumerate}
+	\item \textbf{Upload}: Renseigne les informations générales : nom de l'apllcation, la plateforme ciblée, la langue principale, le numéro de la version et l'application (.xap)
+	\item \textbf{Description} : Description pour chaque langue ciblée des informations visibles dans le Marketplace : catégorie, sous-catégorie, description détaillée, mot-clés, URL de l'éditeur
+	\item \textbf{Artwork} : Référence les images : icônes dans des résolutions différentes et des screenshots (au minimum 1)
+	\item \textbf{Pricing} : Définition du prix de l'application : gratuite, version d'évaluation, tarif.
+	\item \textbf{Submit} : Validation finale, possibilité de choisir si l'application doit être diffusée dès son approbation par Microsoft
+\end{enumerate}
+
 
 %%%%%%%%%%%%% CHAPITRE OUTILS DE DEVELOPPEMENT
 	
 \chapter{Outils de développement}
 	\section{Acquisition des outils}
+
+\paragraph{}
+Microsoft met à disposition gratuitement l'ensemble des outils nécessaire au développement sur Windows Phone. 	Ils sont disponible sur sa plateforme de téléchargement : MSDN. Il est possible pour n'importe qui de faire une application Windows Phone sans achat de licence (notamment pour Visual Studio) grâce aux versions express. 
 	
-	\section{\`Emulateur Windows Phone}
+\paragraph{}
+Le SDK Windows Phone est disponible depuis l'adresse suivante :       \url{http://dev.windowsphone.com/en-us/downloadsdk}. Le SDK 8.0 permet de faire des applications pour Windows Phone 8 et 7.5 mais ne fonctionne que sur Windows 8. Pour ce projet, nous avons utilisé le SDK 7.1, compatible avec Windows 7, permettant de développer pour Windows Phone 7.0 et 7.1. 
+
+\paragraph{}
+Après téléchargement du SDK 7.1, il s'installera sur la machine : 
+\begin{itemize}
+	\item[•]\textbf{Visual Studio 2010 Express pour Windows Phone} : environnement de développement gratuit
+	\item[•]\textbf{Expression Blend 4 pour Windows Phone} : outil gratuit pour les designers
+	\item[•]\textbf{Silverlight pour Windows Phone 7} : framework de développement pour les applications gratuites
+	\item[•]\textbf{XNA Game Studio 4.0} : framexork de développement pour les jeux 2D et 3D
+	\item[•]\textbf{Windows Phone Emulator} : émulateur pour tester les applications avant déploiement sur un vrai téléphone
+	\item[•]\textbf{Windows Phone Developper Registration} : outil pour transformer un téléphone en un terminal de développement
+	\item[•]\textbf{Application Deployement} : outil pour déployer ses applications sur l'émulateur ou un vrai téléphone
+\end{itemize}
 	
+	\section{\'Emulateur Windows Phone}
+\paragraph{}
+L'émulateur est une application indépendante mais rarement cependant utilisée seule. Son lancement est pilotée le plus souvent par Visual Studio et Expression Blend. Il permet de déployer, tester et débugger un projet en cours. 
+
+\paragraph{}
+C'est une machine virtuelle qui exécute une ROM très proche du vrai Windows Phone. Mais celle-ci est cependant restreinte aux usages basiques. Elle n'a pas de messagerie, d'office, Xbox Live ou autres. Lors du déploiement, l'émulateur est disponible en version 512MB et 256MB de RAM. 
+
+\begin{figure}[H]
+\center
+\includegraphics[scale=0.7]{images/emulateur.jpg}
+\caption{\'Emulateur Windows Phone}
+\end{figure}
+
+\paragraph{}
+L'émulateur est muni des trois boutons physiques requis par Microsoft : retour, démarrer, recherche mais aussi d'une barre d'outils. Cette barre est composée des contrôles suivants: 
+\begin{itemize}
+	\item[•]\textbf{Fermer} : mettre fin à l'émulateur
+	\item[•]\textbf{Réduire} : réduit l'émulateur dans la barre de tâches
+	\item[•]\textbf{Faire pivoter vers la gauche} ! fait pivoter l'émulateur de 90 degrés dans le sens anti-horaire
+	\item[•]\textbf{Faire pivoter vers la droite} : fait pivoter l'émulateur de 90 degrés dans le sens horaire
+	\item[•]\textbf{Redimensionner} : redimensionne l'affichage du Windows Phone
+	\item[•]\textbf{Zoom} : permet de redimensionner l'émulateur
+	\item[•]\textbf{Outils supplémentaires} : accès à l'accéléromètre, gestion de l'emplacement géographique et prise des captures d'écrans
+\end{itemize}
+
+
 	\section{Visual Studio}
 		\subsection{Création de projet}
 		
