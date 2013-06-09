@@ -1,12 +1,25 @@
-%\usepackage{listings}
+
+\usepackage{listings}
 \usepackage{hyperref}
 \usepackage{float}
-%\renewcommand{\lstlistlistingname}{Liste des codes}
-%\renewcommand{\lstlistingname}{Code}
+\usepackage{makeidx}
 
-%\addextratables{%
-%	\lstlistoflistings
-%}
+\renewcommand{\lstlistlistingname}{Liste des codes}
+\renewcommand{\lstlistingname}{Code}
+
+\makeindex
+
+\addextratables{
+	\lstlistoflistings
+}
+
+\lstset{
+frame=single ,
+tabsize=2,
+breaklines=true ,
+basicstyle=\small \ttfamily ,
+captionpos=b
+}
 
 \nolistoftables
 %\swapAuthorsAndSupervisors

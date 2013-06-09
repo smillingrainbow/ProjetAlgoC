@@ -35,7 +35,7 @@
 \chapter{Windows Phone}
 \section{Historique}
 
-\paragraph{Windows Phone} est un système d'exploitation mobile développé par Microsoft qui succède à Windows Mobile, son ancienne plateforme renommée en Windows Phone Classic. Windows Phone a été conçut pour être d'abord destiné au grand public puis ensuite aux entreprises. Depuis Windows Phone 8, Microsoft propose des fonctions avancées pour les entreprises.
+\paragraph{Windows Phone}\index{Windows Phone} est un système d'exploitation mobile développé par Microsoft qui succède à Windows Mobile, son ancienne plateforme renommée en Windows Phone Classic. Windows Phone a été conçut pour être d'abord destiné au grand public puis ensuite aux entreprises. Depuis Windows Phone 8, Microsoft propose des fonctions avancées pour les entreprises.
 
 \paragraph{}
 En 2003, naît Windows mobile, qui est décliné en plusieurs éditions pour les PC Pocket, PC Pocket muni de la fonction vocale et les smartphones. En 2005, Windows Mobile devient Windows Mobile 5.0 puis Windows Mobile 6.0 en 2007. Windows Mobile 6.5 est rendue disponible en 2009 et est la version la plus utilisée. 
@@ -82,7 +82,17 @@ Certains fabricants ne veulent pas utiliser ce système d'exploitation : Motorol
 Le développement d'application pour Windows Phone 7 se fait à partir de Silverlight pour les applications et XNA pour les jeux qui sont basés sur le .NET Compact Framework. Silverlight est un langage de programmation multi-plateforme. En effet, il permet de développer des applications pour les PC, les MAC, le Web, le Cloud et les mobiles avec Windows Phone. Quant au langage de programmation XNA, il permet de faire des jeux pour Xbox, sur PC ainsi que Windows Phone.Cette compatibilité des langages entre différentes plateformes est accentuée par l'utilisation d'un seul outil de programmation : Visual Studio. 
 
 \paragraph{}
-Les développeurs d'applications sur Windows Phone ont besoin de Visual Studio et Expression Blend. Une version gratuit de Visual Studio existe : Visual Studio Express for Windows Phone (en anglais). Le SDK(Software Development Kit) pour Windows Phone quant à lui est disponible en français. 
+Les développeurs d'applications sur Windows Phone ont besoin de Visual Studio et Expression Blend. Une version gratuite de Visual Studio existe : Visual Studio Express for Windows Phone (en anglais). Le SDK(Software Development Kit) pour Windows Phone quant à lui est disponible en français. 
+
+\paragraph{}
+Les applications peuvent être codées avec deux langages différents : 
+\begin{itemize}
+	\item[•]\textbf{C$\#$} : C'est un langage de programmation orienté objet crée par Microsoft. Il est très proche du java au niveau syntaxique mais la syntaxe reste cependant semblable à celle du C++ et du C. 
+	\item[•]\textbf{VB.NET} : Visual Basic .NET est un langage dont la syntaxe est similaire à celle de Visual Basic 6. Il permet de développer en .NET avec Visual Studio.
+\end{itemize}
+
+\paragraph{}
+L'interface de l'application Windows Phone sera codée en XAML (se prononce \textit{zammel}),un langage à balise.  
 
 \section{Marketplace}
 
@@ -168,7 +178,7 @@ Visual Studio est l'environnement de développement commun aux deux types de dé
 	\begin{figure}[H]
 		\center
 		\includegraphics[scale=0.6]{images/visualstudioview.png}
-		\caption{Visual Srudio 2010 Express pour Windows Phone}
+		\caption{Visual Studio 2010 Express pour Windows Phone}
 	\end{figure}
 
 \paragraph{}
@@ -186,7 +196,7 @@ Lors de la création d'un projet, Visual Studio propose un ensemble de modèles 
 	\end{figure}		
 
 \paragraph{}
-Visual Srudio propose deux modèles pour XNA : 
+Visual Studio propose deux modèles pour XNA : 
 \begin{itemize}
 	\item[•]\textbf{Jeu Windows Phone (4.0)} : modèle de base pour créer un jeu
 	\item[•]\textbf{Bibliothèque de jeu Windows Phone (4.0)} : permet de rajouter des composantes à son application XNA
@@ -243,42 +253,312 @@ Expression Blend est le logiciel utilisé par les designers de conception graphi
 \paragraph{}
 Comme pour Visual Studio, avec Expression Blend il est possible d'éditer directement le code en XAML mais le travail est majoritairement réalisé de manière graphique. Le concepteur d'interface dispose d'une palette d'objets graphiques destinés à être simplement glissés-déposés dans la page en édition. Chaque contrôle, une fois positionné, peut être configuré grâce à la fenêtre de propriétés. Le designer peut personnaliser l'objet au niveau des couleurs, dégradé, épaisseur des traits, contenu, style de la police, etc ...
 	
+	\begin{figure}[H]	
+		\center
+		\includegraphics[scale=0.5]{images/expressionblend.png}		
+		\caption{Expression Blend 4}
+	\end{figure}
+
 	\section{Test sur le matériel}
 %comment tester son application sur son telephone, declaration avec Zune
+\paragraph{}
+Pour tester son application, chaque développeur disposant d'un compte App Hub peut sur un nombre limité d'appareil déployer son application. Car celui-ci ne peut pas passer par le Marketplace pour l'installer et que toute diffusion d'applications s'effectue par le Marketplace. 
 
+\paragraph{}
+Un téléphone servant aux tests, doit au préalable avoir été synchronisé avec Zune\footnote{\url{www.zune.net}} qui sert d'interface logicielle entre l'ordinateur et le téléphone. Après la reconnaissance du téléphone par Zune, il faut l'enregistrer. Cela ne peut être fait que par un développeur possédant un compte App Hub valide. Un téléphone ne peut appartenir qu'à un seul compte valide à la fois. L'enregistrement s'efectue au travers d'un outil fournit lors de l'installation de l'environnement de développement : Windows Phone Developper Registration. Le téléphone est ensuite déverrouillé  pour le développement. Il est donc possible de déployer des applications dessus. Il est possible lorsque le téléphone est connecté de tester directement dessus à la place de l'émulateur en choisissant à la place de "Windows Phone 7 Emulator" "Windows Phone 7 Device". Cela permet donc de débugguer depuis son Windows Phone.
 
-%%%%%%%%%%% CHAPITRE SILVERLIGHT
+%%%%%%%%%%% CHAPITRE SILVERLIGHT %%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Silverlight}
 
-	\section{Définition}
 %definitions et explications de ce qu'est le framework silverlight
+\paragraph{}
+Silverlight est le framework utilisé lors de conception d'application Windows Phone. 
+
 	
 	%\section{Différentes classes}
 	
 	\section{Contrôles de positionnement}
 		\subsection{La grille}
+\paragraph{}
+Le contrôle \textbf{Grid} permet d'organiser une vue en ligne et en colonne. C'est l'équivalent d'un tableau en HTML. Grâce à ce tableau; il sera plus facile de positionner d'autres contrôles. par défaut, une grille ne possède qu'une seule ligne et colonne. 
+
+\begin{lstlisting}[caption={Exemple d'utilisation du contrôle \textbf{Grid}}]
+<Grid>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+	<TextBlock Text="O" FontSize="50" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+    <TextBlock Text="O" FontSize="50" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+    <TextBlock Text="O" FontSize="50" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+    <TextBlock Text="X" FontSize="50" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+    <TextBlock Text="O" FontSize="50" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+    <TextBlock Text="X" FontSize="50" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+    <TextBlock Text="O" FontSize="50" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+    <TextBlock Text="X" FontSize="50" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+    <TextBlock Text="X" FontSize="50" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
+</Grid>
+\end{lstlisting}
+
+Dans cet exemple, tout d'abord une grille de trois lignes et colonnes sont définies. Ensuite sont crée neuf zone de texte contenant soit "X" soit "O". Leur contenu sera centré horizontalement et verticalement et aura une taille de 50. A chaque zone de texte, o, lui indique sur quelle ligne et colonne elle doit se placer. Ce qui donne le rendu suivant : 
+\begin{figure}[H]
+	\center
+	\includegraphics[scale=0.3]{images/morpion.png}
+	\caption{Grille 3x3}
+\end{figure}
+
+		
 		\subsection{Le stackpanel}
+		
+\paragraph{}
+Le contrôle \textbf{StackPanel} permet d’empiler les contrôles les uns à la suite des
+autres verticalement ou horizontalement. 
+
+\begin{lstlisting}[caption={Exemple d'utilisation du contrôle \textbf{StackPanel}}]
+	<StackPanel>
+		<Button Content="Button1" Height="71" Name="button1" Width="447" />
+		<Button Content="Button2" Height="71" Name="button2" Width="447" />
+		<Button Content="Button3" Height="71" Name="button3" Width="447" />
+	</StackPanel>
+\end{lstlisting}
+	
+\paragraph{}
+Le code ci-dessus donnera l'exemple suivant : 
+
+\begin{figure}[H]
+	\center
+	\includegraphics[scale=0.3]{images/stackpanel.png}
+	\caption{Empilement vertical de bouton avec le StackPanel}
+\end{figure}	
+		
 		\subsection{Le canvas}
+
+\paragraph{}
+Le contrôle \textbf{Canvas} permet de placer les éléments de façon absolue par coordonnées. L'origine du canvas (le point (0,0)) se situe dans le coin supérieur gauche du contrôle. 
+
+\begin{lstlisting}[caption={Exemple d'utilisation du contrôle \textbf{Canvas}}]
+    <Canvas>
+        <TextBlock Text="Je suis en bas a gauche" Canvas.Top="500" />
+        <TextBlock Text="Je suis en haut a droite" Canvas.Left="250" Canvas.Top="10"/>
+    </Canvas>
+\end{lstlisting}
+
+\paragraph{}
+Dans cet exemple, un canvas contenant deux zones de texte est défini. Les zones de texte sont placés dans le canvas à l'aide des attributs \textbf{Canvas.top} (coordonnée sur l'axe des Y) et \textbf{Canvas.Left} (coordonée sur l'axe des X). Cet exemple de canvas donnera le résultat suivant : 
+
+\begin{figure}[H]
+	\center
+	\includegraphics[scale=0.3]{images/canvas.png}
+	\caption{Affichage du texte avec un \textbf{Canvas}}
+\end{figure}
 
 	\section{Contrôles d'entrée utilisateur}
 		\subsection{TextBox}
-		\subsection{CheckBox}
-		\subsection{RadioButton}
+		
+\paragraph{}
+Le contrôle \textbf{TextBox} permet à l'utilisateur de saisir du texte. Il est possible de préciser une valeur par défaut au  contrôle en remplissant le champ \textbf{Text}. L'exemple ci-dessous générera une une zone de texte pré-remplie avec la valeur "Prenom" que l'utilisateur pourra modifier.
+
+\begin{lstlisting}[caption={Exemple d'utilisation du contrôle \textbf{TextBox}}]
+    <TextBox x:Name="nom" Text="Prenom" />
+\end{lstlisting}
+
+\paragraph{}
+Il est possible de récupérer le texte saisit par l'utilisateur avec la propriété \textbf{Text} du contrôle. Pour cela, il faut déclarer une variable qui prendra la valeur saisie.
+
+\begin{lstlisting}[caption={Récupération du texte saisit}]
+	string prenom = nom.Text;
+\end{lstlisting}
+		
+		\subsection{CheckBox et RadioButton}
+
+\paragraph{}
+Les contrôles \textbf{CheckBox} et \textbf{RadioButton} permettent à l'utilisateur d'effectuer un choix parmi une liste d'options. Le RadioButton, contrairement au CheckBox ne permet de ne choisir qu'une unique option dans une liste. 
+
+\begin{lstlisting}[caption={Exemple d'utilisation du contrôle \textbf{CheckBox} et \textbf{RadioButton}}]
+    <CheckBox x:Name="caseACocher" Checked="case_ Checked" Unchecked ="case_Unchecked"/>
+    <RadioButton x:Name="boutonACocher" />
+\end{lstlisting}
+
+\paragraph{}
+Il est possible de récupérer l'état d'un CheckBox et d'un RadioButton avec la boucle if suivante : 
+
+\begin{lstlisting}[caption={Récupération de l'état d'un \textbf{CheckBox} et d'un \textbf{RadioButton}}]
+	if(caseACocher.IsChecked){ \\ou (boutonACocher.IsChecked)
+		\\ traitement
+	]else{
+		\\traitement
+	}
+\end{lstlisting}
+
+\paragraph{}
+Ces deux contrôles possèdent deux évènements : \textbf{Checked} et \textbf{Unchecked}. Ce qui permet de réaliser une action si une case est cochée et de réaliser un traitement lorsque bouton radio est coché.
+ 
+\begin{lstlisting}[caption={Gestionnaire d'événements du contrôle \textbf{CheckBox}}]
+	private void case_ Checked(object sender, EventArgs e){
+		\\ traitement quand la case est coche
+	}
+	private void case_ Unchecked(object sender, EventArgs e){
+		\\ traitement quand la case est decoche
+	}
+	
+\end{lstlisting}
 		
 	\section{Autres contrôles}
 		\subsection{Button}
-		\subsection{ContentControl}
-		\subsection{ScrollViewver}
-		\subsection{Formes}
+		
+\paragraph{}
+Le contrôle \textbf{Button} permet d'ajouter un bouton. L'attribut \textbf{Content} permet de définir le texte afficher dans le bouton.
+
+\begin{lstlisting}[caption={Gestionnaire d'événements du contrôle \textbf{CheckBox}}]
+	<Button x:Name="bouton" Content="Cliquez" Click="bouton_click />	
+\end{lstlisting}
+
+Lorsque l'utilisateur clique dessus, il peut déclencher une action. Cela est réalisé par l'attribut \textbf{Click}.
+
+\begin{lstlisting}[caption={Gestionnaire d'événements du contrôle \textbf{Button}}]
+	private void bouton_click(object sender, RoutedEventArgs e){
+		\\ traitement quand on clique sur le bouton
+	}
+	
+\end{lstlisting}
+
+		\subsection{ScrollViewer}
+
+\paragraph{}
+Le contrôle \textbf{ScrollViewer} permet d'afficher un élément dans une zone plus petite que sa taille réelle grâce à la barre de défilement.
+ 
+\begin{lstlisting}[caption={Exemple d'utilisation du contrôle \textbf{ScrollViewer}}]
+<ScrollViewer>
+    <StackPanel>
+        <TextBlock Text="Bonjour a tous 1" Margin="40" />
+        <TextBlock Text="Bonjour a tous 2" Margin="40" />
+        <TextBlock Text="Bonjour a tous 3" Margin="40" />
+        <TextBlock Text="Bonjour a tous 4" Margin="40" />
+        <TextBlock Text="Bonjour a tous 5" Margin="40" />
+        <TextBlock Text="Bonjour a tous 6" Margin="40" />
+        <TextBlock Text="Bonjour a tous 7" Margin="40" />
+        <TextBlock Text="Bonjour a tous 8" Margin="40" />
+        <TextBlock Text="Bonjour a tous 9" Margin="40" />
+        <TextBlock Text="Bonjour a tous 10" Margin="40" />
+    </StackPanel>
+</ScrollViewer>
+\end{lstlisting}
+	
+\paragraph{}	
+Toutes les zones de textes n'apparaissent pas à l'écran avec l'exemple précédent, l'utilisateur devra donc faire défiler le texte pour voir les dernières zones.
+
+\begin{figure}[H]
+	\center
+	\includegraphics[scale=0.3]{images/scrollviewer.png}
+	\caption{Affichage du texte avec \textbf{ScrollViewer}}
+\end{figure}
 		
 	\section{Manipulation des images}
 	
+\paragraph{}
+Pour afficher une image dans l'application, il faut utiliser le contrôle \textbf{Image}.
+
+\begin{lstlisting}[caption={Exemple d'utilisation du contrôle \textbf{Image}}]
+	<Image x:Name="logo" Source="images/monimage.png" />	
+\end{lstlisting}	
+
+Avant de renseigner le contrôle Image, l'image que l'on veut afficher doit être embarquer dans le projet. Pour cela en faisant un clic droit dans l'explorateur de la solution, on sélectionnera tout d'abord le menu \textbf{ajouter} puis \textbf{ajouter un élément existant}.
+
 	\section{Geolocalisation}
 		\subsection{Geolocalisation du smartphone}
-		
+
+\paragraph{}
+La position géographique du téléphone peut être déterminé grâce à la classe \textbf{GeoCoordinateWatcher}. Pour pouvoir l'utiliser, il faut faire une référence à l'assemblage \textbf{System.Device.dll} et ajouter l'espace de nom \textbf{System.Device.Location}. La position sera récupérée avec l'évènement \textbf{PositionChanged}. Pour démarrer le GPS, il faut appeler la méthode \textbf{start()}.
+
+\begin{lstlisting}[caption={Affichage des coordonnées du téléphone}]
+// Code dans MainPage.xaml.cs
+using System.Device.Location;
+
+namespace PhoneApp2
+{
+    public partial class MainPage : PhoneApplicationPage
+    {
+        // Constructeur
+        public MainPage()
+        {
+            InitializeComponent();
+            var geoWatcher = new GeoCoordinateWatcher();
+
+            geoWatcher.PositionChanged += (s, e) =>
+               {
+            latitude.Text = e.Position.Location.Latitude.ToString();
+            longitude.Text = e.Position.Location.Longitude.ToString();
+               };
+            geoWatcher.Start();
+        }
+    }
+}
+
+// Code dans MainPage.xaml
+<StackPanel>    
+	<TextBlock Height="30"  Name="latitude" Text="TextBlock"  />
+    <TextBlock Height="30"  Name="longitude" Text="TextBlock"  />
+</StackPanel> 
+
+\end{lstlisting}	
+
+\paragraph{}	
+On peut modifier la position géographique de l'émulateur avec l'outil \textbf{Emplacement}. 
+
+\begin{figure}[H]
+	\center
+	\includegraphics[scale=0.7]{images/geolocalisation.png}
+	\caption{Modification de la position de l'émulateur}
+\end{figure}
+	
+	
 		\subsection{Bing Maps}
+		
+\paragraph{}
+La représentation géographique d'une position est possible avec le contrôle \textbf{Bing Maps} de classe \textbf{Map}. Pour utiliser cette classe, il faut ajouter l'espace nom et faire référence à l'assemblage \textbf{Microsoft.Phone.Control.Maps}. Il est nécessaire de s'enregistrer sur le site \url{www.bingmapsportal.com} pour utiliser les cartes de Bing. Après l'inscription, qui est gratuite, une clé est obtenue. Elle est à insérer dans le code XAML. 
+
+\begin{lstlisting}[caption={Utilisation de la carte avec le contrôle \textbf{Bing Maps}}]
+// ajout de l'espace nom du controle
+xmlns:carte="clr-namespace:Microsoft.Phone.Controls.Maps;assembly=Microsoft.Phone.Controls.Maps"	
+	
+// ajout de la carte	
+	<carte:Map x:Name="map" ZoomBarVisibility="Visible"/>
+\end{lstlisting}
+
+\paragraph{}
+L'attribut \textbf{ZoomBarVisibility} permet d'afficher les contrôles du zoom.
+
+\begin{figure}[H]
+	\center
+	\includegraphics[scale=0.4]{images/bing.png}
+	\caption{Affichage de la carte avec les contrôles du zoom}
+\end{figure}
+
 	\section{Orientation de l'application}
+
+\paragraph{}
+Le téléphone est orientable soit en mode portrait soit en mode paysage. Le développeur peut choisir si son application sera compatible avec une ou les deux orientations et quelle sera l'orientation au démarrage avec les propriétés \textbf{SupportedOrientations} et \textbf{Orientation}.
+
+\begin{lstlisting}[caption={Orientation du téléphone}]
+<phone:PhoneApplicationPage 
+	SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
+\end{lstlisting}
+
+\paragraph{}
+Avec code ci-dessus, l'application s'ouvrira en mode Portrait mais supportera le mode paysage. Les propriétés SupportedOrientations et Orientation peuvent prendre les valeurs suivantes : 
+\begin{itemize}
+	\item[•] Portrait
+	\item[•] Landscape
+	\item[•] PortaitOrLandscape
+\end{itemize}
+	
 		
 %%%%%%%%%%%% CHAPITRE 4 LECTEUR RSS %%%%%%%%%%%%%%%%%%%%%%
 
@@ -288,7 +568,7 @@ Comme pour Visual Studio, avec Expression Blend il est possible d'éditer direct
 %defintion d'un flux rss
 		
 		\subsection{Applications existantes}
-%présentation des applis déjà existante sur le markerplace
+%présentation des applis déja existante sur le markerplace
 
 	\section{Lecteur RSS}
 	
@@ -298,7 +578,10 @@ Comme pour Visual Studio, avec Expression Blend il est possible d'éditer direct
 
 \chapter{Conclusion}
 
-\annexes
+%\annexes
+
+\addcontentsline{toc}{chapter}{\numberline{}Index}
+\printindex
 
 \end{document}
 
