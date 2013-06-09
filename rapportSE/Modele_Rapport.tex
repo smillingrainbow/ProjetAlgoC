@@ -20,22 +20,32 @@
 	\details{Université François-Rabelais, Tours}
 }
 
-\abstracts{Description en français}
-{Mots clés français}
-{Description en anglais}
-{Mots clés en anglais}
+\abstracts{Ce projet de troisième année est une initiation au développement sur Windows Phone. Il traite de la prise en main du SDK Windows Phone 7 et des différents contrôles de bases de Silverlight. Et finalement, afin de montrer comment développer avec Silverlight et le SDK, un agrégateur de flux RSS a été réalisé.}
+{Windows Phone 7, Microsoft, Visual Studio, Expression Blend, Silverlight, XML, C$\#$, XAML, RSS, Application}
+{This third year project is an introduction at developpement of Windows Phone applications. It talks about picking up the Windows Phone SDK and the differents basic controls from Silverlight. And finally, in order to show how develop with Silverlight and the SDK, an aggregator RSS has been created.}
+{Windows Phone 7, Microsoft, Visual Studio, Expression Blend, Silverlight, XML, C$\#$, XAML, RSS, Application}
 
 \begin{document}
 
 %%%%%%%%%%% INTRODUCTION %%%%%%%%%%%%%%%%%%%%%%
 \chapter{Introduction}
 
+\paragraph{}
+Le marché du smartphone  actuellement est en pleine expansion dans le monde. Ce marché est dominé par Google avec son sytème d'exploitation Android et Apple avec iOS. Microsoft pour combler son retard dû à Windows Mobile, l'a remplacé par un nouveau système d'exploitation : Windows Phone 7 sorti en octobre. 
+
+\paragraph{}
+Après installation du SDK, des applications et des jeux peuvent être développés avec les frameworks Sliverlight et XNA et les langages VB.NET et C$\#$. Durant ce projet, nous avons seulement utilisé Silverlight et developpé en C$\#$. 
+
+\paragraph{}
+Dans un premier nous allons définir Windows Phone à travers son histoire et la politique mise en place par Microsoft envers les constructeurs ainsi que les outils de programmation nécessaire et comment fonctionne le Marketplace. Puis dans un deuxième temps seront passé en revue tous les outils nécessaire au développement Windows Phone et sur la manière de les acquérir. Dans un troisième, Silverlight et ses différents contrôles seront présentés et définis. Et enfin, dans un dernier temps, nous expliquerons le processus de réalisation d'un agrégateur de flux pour Windows phone.
+
 %%%%%%%%%%%%%%%%% CHAPITRE WINDOWS PHONE %%%%%%%%%
 
 \chapter{Windows Phone}
 \section{Historique}
 
-\paragraph{Windows Phone}\index{Windows Phone} est un système d'exploitation mobile développé par Microsoft qui succède à Windows Mobile, son ancienne plateforme renommée en Windows Phone Classic. Windows Phone a été conçut pour être d'abord destiné au grand public puis ensuite aux entreprises. Depuis Windows Phone 8, Microsoft propose des fonctions avancées pour les entreprises.
+\paragraph{}
+Windows Phone\index{Windows Phone} est un système d'exploitation mobile développé par Microsoft qui succède à Windows Mobile, son ancienne plateforme renommée en Windows Phone Classic. Windows Phone a été conçut pour être d'abord destiné au grand public puis ensuite aux entreprises. Depuis Windows Phone 8, Microsoft propose des fonctions avancées pour les entreprises.
 
 \paragraph{}
 En 2003, naît Windows mobile, qui est décliné en plusieurs éditions pour les PC Pocket, PC Pocket muni de la fonction vocale et les smartphones. En 2005, Windows Mobile devient Windows Mobile 5.0 puis Windows Mobile 6.0 en 2007. Windows Mobile 6.5 est rendue disponible en 2009 et est la version la plus utilisée. 
@@ -566,17 +576,30 @@ Avec code ci-dessus, l'application s'ouvrira en mode Portrait mais supportera le
 	\section{Flux RSS et applications}
 		\subsection{Flux RSS}
 %defintion d'un flux rss
+\paragraph{}		
+Le sigle RSS signifie Really Simple Syndication. C'est une famille de formats de données qui est utilisée pour la syndication de contenu Web. Ici, la syndication consiste à mettre à disposition un flux RSS avec l'en-tête du contenu ajouté récemment à un site, le dernier message ou dernière nouvelle de celui-ci. Les flux RSS sont des fichiers XML utilisés par les blogs et sites d'actualité pour présenter aux abonnés à leurs flux les dernières nouveautés.
+
+\paragraph{}
+Un flux RSS pour être lu nécessite un logiciel agrégateur. Pour s'abonner à un flux, il faut donner l'adresse à l'agrégateur afin que celui-ci se connecte au site émetteur pour vérifier la présence de nouveau contenu. Le flux RSS sera ensuite téléchargé et convertit au format HTML pour être lu.
 		
 		\subsection{Applications existantes}
 %présentation des applis déja existante sur le markerplace
 
 	\section{Lecteur RSS}
 	
+
 %Explication sur notre appli : comment ca fonctionne, comment la faire .... 
 
 %%%%%%%%%%%%% CONCLUSION %%%%%%%%%%%%%%%%%%%%
 
 \chapter{Conclusion}
+
+\paragraph{}
+Tout au long de notre projet, nous avons découvert l'environnement de développement du SDK Windows Phone en utilisant Visual Studio Express pour Windows Phone et Expression Blend. Nous avons exploré différents contrôles du framework de développement Windows Phone, Silverlight, en les testant dans plusieurs petites applications ensuite lancées avec l'émulateur fournit avec le SDK. Par la suite, après la prise en main du SDK, nous avons réalisé un agrégateur de flux RSS. 
+
+
+\paragraph{}
+Dans un projet ultérieur, l'application de l'agrégateur de flux pourrait être repris et amélioré par l'ajout d'une base de données des différents abonnements à des flux de l'utilisateur et d'un navigateur web interne ouvert dans une nouvelle page de l'application lors d'un clic sur une news 
 
 %\annexes
 
