@@ -107,12 +107,12 @@ L'interface de l'application Windows Phone sera codée en XAML (se prononce \tex
 \section{Marketplace}
 
 \paragraph{}
-Le Marketplace est une plateforme de vente d'applications pour Windows Phone et Xbox Live mais on peut aussi trouver de la musique, des films et des podcasts. Elle connu aussi sous le nom Windows Phone Store et a été mise en service me 21 octobre 2010. Il y a environ 145 000 applications disponibles actuellement.
+Le Marketplace \index{Marketplace} est une plateforme de vente d'applications pour Windows Phone et Xbox Live mais on peut aussi trouver de la musique, des films et des podcasts. Elle connu aussi sous le nom Windows Phone Store et a été mise en service me 21 octobre 2010. Il y a environ 145 000 applications disponibles actuellement.
 
 \paragraph{}
 Microsoft gère l'achat des applications par les utilisateurs puis reverse les fonds à leurs développeurs. Ce système est géré par deux interfaces et services : 
 \begin{itemize}
-	\item[•] \textbf{App Hub} est une interface web qui permet aux créateurs de soumettre leurs applications sur le Marketplace.
+	\item[•] \textbf{App Hub}\index{App Hub} est une interface web qui permet aux créateurs de soumettre leurs applications sur le Marketplace.
 	\item[•]\textbf{Marketplace} est un catalogue d'applications destinés aux utilisateurs disponibles depuis leur téléphone ou depuis le logiciel Zune.
 \end{itemize}
 
@@ -136,7 +136,7 @@ Tout créateur possédant un compte App Hub valide peut soumettre son applicatio
 	\section{Acquisition des outils}
 
 \paragraph{}
-Microsoft met à disposition gratuitement l'ensemble des outils nécessaire au développement sur Windows Phone. 	Ils sont disponible sur sa plateforme de téléchargement : MSDN. Il est possible pour n'importe qui de faire une application Windows Phone sans achat de licence (notamment pour Visual Studio) grâce aux versions express. 
+Microsoft met à disposition gratuitement l'ensemble des outils nécessaire au développement sur Windows Phone. Ils sont disponible sur sa plateforme de téléchargement : MSDN\index{MSDN}. Il est possible pour n'importe qui de faire une application Windows Phone sans achat de licence (notamment pour Visual Studio) grâce aux versions express. 
 	
 \paragraph{}
 Le SDK Windows Phone est disponible depuis l'adresse suivante :       \url{http://dev.windowsphone.com/en-us/downloadsdk}. Le SDK 8.0 permet de faire des applications pour Windows Phone 8 et 7.5 mais ne fonctionne que sur Windows 8. Pour ce projet, nous avons utilisé le SDK 7.1, compatible avec Windows 7, permettant de développer pour Windows Phone 7.0 et 7.1. 
@@ -155,7 +155,7 @@ Après téléchargement du SDK 7.1, il s'installera sur la machine :
 	
 	\section{\'Emulateur Windows Phone}
 \paragraph{}
-L'émulateur est une application indépendante mais rarement cependant utilisée seule. Son lancement est pilotée le plus souvent par Visual Studio et Expression Blend. Il permet de déployer, tester et débugger un projet en cours. 
+L'émulateur\index{\'Emulateur} est une application indépendante mais rarement cependant utilisée seule. Son lancement est pilotée le plus souvent par Visual Studio et Expression Blend. Il permet de déployer, tester et débugger un projet en cours. 
 
 \paragraph{}
 C'est une machine virtuelle qui exécute une ROM très proche du vrai Windows Phone. Mais celle-ci est cependant restreinte aux usages basiques. Elle n'a pas de messagerie, d'office, Xbox Live ou autres. Lors du déploiement, l'émulateur est disponible en version 512MB et 256MB de RAM. 
@@ -183,7 +183,7 @@ L'émulateur est muni des trois boutons physiques requis par Microsoft : retour,
 
 	\subsection{Interface de développement}	
 \paragraph{}
-Visual Studio est l'environnement de développement commun aux deux types de développements supportés parla plateforme mobile : Silverlight et XNA.  
+Visual Studio\index{Visual Studio} est l'environnement de développement commun aux deux types de développements supportés parla plateforme mobile : Silverlight et XNA.  
 
 	\begin{figure}[H]
 		\center
@@ -219,7 +219,7 @@ Visual Studio propose deux modèles pour XNA :
 	\end{figure}
 
 \paragraph{}
-Pour Silverlight, il propose cinq modèles de projet : 
+Pour Silverlight,\index{Silverlight} il propose cinq modèles de projet : 
 \begin{itemize}
 	\item[•]\textbf{Application Windows Phone} : modèle de base pour commencer d'une page vierge
 	\item[•]\textbf{Application liée aux données Windows Phone} : modèle exemple qui contient une ListBox alimentée en données, permet également de voir comment naviguer entre des pages de l'application en cliquant sur un élément de la ListBox
@@ -258,7 +258,7 @@ Dans le cas d'une application Silverlight, \textbf{App.xaml} est un fichier qui 
 	\section{Expression Blend}
 	
 \paragraph{}
-Expression Blend est le logiciel utilisé par les designers de conception graphique. Il n'est utilisé que dans le cadre d'applications Silverlight. Il est possible de créer un nouveau projet à partir d'Expression Blend de développement Windows Phone 7. Mais il est aussi possible de lancer Expression Blend à partir de Visual Studio.
+Expression Blend\index{Expression Blend} est le logiciel utilisé par les designers de conception graphique. Il n'est utilisé que dans le cadre d'applications Silverlight. Il est possible de créer un nouveau projet à partir d'Expression Blend de développement Windows Phone 7. Mais il est aussi possible de lancer Expression Blend à partir de Visual Studio.
 
 \paragraph{}
 Comme pour Visual Studio, avec Expression Blend il est possible d'éditer directement le code en XAML mais le travail est majoritairement réalisé de manière graphique. Le concepteur d'interface dispose d'une palette d'objets graphiques destinés à être simplement glissés-déposés dans la page en édition. Chaque contrôle, une fois positionné, peut être configuré grâce à la fenêtre de propriétés. Le designer peut personnaliser l'objet au niveau des couleurs, dégradé, épaisseur des traits, contenu, style de la police, etc ...
@@ -272,10 +272,10 @@ Comme pour Visual Studio, avec Expression Blend il est possible d'éditer direct
 	\section{Test sur le matériel}
 %comment tester son application sur son telephone, declaration avec Zune
 \paragraph{}
-Pour tester son application, chaque développeur disposant d'un compte App Hub peut sur un nombre limité d'appareil déployer son application. Car celui-ci ne peut pas passer par le Marketplace pour l'installer et que toute diffusion d'applications s'effectue par le Marketplace. 
+Pour tester son application, chaque développeur disposant d'un compte App Hub\index{App Hub} peut sur un nombre limité d'appareil déployer son application. Car celui-ci ne peut pas passer par le Marketplace pour l'installer et que toute diffusion d'applications s'effectue par le Marketplace. 
 
 \paragraph{}
-Un téléphone servant aux tests, doit au préalable avoir été synchronisé avec Zune\footnote{\url{www.zune.net}} qui sert d'interface logicielle entre l'ordinateur et le téléphone. Après la reconnaissance du téléphone par Zune, il faut l'enregistrer. Cela ne peut être fait que par un développeur possédant un compte App Hub valide. Un téléphone ne peut appartenir qu'à un seul compte valide à la fois. L'enregistrement s'efectue au travers d'un outil fournit lors de l'installation de l'environnement de développement : Windows Phone Developper Registration. Le téléphone est ensuite déverrouillé  pour le développement. Il est donc possible de déployer des applications dessus. Il est possible lorsque le téléphone est connecté de tester directement dessus à la place de l'émulateur en choisissant à la place de "Windows Phone 7 Emulator" "Windows Phone 7 Device". Cela permet donc de débugguer depuis son Windows Phone.
+Un téléphone servant aux tests, doit au préalable avoir été synchronisé avec Zune\footnote{\url{www.zune.net}}\index{Zune} qui sert d'interface logicielle entre l'ordinateur et le téléphone. Après la reconnaissance du téléphone par Zune, il faut l'enregistrer. Cela ne peut être fait que par un développeur possédant un compte App Hub valide. Un téléphone ne peut appartenir qu'à un seul compte valide à la fois. L'enregistrement s'efectue au travers d'un outil fournit lors de l'installation de l'environnement de développement : Windows Phone Developper Registration. Le téléphone est ensuite déverrouillé  pour le développement. Il est donc possible de déployer des applications dessus. Il est possible lorsque le téléphone est connecté de tester directement dessus à la place de l'émulateur en choisissant à la place de "Windows Phone 7 Emulator" "Windows Phone 7 Device". Cela permet donc de débugguer depuis son Windows Phone.
 
 %%%%%%%%%%% CHAPITRE SILVERLIGHT %%%%%%%%%%%%%%%%%%%%%
 
@@ -283,7 +283,7 @@ Un téléphone servant aux tests, doit au préalable avoir été synchronisé av
 
 %definitions et explications de ce qu'est le framework silverlight
 \paragraph{}
-Silverlight est le framework utilisé lors de conception d'application Windows Phone. 
+Silverlight\index{Silverlight} est le framework utilisé lors de conception d'application Windows Phone. 
 
 	
 	%\section{Différentes classes}
@@ -291,7 +291,7 @@ Silverlight est le framework utilisé lors de conception d'application Windows P
 	\section{Contrôles de positionnement}
 		\subsection{La grille}
 \paragraph{}
-Le contrôle \textbf{Grid} permet d'organiser une vue en ligne et en colonne. C'est l'équivalent d'un tableau en HTML. Grâce à ce tableau; il sera plus facile de positionner d'autres contrôles. par défaut, une grille ne possède qu'une seule ligne et colonne. 
+Le contrôle \textbf{Grid}\index{Grid} permet d'organiser une vue en ligne et en colonne. C'est l'équivalent d'un tableau en HTML. Grâce à ce tableau; il sera plus facile de positionner d'autres contrôles. par défaut, une grille ne possède qu'une seule ligne et colonne. 
 
 \begin{lstlisting}[caption={Exemple d'utilisation du contrôle \textbf{Grid}}]
 <Grid>
@@ -328,7 +328,7 @@ Dans cet exemple, tout d'abord une grille de trois lignes et colonnes sont défi
 		\subsection{Le stackpanel}
 		
 \paragraph{}
-Le contrôle \textbf{StackPanel} permet d’empiler les contrôles les uns à la suite des
+Le contrôle \textbf{StackPanel}\index{Stackpanel} permet d’empiler les contrôles les uns à la suite des
 autres verticalement ou horizontalement. 
 
 \begin{lstlisting}[caption={Exemple d'utilisation du contrôle \textbf{StackPanel}}]
@@ -351,7 +351,7 @@ Le code ci-dessus donnera l'exemple suivant :
 		\subsection{Le canvas}
 
 \paragraph{}
-Le contrôle \textbf{Canvas} permet de placer les éléments de façon absolue par coordonnées. L'origine du canvas (le point (0,0)) se situe dans le coin supérieur gauche du contrôle. 
+Le contrôle \textbf{Canvas}\index{Canvas} permet de placer les éléments de façon absolue par coordonnées. L'origine du canvas (le point (0,0)) se situe dans le coin supérieur gauche du contrôle. 
 
 \begin{lstlisting}[caption={Exemple d'utilisation du contrôle \textbf{Canvas}}]
     <Canvas>
@@ -373,7 +373,7 @@ Dans cet exemple, un canvas contenant deux zones de texte est défini. Les zones
 		\subsection{TextBox}
 		
 \paragraph{}
-Le contrôle \textbf{TextBox} permet à l'utilisateur de saisir du texte. Il est possible de préciser une valeur par défaut au  contrôle en remplissant le champ \textbf{Text}. L'exemple ci-dessous générera une une zone de texte pré-remplie avec la valeur "Prenom" que l'utilisateur pourra modifier.
+Le contrôle \textbf{TextBox}\index{TextBox} permet à l'utilisateur de saisir du texte. Il est possible de préciser une valeur par défaut au  contrôle en remplissant le champ \textbf{Text}. L'exemple ci-dessous générera une une zone de texte pré-remplie avec la valeur "Prenom" que l'utilisateur pourra modifier.
 
 \begin{lstlisting}[caption={Exemple d'utilisation du contrôle \textbf{TextBox}}]
     <TextBox x:Name="nom" Text="Prenom" />
@@ -389,7 +389,7 @@ Il est possible de récupérer le texte saisit par l'utilisateur avec la propri�
 		\subsection{CheckBox et RadioButton}
 
 \paragraph{}
-Les contrôles \textbf{CheckBox} et \textbf{RadioButton} permettent à l'utilisateur d'effectuer un choix parmi une liste d'options. Le RadioButton, contrairement au CheckBox ne permet de ne choisir qu'une unique option dans une liste. 
+Les contrôles \textbf{CheckBox}\index{CheckBox} et \textbf{RadioButton}\index{RadioButton} permettent à l'utilisateur d'effectuer un choix parmi une liste d'options. Le RadioButton, contrairement au CheckBox ne permet de ne choisir qu'une unique option dans une liste. 
 
 \begin{lstlisting}[caption={Exemple d'utilisation du contrôle \textbf{CheckBox} et \textbf{RadioButton}}]
     <CheckBox x:Name="caseACocher" Checked="case_ Checked" Unchecked ="case_Unchecked"/>
@@ -424,7 +424,7 @@ Ces deux contrôles possèdent deux évènements : \textbf{Checked} et \textbf{U
 		\subsection{Button}
 		
 \paragraph{}
-Le contrôle \textbf{Button} permet d'ajouter un bouton. L'attribut \textbf{Content} permet de définir le texte afficher dans le bouton.
+Le contrôle \textbf{Button}\index{Button} permet d'ajouter un bouton. L'attribut \textbf{Content} permet de définir le texte afficher dans le bouton.
 
 \begin{lstlisting}[caption={Gestionnaire d'événements du contrôle \textbf{CheckBox}}]
 	<Button x:Name="bouton" Content="Cliquez" Click="bouton_click />	
@@ -442,7 +442,7 @@ Lorsque l'utilisateur clique dessus, il peut déclencher une action. Cela est r�
 		\subsection{ScrollViewer}
 
 \paragraph{}
-Le contrôle \textbf{ScrollViewer} permet d'afficher un élément dans une zone plus petite que sa taille réelle grâce à la barre de défilement.
+Le contrôle \textbf{ScrollViewer}\index{ScrollViewer} permet d'afficher un élément dans une zone plus petite que sa taille réelle grâce à la barre de défilement.
  
 \begin{lstlisting}[caption={Exemple d'utilisation du contrôle \textbf{ScrollViewer}}]
 <ScrollViewer>
@@ -473,7 +473,7 @@ Toutes les zones de textes n'apparaissent pas à l'écran avec l'exemple précé
 	\section{Manipulation des images}
 	
 \paragraph{}
-Pour afficher une image dans l'application, il faut utiliser le contrôle \textbf{Image}.
+Pour afficher une image dans l'application, il faut utiliser le contrôle \textbf{Image}\index{Image}.
 
 \begin{lstlisting}[caption={Exemple d'utilisation du contrôle \textbf{Image}}]
 	<Image x:Name="logo" Source="images/monimage.png" />	
@@ -484,8 +484,8 @@ Avant de renseigner le contrôle Image, l'image que l'on veut afficher doit êtr
 	\section{Geolocalisation}
 		\subsection{Geolocalisation du smartphone}
 
-\paragraph{}
-La position géographique du téléphone peut être déterminé grâce à la classe \textbf{GeoCoordinateWatcher}. Pour pouvoir l'utiliser, il faut faire une référence à l'assemblage \textbf{System.Device.dll} et ajouter l'espace de nom \textbf{System.Device.Location}. La position sera récupérée avec l'évènement \textbf{PositionChanged}. Pour démarrer le GPS, il faut appeler la méthode \textbf{start()}.
+\paragraph{}\index{Géolocolasition}
+La position géographique du téléphone peut être déterminé grâce à la classe \textbf{GeoCoordinateWatcher}\index{GeoCoordinateWatcher}. Pour pouvoir l'utiliser, il faut faire une référence à l'assemblage \textbf{System.Device.dll} et ajouter l'espace de nom \textbf{System.Device.Location}. La position sera récupérée avec l'évènement \textbf{PositionChanged}. Pour démarrer le GPS, il faut appeler la méthode \textbf{start()}.
 
 \begin{lstlisting}[caption={Affichage des coordonnées du téléphone}]
 // Code dans MainPage.xaml.cs
@@ -532,7 +532,7 @@ On peut modifier la position géographique de l'émulateur avec l'outil \textbf{
 		\subsection{Bing Maps}
 		
 \paragraph{}
-La représentation géographique d'une position est possible avec le contrôle \textbf{Bing Maps} de classe \textbf{Map}. Pour utiliser cette classe, il faut ajouter l'espace nom et faire référence à l'assemblage \textbf{Microsoft.Phone.Control.Maps}. Il est nécessaire de s'enregistrer sur le site \url{www.bingmapsportal.com} pour utiliser les cartes de Bing. Après l'inscription, qui est gratuite, une clé est obtenue. Elle est à insérer dans le code XAML. 
+La représentation géographique d'une position est possible avec le contrôle \textbf{Bing Maps}\index{Bing Maps} de classe \textbf{Map}. Pour utiliser cette classe, il faut ajouter l'espace nom et faire référence à l'assemblage \textbf{Microsoft.Phone.Control.Maps}. Il est nécessaire de s'enregistrer sur le site \url{www.bingmapsportal.com} pour utiliser les cartes de Bing. Après l'inscription, qui est gratuite, une clé est obtenue. Elle est à insérer dans le code XAML. 
 
 \begin{lstlisting}[caption={Utilisation de la carte avec le contrôle \textbf{Bing Maps}}]
 // ajout de l'espace nom du controle
@@ -554,7 +554,7 @@ L'attribut \textbf{ZoomBarVisibility} permet d'afficher les contrôles du zoom.
 	\section{Orientation de l'application}
 
 \paragraph{}
-Le téléphone est orientable soit en mode portrait soit en mode paysage. Le développeur peut choisir si son application sera compatible avec une ou les deux orientations et quelle sera l'orientation au démarrage avec les propriétés \textbf{SupportedOrientations} et \textbf{Orientation}.
+Le téléphone est orientable soit en mode portrait soit en mode paysage. Le développeur peut choisir si son application sera compatible avec une ou les deux orientations et quelle sera l'orientation au démarrage avec les propriétés \textbf{SupportedOrientations}\index{SupportedOrientations} et \textbf{Orientation}\index{Orientation}.
 
 \begin{lstlisting}[caption={Orientation du téléphone}]
 <phone:PhoneApplicationPage 
@@ -577,15 +577,20 @@ Avec code ci-dessus, l'application s'ouvrira en mode Portrait mais supportera le
 		\subsection{Flux RSS}
 %defintion d'un flux rss
 \paragraph{}		
-Le sigle RSS signifie Really Simple Syndication. C'est une famille de formats de données qui est utilisée pour la syndication de contenu Web. Ici, la syndication consiste à mettre à disposition un flux RSS avec l'en-tête du contenu ajouté récemment à un site, le dernier message ou dernière nouvelle de celui-ci. Les flux RSS sont des fichiers XML utilisés par les blogs et sites d'actualité pour présenter aux abonnés à leurs flux les dernières nouveautés.
+Le sigle RSS\index{RSS} signifie Really Simple Syndication. C'est une famille de formats de données qui est utilisée pour la syndication de contenu Web. Ici, la syndication consiste à mettre à disposition un flux RSS avec l'en-tête du contenu ajouté récemment à un site, le dernier message ou dernière nouvelle de celui-ci. Les flux RSS sont des fichiers XML utilisés par les blogs et sites d'actualité pour présenter aux abonnés à leurs flux les dernières nouveautés.
 
 \paragraph{}
 Un flux RSS pour être lu nécessite un logiciel agrégateur. Pour s'abonner à un flux, il faut donner l'adresse à l'agrégateur afin que celui-ci se connecte au site émetteur pour vérifier la présence de nouveau contenu. Le flux RSS sera ensuite téléchargé et convertit au format HTML pour être lu.
 		
 		\subsection{Applications existantes}
 %présentation des applis déja existante sur le markerplace
+\paragraph{}
+Sur le Marketplace\index{Marketplace}, des agrégateurs de flux RSS sont disponibles. Certaines de ces applications sont payantes. 
+
+
 
 	\section{Lecteur RSS}
+
 	
 
 %Explication sur notre appli : comment ca fonctionne, comment la faire .... 
@@ -599,9 +604,19 @@ Tout au long de notre projet, nous avons découvert l'environnement de développ
 
 
 \paragraph{}
-Dans un projet ultérieur, l'application de l'agrégateur de flux pourrait être repris et amélioré par l'ajout d'une base de données des différents abonnements à des flux de l'utilisateur et d'un navigateur web interne ouvert dans une nouvelle page de l'application lors d'un clic sur une news 
+Dans un projet ultérieur, l'application de l'agrégateur de flux pourrait être repris et amélioré par l'ajout d'une base de données des différents abonnements à des flux de l'utilisateur et d'un navigateur web interne ouvert dans une nouvelle page de l'application lors d'un clic sur une news. 
 
 %\annexes
+
+\nocite{livre}
+\nocite{wiki}
+\nocite{siteduzero}
+\nocite{developpez}
+\nocite{microsoft}
+\nocite{windowsphone}
+
+\bibliographystyle{plain}
+\bibliography{biblio}
 
 \addcontentsline{toc}{chapter}{\numberline{}Index}
 \printindex
